@@ -1,0 +1,62 @@
+decision_id: RGDS-DEC-0001
+decision_title: ""
+program_context:
+  program_id: ""
+  asset_or_initiative: ""
+  domain: non_clinical_informatics
+status: proposed
+created_at: ""
+created_by: {name: "", role: ""}
+
+gate:
+  gate_name: ""
+  gate_type: phase_gate
+  gate_date: ""
+  decision_deadline: ""
+  meeting_refs: []
+
+decision_question: ""
+options_considered: []
+decision_outcome:
+  outcome: defer
+  selected_option_id: null
+  conditions: []
+  rationale_summary: ""
+
+evidence:
+  evidence_items: []
+known_gaps_and_assumptions:
+  gaps: []
+  assumptions: []
+
+risk_assessment:
+  key_risks: []
+  residual_risk_statement: ""
+  risk_acceptance_required: false
+
+governance:
+  decision_owner: {name: "", role: ""}
+  approvers: []
+  reviewers: []
+  approval_method: meeting_vote
+  approvals: []
+  final_signoff: {person: {name: "", role: ""}, timestamp: "", notes: ""}
+
+ai_assistance:
+  used: false
+  use_cases: []
+  artifacts: []
+  controls: {}
+
+actions: []
+dependencies: []
+change_control:
+  change_requests: []
+  release_or_validation_refs: []
+
+audit:
+  record_version: 1
+  change_log: []
+  supersedes: null
+  superseded_by: null
+  retention_class: draft

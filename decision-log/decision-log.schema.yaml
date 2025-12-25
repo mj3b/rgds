@@ -1,0 +1,10 @@
+# RGDS Decision Log Schema (placeholder)
+# Next: convert to formal JSON Schema OR a strict YAML contract.
+version: 0.1
+required_sections:
+  - record_identity
+  - gate_context
+  - decision_statement
+  - evidence_packet
+  - governance
+  - audit_trail
