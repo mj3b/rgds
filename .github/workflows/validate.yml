@@ -25,7 +25,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Validate all example decision logs
+      - name: Validate all decision log examples
         run: |
-          python scripts/validate_decision_log.py decision-log/decision-log.schema.json examples/rgds-dec-0001.json
-          python scripts/validate_decision_log.py decision-log/decision-log.schema.json examples/rgds-dec-0002-no-go.json
+          python scripts/validate_all_examples.py
