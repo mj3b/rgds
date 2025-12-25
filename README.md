@@ -131,7 +131,7 @@ Every decision remains defensible without AI outputs.
 ---
 
 ## Repository Structure
-
+```text
 rgds/
 ├── decision-log/
 │   ├── decision-log.schema.json
@@ -155,7 +155,7 @@ rgds/
 │   └── validate.yml
 ├── Makefile
 └── requirements.txt
-
+```
 ---
 
 ## Why This Matters in Production
