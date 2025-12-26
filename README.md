@@ -138,15 +138,13 @@ AI outputs:
 
 Every decision remains defensible without AI outputs.
 
----
-
 ### Why v1 Contains No AI Components
 
-RGDS v1 deliberately excludes AI components to establish a defensible, human-governed decision baseline before introducing automation. 
+RGDS v1 deliberately excludes AI components to establish a defensible, human-governed decision baseline before introducing automation.
 
-In regulated environments, governance, ownership, and auditability are the primary failure modes—not analytical capability. 
+In regulated environments, the primary failure modes are governance, ownership, and auditability—not analytical capability.
 
-v1 proves the decision system stands on its own; AI may be layered in later only as bounded, reviewable assistance without altering decision authority.
+v1 proves the decision system stands on its own; AI may be layered in later only as bounded, reviewable assistance without altering decision authority or compliance posture.
 
 ---
 ## Repository Structure
