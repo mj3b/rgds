@@ -1,6 +1,5 @@
 # RGDS — Regulated Gate Decision Support
 
-
 ## Canonical Reference Decisions
 
 If you read only one thing in this repository, read:
@@ -12,7 +11,7 @@ These examples demonstrate the intended RGDS operating model: human-governed, ev
 
 A human-governed system for producing defensible, phase-gate decisions in regulated environments.
 
-This repository is not about building AI agents.
+This repository is not about building AI agents.  
 It exists to close the gap between:
 
 - delivery evidence scattered across teams and tools, and
@@ -34,7 +33,7 @@ Not because teams lacked expertise, but because:
 - alignment happened too late
 - decision context could not be reconstructed later
 
-Traditional documentation focuses on inputs such as documents and analyses.
+Traditional documentation focuses on inputs such as documents and analyses.  
 RGDS focuses on decision integrity.
 
 ---
@@ -61,11 +60,10 @@ No component in this repository is allowed to silently decide, approve, or accep
 
 This repository is organized around decisions, not tools or models.
 
-Start with the examples directory.
+Start with the `examples/` directory.  
 Each file represents a single, concrete decision, such as a conditional-go or a no-go at a data readiness gate.
 
-Open an example decision record first.
-It shows:
+Open an example decision record first. It shows:
 
 - what was decided
 - what evidence was used
@@ -73,7 +71,7 @@ It shows:
 - who owned and approved the outcome
 - what conditions or actions followed
 
-You do not need to read code to understand the decision.
+You do not need to read code to understand the decision.  
 The structure is designed so executives, quality, and auditors can understand why a decision was defensible.
 
 ---
@@ -103,7 +101,7 @@ RGDS evaluates:
 - decision readiness and confidence
 - time-to-decision
 - evidence quality
-- AI-assisted task performance when used
+- AI-assisted task performance (when used)
 - governance execution
 
 Evaluation focuses on decision quality, not model performance in isolation.
@@ -142,11 +140,12 @@ Every decision remains defensible without AI outputs.
 
 RGDS v1 deliberately excludes AI components to establish a defensible, human-governed decision baseline before introducing automation.
 
-In regulated environments, the primary failure modes are governance, ownership, and auditability—not analytical capability.
+In regulated environments, the primary failure modes are governance, ownership, and auditability — not analytical capability.
 
 v1 proves the decision system stands on its own; AI may be layered in later only as bounded, reviewable assistance without altering decision authority or compliance posture.
 
 ---
+
 ## Repository Structure
 ```text
 rgds/
