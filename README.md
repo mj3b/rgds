@@ -198,5 +198,6 @@ It assumes familiarity with regulated delivery, not machine learning research.
 
 ## Status
 
-v1 — Decision spine, evaluation, governance, and CI in place.
+v1 — Reference implementation complete: decision spine, evaluation artifacts, governance model, and CI enforcement.  
 This repository is an independent case study, not a production system.
+
