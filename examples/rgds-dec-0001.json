@@ -1,6 +1,6 @@
 {
   "decision_id": "RGDS-DEC-0001",
-  "decision_title": "Proceed to Data Readiness Gate for IND-enabling tox package evidence packet",
+  "decision_title": "CANONICAL — Conditional-Go at Data Readiness Gate (IND-enabling tox evidence packet)",
   "program_context": {
     "program_id": "PRG-241",
     "asset_or_initiative": "ABC-101",
@@ -18,7 +18,7 @@
     "meeting_refs": ["CONFL-987", "GCAL-123"]
   },
 
-  "decision_question": "Is the tox dataset complete, traceable, and fit for downstream analysis and reporting needed for this gate?",
+  "decision_question": "At the Data Readiness gate, is the tox dataset complete, traceable, and integrity-checked enough to proceed, with any remaining gaps handled as explicit, owned conditions?",
   "options_considered": [
     {
       "option_id": "A",
