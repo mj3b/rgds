@@ -1,0 +1,281 @@
+{
+  "decision_id": "RGDS-DEC-0006",
+  "decision_title": "Go \u2014 Pre-IND Meeting Strategy for Nonstandard Safety Package (Drew pattern)",
+  "program_context": {
+    "program_id": "PRG-246",
+    "asset_or_initiative": "ABC-101",
+    "domain": "other",
+    "target_product_profile": {
+      "intended_indication": "Rare disease",
+      "patient_population": "Pediatric",
+      "route_of_administration": "Oral",
+      "dosing_regimen": "Daily",
+      "key_safety_considerations": [
+        "Pediatric safety margin",
+        "Chronic dosing exposure"
+      ],
+      "development_stage_relevance": "Pre-IND strategy (risk posture and regulatory comfort before IND submission)"
+    }
+  },
+  "status": "decided",
+  "created_at": "2025-12-27T14:10:00-05:00",
+  "created_by": {
+    "name": "Mark Banasihan",
+    "role": "Principal AI Business Analyst (Case Study)"
+  },
+  "gate": {
+    "gate_name": "Regulatory Strategy Alignment",
+    "gate_type": "exec_committee",
+    "gate_date": "2026-01-20",
+    "decision_deadline": "2026-01-05T17:00:00-05:00",
+    "meeting_refs": [
+      "GCAL-330"
+    ]
+  },
+  "decision_question": "Should the program request a pre-IND meeting to align FDA on the nonstandard safety package approach and reduce the risk of avoidable questions at IND review?",
+  "options_considered": [
+    {
+      "option_id": "A",
+      "description": "Request a pre-IND meeting with targeted questions on the safety package and pediatric considerations.",
+      "pros": [
+        "Clarifies FDA comfort expectations early",
+        "Reduces risk of rework after submission"
+      ],
+      "cons": [
+        "Adds planning overhead",
+        "May extend timeline if poorly prepared"
+      ],
+      "estimated_impact": "Higher alignment and fewer surprises; modest near-term effort."
+    },
+    {
+      "option_id": "B",
+      "description": "Proceed without a pre-IND meeting; rely on standard guidance and internal precedent.",
+      "pros": [
+        "Avoids meeting lead time",
+        "Keeps focus on execution"
+      ],
+      "cons": [
+        "Higher risk of FDA questions and delays",
+        "Internal alignment may remain implicit"
+      ],
+      "estimated_impact": "Faster in short term; higher regulatory uncertainty."
+    }
+  ],
+  "decision_outcome": {
+    "outcome": "go",
+    "selected_option_id": "A",
+    "conditions": [],
+    "rationale_summary": "Given the pediatric population and nonstandard elements of the safety package, the program will request a pre-IND meeting to confirm FDA comfort expectations before IND submission. This decision makes the program's risk posture explicit, aligns internal stakeholders on what we are asking FDA to accept, and reduces the likelihood of avoidable questions that could delay first-in-human timelines."
+  },
+  "risk_posture": {
+    "program_risk_tolerance": "medium",
+    "regulatory_risk_tolerance": "low",
+    "justification": "Regulatory comfort is prioritized due to pediatric exposure and chronic dosing; early alignment is preferred over speed that could trigger downstream FDA questions.",
+    "known_unknowns": [
+      "Division-specific expectations for pediatric nonclinical package",
+      "Tolerance for proposed bridging rationale"
+    ],
+    "tradeoffs": [
+      "Accept meeting preparation overhead to reduce downstream regulatory friction."
+    ]
+  },
+  "regulatory_interaction_decision": {
+    "meeting_type": "pre-IND",
+    "rationale": "Nonstandard safety package and pediatric considerations warrant early alignment to avoid avoidable review questions and rework.",
+    "questions_for_agency": [
+      "Is the proposed nonclinical safety package sufficient to support the initial pediatric FIH protocol as described?",
+      "Does FDA agree with the bridging rationale across species/assays, and what additional analyses would increase comfort?",
+      "Are there division-specific expectations for chronic dosing exposure margins in this indication?"
+    ],
+    "timing_window": {
+      "earliest": "2026-01-10",
+      "latest": "2026-02-28"
+    },
+    "risk_reduced": [
+      "Avoidable FDA questions at IND review",
+      "Late rework of safety rationale",
+      "Misalignment on pediatric expectations"
+    ],
+    "if_no_meeting_then": "Proceed with a written questions package and internal mock review; increase evidence thresholds and expand contingency time in the submission plan."
+  },
+  "fallback_plan": {
+    "trigger": "FDA declines the meeting, scheduling falls outside the timing window, or feedback indicates the safety package is insufficient.",
+    "actions": [
+      "Pivot to written response pathway and submit focused questions with supporting rationale.",
+      "Initiate additional targeted nonclinical analyses identified as likely comfort builders and log change requests.",
+      "Re-baseline IND submission timeline and update gate evidence packet to reflect new scope."
+    ],
+    "owner": {
+      "name": "Regulatory Lead",
+      "role": "Regulatory Strategy"
+    },
+    "time_cost_estimate": "2\u20138 weeks depending on additional analyses and agency feedback."
+  },
+  "evidence": {
+    "evidence_items": [
+      {
+        "evidence_id": "E-201",
+        "type": "memo",
+        "title": "Draft pre-IND questions package and rationale",
+        "source_system": "Confluence",
+        "location_ref": "CONFL-2201",
+        "owner": {
+          "name": "Regulatory Lead",
+          "role": "Regulatory Strategy"
+        },
+        "as_of": "2025-12-27T12:30:00-05:00",
+        "relevance": "primary",
+        "quality_notes": "Reviewed for clarity and alignment to TPP and protocol assumptions.",
+        "confidence": "high"
+      },
+      {
+        "evidence_id": "E-202",
+        "type": "protocol",
+        "title": "Draft FIH protocol synopsis (pediatric)",
+        "source_system": "SharePoint",
+        "location_ref": "SP://working/ABC-101/clinical/protocol_synopsis_v1.docx",
+        "owner": {
+          "name": "Clinical Lead",
+          "role": "Clinical Development"
+        },
+        "as_of": "2025-12-26T16:00:00-05:00",
+        "relevance": "supporting",
+        "quality_notes": "Early draft; assumptions documented in known_gaps_and_assumptions.",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "known_gaps_and_assumptions": {
+    "gaps": [
+      {
+        "gap": "Division-specific expectations for pediatric chronic dosing exposure are not confirmed.",
+        "impact": "May trigger additional FDA questions or required analyses at IND review.",
+        "mitigation_plan": "Use pre-IND meeting to confirm expectations; maintain fallback plan if meeting unavailable."
+      }
+    ],
+    "assumptions": [
+      {
+        "assumption": "Proposed bridging rationale will be acceptable with additional supportive analyses if requested.",
+        "risk_if_wrong": "Program may require expanded studies and timeline changes.",
+        "how_to_verify": "Seek FDA feedback via pre-IND; document and action any required changes."
+      }
+    ]
+  },
+  "risk_assessment": {
+    "key_risks": [
+      {
+        "risk": "FDA requests additional nonclinical work that impacts IND timeline.",
+        "severity": "high",
+        "likelihood": "possible",
+        "detectability": "moderate",
+        "mitigation": "Engage FDA early; define fallback actions and change control path.",
+        "owner": {
+          "name": "Regulatory Lead",
+          "role": "Regulatory Strategy"
+        }
+      }
+    ],
+    "residual_risk_statement": "Residual risk remains but is reduced by early agency interaction and explicit contingency planning.",
+    "risk_acceptance_required": true
+  },
+  "governance": {
+    "decision_owner": {
+      "name": "Regulatory Lead",
+      "role": "Regulatory Strategy"
+    },
+    "approvers": [
+      {
+        "name": "Executive Sponsor",
+        "role": "Program Sponsor"
+      }
+    ],
+    "reviewers": [
+      {
+        "name": "Clinical Lead",
+        "role": "Clinical Development"
+      },
+      {
+        "name": "Nonclinical Lead",
+        "role": "Toxicology"
+      }
+    ],
+    "approval_method": "meeting_vote",
+    "approvals": [
+      {
+        "person": {
+          "name": "Executive Sponsor",
+          "role": "Program Sponsor"
+        },
+        "decision": "approve",
+        "timestamp": "2025-12-27T14:05:00-05:00",
+        "comments": "Proceed with pre-IND; ensure questions are tightly scoped and evidence-backed."
+      }
+    ],
+    "final_signoff": {
+      "person": {
+        "name": "Regulatory Lead",
+        "role": "Regulatory Strategy"
+      },
+      "timestamp": "2025-12-27T14:10:00-05:00",
+      "notes": "Go decision recorded with explicit risk posture and contingency."
+    }
+  },
+  "ai_assistance": {
+    "used": false,
+    "use_cases": [],
+    "artifacts": [],
+    "controls": {
+      "prompt_or_instruction_ref": "",
+      "schema_or_format_constraints": "",
+      "versioning": "",
+      "safety_notes": ""
+    }
+  },
+  "actions": [
+    {
+      "action_id": "A-601",
+      "description": "Finalize pre-IND questions package and meeting request submission.",
+      "owner": {
+        "name": "Regulatory Lead",
+        "role": "Regulatory Strategy"
+      },
+      "due_date": "2026-01-06",
+      "status": "open",
+      "success_criteria": ""
+    }
+  ],
+  "dependencies": [
+    "Draft protocol synopsis",
+    "Safety package rationale memo"
+  ],
+  "change_control": {
+    "change_requests": [],
+    "release_or_validation_refs": []
+  },
+  "audit": {
+    "record_version": 1,
+    "change_log": [
+      {
+        "version": 1,
+        "changed_by": {
+          "name": "Mark Banasihan",
+          "role": "Principal AI Business Analyst (Case Study)"
+        },
+        "changed_at": "2025-12-27T14:15:00-05:00",
+        "summary": "Created regulatory interaction strategy decision record (v1.2 additions)."
+      }
+    ],
+    "supersedes": null,
+    "superseded_by": null,
+    "retention_class": "controlled_record"
+  },
+  "decision_category": "regulatory_interaction",
+  "regulatory_context": {
+    "interaction_type": "pre-IND",
+    "questions_submitted": [],
+    "assumptions_made": [],
+    "feedback_received": [],
+    "interpretation_risks": [],
+    "follow_up_actions": []
+  }
+}
