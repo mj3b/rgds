@@ -1,6 +1,6 @@
 {
   "decision_id": "RGDS-DEC-0001",
-  "decision_title": "CANONICAL — Conditional-Go at Data Readiness Gate (IND-enabling tox evidence packet)",
+  "decision_title": "CANONICAL \u2014 Conditional-Go at Data Readiness Gate (IND-enabling tox evidence packet)",
   "program_context": {
     "program_id": "PRG-241",
     "asset_or_initiative": "ABC-101",
@@ -8,16 +8,20 @@
   },
   "status": "decided",
   "created_at": "2025-12-25T16:20:00-05:00",
-  "created_by": { "name": "Mark Banasihan", "role": "Principal AI Business Analyst (Case Study)" },
-
+  "created_by": {
+    "name": "Mark Banasihan",
+    "role": "Principal AI Business Analyst (Case Study)"
+  },
   "gate": {
     "gate_name": "Data Readiness",
     "gate_type": "phase_gate",
     "gate_date": "2026-01-07",
     "decision_deadline": "2026-01-06T17:00:00-05:00",
-    "meeting_refs": ["CONFL-987", "GCAL-123"]
+    "meeting_refs": [
+      "CONFL-987",
+      "GCAL-123"
+    ]
   },
-
   "decision_question": "At the Data Readiness gate, is the tox dataset complete, traceable, and integrity-checked enough to proceed, with any remaining gaps handled as explicit, owned conditions?",
   "options_considered": [
     {
@@ -47,27 +51,31 @@
       "estimated_impact": "Higher immediate confidence; moderate schedule risk with knock-on effects."
     }
   ],
-
   "decision_outcome": {
     "outcome": "conditional_go",
     "selected_option_id": "A",
     "conditions": [
       {
         "condition": "Backfill missing exposure metadata for Study-03 in the controlled dataset and publish a QC memo confirming closure.",
-        "owner": { "name": "Data Steward", "role": "Non-clinical Data Operations" },
+        "owner": {
+          "name": "Data Steward",
+          "role": "Non-clinical Data Operations"
+        },
         "due_date": "2026-01-10",
         "evidence_to_close": "LIMS export v3 + QC memo stored in controlled location"
       },
       {
         "condition": "Confirm no late-arriving lab results are expected for Study-03 and attach confirmation note to the evidence packet.",
-        "owner": { "name": "Study Lead", "role": "Non-clinical Study Lead" },
+        "owner": {
+          "name": "Study Lead",
+          "role": "Non-clinical Study Lead"
+        },
         "due_date": "2026-01-08",
         "evidence_to_close": "Lab release calendar confirmation note"
       }
     ],
     "rationale_summary": "The evidence packet is sufficient to support the gate decision: dataset lineage is documented, completeness is high, and primary analyses are stable. Two bounded issues remain (Study-03 exposure metadata and late-arrival confirmation). These do not change the gate decision outcome if they are tracked as explicit conditions with named owners, dated closure criteria, and controlled evidence of completion. This decision preserves timeline integrity while maintaining audit-defensible governance through documented conditions and follow-through."
   },
-
   "evidence": {
     "evidence_items": [
       {
@@ -76,7 +84,10 @@
         "title": "Data completeness and lineage view (gate pack)",
         "source_system": "Power BI",
         "location_ref": "PBI-DSH-445",
-        "owner": { "name": "Analytics Lead", "role": "BI / Reporting" },
+        "owner": {
+          "name": "Analytics Lead",
+          "role": "BI / Reporting"
+        },
         "as_of": "2026-01-05T09:00:00-05:00",
         "relevance": "primary",
         "quality_notes": "Refresh completed within SLA; lineage links verified to source extracts; definitions aligned to gate requirements.",
@@ -88,7 +99,10 @@
         "title": "Controlled tox dataset export (Study-01 to Study-03)",
         "source_system": "LIMS",
         "location_ref": "SP://controlled-data/ABC-101/tox/export_v2.csv",
-        "owner": { "name": "Data Steward", "role": "Non-clinical Data Operations" },
+        "owner": {
+          "name": "Data Steward",
+          "role": "Non-clinical Data Operations"
+        },
         "as_of": "2026-01-05T08:35:00-05:00",
         "relevance": "primary",
         "quality_notes": "4 records missing exposure metadata for Study-03; otherwise conforms to required fields.",
@@ -100,7 +114,10 @@
         "title": "QC memo: dataset integrity checks and deltas vs prior export",
         "source_system": "SharePoint",
         "location_ref": "SP://controlled-docs/ABC-101/tox/QC_memo_v1.docx",
-        "owner": { "name": "QA Representative", "role": "Quality" },
+        "owner": {
+          "name": "QA Representative",
+          "role": "Quality"
+        },
         "as_of": "2026-01-05T15:10:00-05:00",
         "relevance": "supporting",
         "quality_notes": "QC performed on required fields and value ranges; open issue documented for Study-03 exposure metadata.",
@@ -108,7 +125,6 @@
       }
     ]
   },
-
   "known_gaps_and_assumptions": {
     "gaps": [
       {
@@ -125,7 +141,6 @@
       }
     ]
   },
-
   "risk_assessment": {
     "key_risks": [
       {
@@ -134,7 +149,10 @@
         "likelihood": "possible",
         "detectability": "easy",
         "mitigation": "Conditioned action: backfill and QC memo closure with controlled evidence link.",
-        "owner": { "name": "Data Steward", "role": "Non-clinical Data Operations" }
+        "owner": {
+          "name": "Data Steward",
+          "role": "Non-clinical Data Operations"
+        }
       },
       {
         "risk": "Late-arriving lab results could invalidate parts of the evidence packet post-gate.",
@@ -142,55 +160,89 @@
         "likelihood": "unlikely",
         "detectability": "moderate",
         "mitigation": "Conditioned action: confirm lab release expectations and attach controlled confirmation note.",
-        "owner": { "name": "Study Lead", "role": "Non-clinical Study Lead" }
+        "owner": {
+          "name": "Study Lead",
+          "role": "Non-clinical Study Lead"
+        }
       }
     ],
     "residual_risk_statement": "Residual risk is acceptable given bounded scope and explicit closure conditions. If conditions fail to close by the due dates, the decision must be escalated for governance re-review.",
     "risk_acceptance_required": true
   },
-
   "governance": {
-    "decision_owner": { "name": "Program Lead", "role": "Non-clinical Program Lead" },
+    "decision_owner": {
+      "name": "Program Lead",
+      "role": "Non-clinical Program Lead"
+    },
     "approvers": [
-      { "name": "QA Representative", "role": "Quality" },
-      { "name": "Executive Sponsor", "role": "VP, Development" }
+      {
+        "name": "QA Representative",
+        "role": "Quality"
+      },
+      {
+        "name": "Executive Sponsor",
+        "role": "VP, Development"
+      }
     ],
     "reviewers": [
-      { "name": "Analytics Lead", "role": "BI / Reporting" },
-      { "name": "Data Steward", "role": "Non-clinical Data Operations" }
+      {
+        "name": "Analytics Lead",
+        "role": "BI / Reporting"
+      },
+      {
+        "name": "Data Steward",
+        "role": "Non-clinical Data Operations"
+      }
     ],
     "approval_method": "meeting_vote",
     "approvals": [
       {
-        "person": { "name": "QA Representative", "role": "Quality" },
+        "person": {
+          "name": "QA Representative",
+          "role": "Quality"
+        },
         "decision": "approve",
         "timestamp": "2026-01-06T16:15:00-05:00",
         "comments": "Conditional approval acceptable with documented closure evidence and due dates."
       },
       {
-        "person": { "name": "Executive Sponsor", "role": "VP, Development" },
+        "person": {
+          "name": "Executive Sponsor",
+          "role": "VP, Development"
+        },
         "decision": "approve",
         "timestamp": "2026-01-06T16:30:00-05:00",
         "comments": "Proceed with conditional closure; monitor follow-through and escalate if delays occur."
       }
     ],
     "final_signoff": {
-      "person": { "name": "Executive Sponsor", "role": "VP, Development" },
+      "person": {
+        "name": "Executive Sponsor",
+        "role": "VP, Development"
+      },
       "timestamp": "2026-01-06T16:35:00-05:00",
       "notes": "Conditional go recorded; conditions must close by due dates."
     }
   },
-
   "ai_assistance": {
     "used": true,
-    "use_cases": ["summarize", "compare"],
+    "use_cases": [
+      "summarize",
+      "compare"
+    ],
     "artifacts": [
       {
         "artifact_id": "AI-0001",
         "description": "Drafted summary of QC memo deltas vs prior export for inclusion in rationale.",
-        "input_refs": ["SP://controlled-docs/ABC-101/tox/QC_memo_v1.docx", "SP://controlled-docs/ABC-101/tox/QC_memo_prev.docx"],
+        "input_refs": [
+          "SP://controlled-docs/ABC-101/tox/QC_memo_v1.docx",
+          "SP://controlled-docs/ABC-101/tox/QC_memo_prev.docx"
+        ],
         "output_ref": "RGDS://ai-outputs/AI-0001.yaml",
-        "human_reviewer": { "name": "QA Representative", "role": "Quality" },
+        "human_reviewer": {
+          "name": "QA Representative",
+          "role": "Quality"
+        },
         "disposition": "edited"
       }
     ],
@@ -201,12 +253,14 @@
       "safety_notes": "AI output used for drafting only; source documents remain the evidence of record."
     }
   },
-
   "actions": [
     {
       "action_id": "ACT-0001",
       "description": "Backfill Study-03 exposure metadata for 4 records and publish QC memo addendum confirming closure.",
-      "owner": { "name": "Data Steward", "role": "Non-clinical Data Operations" },
+      "owner": {
+        "name": "Data Steward",
+        "role": "Non-clinical Data Operations"
+      },
       "due_date": "2026-01-10",
       "success_criteria": "0 missing required fields for Study-03 exposure metadata; QC addendum stored and linked in evidence packet.",
       "status": "open"
@@ -214,26 +268,36 @@
     {
       "action_id": "ACT-0002",
       "description": "Attach lab release expectation confirmation note to evidence packet.",
-      "owner": { "name": "Study Lead", "role": "Non-clinical Study Lead" },
+      "owner": {
+        "name": "Study Lead",
+        "role": "Non-clinical Study Lead"
+      },
       "due_date": "2026-01-08",
       "success_criteria": "Confirmation note stored in controlled location and referenced in decision record.",
       "status": "open"
     }
   ],
-
-  "dependencies": ["IND-TIMELINE-REF-12", "DATA-PIPELINE-CR-33"],
-
+  "dependencies": [
+    "IND-TIMELINE-REF-12",
+    "DATA-PIPELINE-CR-33"
+  ],
   "change_control": {
-    "change_requests": ["CR-33"],
-    "release_or_validation_refs": ["VAL-TOX-PIPELINE-07"]
+    "change_requests": [
+      "CR-33"
+    ],
+    "release_or_validation_refs": [
+      "VAL-TOX-PIPELINE-07"
+    ]
   },
-
   "audit": {
     "record_version": 1,
     "change_log": [
       {
         "version": 1,
-        "changed_by": { "name": "Mark Banasihan", "role": "Principal AI Business Analyst (Case Study)" },
+        "changed_by": {
+          "name": "Mark Banasihan",
+          "role": "Principal AI Business Analyst (Case Study)"
+        },
         "changed_at": "2026-01-06T17:05:00-05:00",
         "summary": "Initial decision record finalized with approvals and linked evidence."
       }
@@ -241,5 +305,6 @@
     "supersedes": null,
     "superseded_by": null,
     "retention_class": "controlled_record"
-  }
+  },
+  "decision_category": "internal"
 }

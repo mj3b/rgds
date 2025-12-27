@@ -15,6 +15,35 @@ def load_json(path: Path):
         print(f"[ERROR] Failed to read JSON: {path}\n  {e}")
         sys.exit(2)
 
+
+def semantic_errors(instance: dict) -> list[str]:
+    errs: list[str] = []
+    outcome = instance.get("decision_outcome", {}).get("outcome")
+
+    # Evidence items should always carry confidence + quality notes for auditability
+    for i, ev in enumerate(instance.get("evidence", {}).get("evidence_items", [])):
+        if not ev.get("confidence"):
+            errs.append(f"evidence.evidence_items[{i}].confidence is missing/empty")
+        if not ev.get("quality_notes"):
+            errs.append(f"evidence.evidence_items[{i}].quality_notes is missing/empty")
+
+    conditions = instance.get("decision_outcome", {}).get("conditions") or []
+    actions = instance.get("actions") or []
+    gaps = instance.get("known_gaps_and_assumptions", {}).get("gaps") or []
+
+    if outcome in ("conditional_go",):
+        if len(conditions) == 0:
+            errs.append("conditional_go requires decision_outcome.conditions (at least 1)")
+    if outcome in ("defer_with_required_evidence",):
+        if len(gaps) == 0:
+            errs.append("defer_with_required_evidence requires known_gaps_and_assumptions.gaps (at least 1)")
+        if len(conditions) == 0:
+            errs.append("defer_with_required_evidence requires decision_outcome.conditions (at least 1)")
+        if len(actions) == 0:
+            errs.append("defer_with_required_evidence requires actions (at least 1)")
+
+    return errs
+
 def main():
     if not SCHEMA_PATH.exists():
         print(f"[ERROR] Schema not found: {SCHEMA_PATH}")
@@ -44,6 +73,12 @@ def main():
                 print(f"  - {path}: {e.message}")
         else:
             print(f"[PASS] {example.name}")
+            sem_errs = semantic_errors(instance)
+            if sem_errs:
+                failed = True
+                print(f"\n[FAIL] {example.name} (semantic)")
+                for msg in sem_errs:
+                    print(f"  - {msg}")
 
     if failed:
         sys.exit(1)
