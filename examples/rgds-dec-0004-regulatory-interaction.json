@@ -1,0 +1,301 @@
+{
+  "decision_id": "RGDS-DEC-0004",
+  "decision_title": "Pre-IND interaction: align FDA questions and interpret prior written feedback",
+  "program_context": {
+    "program_id": "PRG-IND-042",
+    "asset_or_initiative": "Example small molecule program",
+    "domain": "cmc",
+    "target_product_profile": {
+      "intended_indication": "(example) Indication under evaluation",
+      "patient_population": "(example) Adult patients; specifics TBD",
+      "route_of_administration": "(example) Oral",
+      "dosing_regimen": "(example) Dose escalation in SAD/MAD",
+      "key_safety_considerations": [
+        "(example) Genotox signal management",
+        "(example) Impurity qualification"
+      ],
+      "development_stage_relevance": "Pre-IND strategy: ensure questions map to IND-enabling evidence plan."
+    }
+  },
+  "decision_category": "regulatory_interaction",
+  "regulatory_context": {
+    "interaction_type": "pre-IND",
+    "questions_submitted": [
+      "Is the proposed 28-day GLP tox package sufficient for the planned SAD/MAD design?",
+      "Are additional impurity qualification studies expected prior to IND submission?"
+    ],
+    "assumptions_made": [
+      "FDA feedback will focus on tox package adequacy and impurity controls rather than clinical protocol details."
+    ],
+    "feedback_received": [
+      "Prior written feedback suggested additional impurity characterization may be needed depending on spec limits."
+    ],
+    "interpretation_risks": [
+      "Written feedback is conditional; interpretation depends on final impurity profile and proposed specs."
+    ],
+    "follow_up_actions": [
+      "Confirm impurity profile thresholds and update CMC narrative prior to meeting package finalization."
+    ]
+  },
+  "status": "decided",
+  "created_at": "2026-01-10T11:15:00-05:00",
+  "created_by": {
+    "name": "Program Lead",
+    "role": "Program Management"
+  },
+  "gate": {
+    "gate_name": "Pre-IND Strategy",
+    "gate_type": "exec_committee",
+    "gate_date": "2026-01-15",
+    "decision_deadline": "2026-01-10T17:00:00-05:00",
+    "meeting_refs": [
+      "FDA-PREIND-REQ-001"
+    ]
+  },
+  "decision_question": "What questions will we submit for the pre-IND meeting and how will we interpret existing FDA feedback to de-risk IND readiness?",
+  "options_considered": [
+    {
+      "option_id": "opt-1",
+      "description": "Submit a broad question set across non-clinical + CMC + clinical to maximize coverage.",
+      "pros": [
+        "May capture a wider set of FDA expectations in one interaction."
+      ],
+      "cons": [
+        "Lower specificity; higher risk of receiving non-actionable feedback; increases preparation burden."
+      ],
+      "estimated_impact": "Higher prep effort; potentially lower clarity of answers."
+    },
+    {
+      "option_id": "opt-2",
+      "description": "Submit a focused question set on IND-enabling tox adequacy and impurity strategy; defer clinical protocol detail.",
+      "pros": [
+        "Higher likelihood of actionable feedback on highest-risk readiness items.",
+        "Reduces interpretation risk by scoping questions tightly."
+      ],
+      "cons": [
+        "May require a follow-on interaction if additional topics emerge."
+      ],
+      "estimated_impact": "Lower prep effort; higher clarity/actionability; maintains timeline with explicit conditions."
+    }
+  ],
+  "decision_outcome": {
+    "outcome": "conditional_go",
+    "selected_option_id": "opt-2",
+    "conditions": [
+      {
+        "condition": "Finalize impurity profile summary and confirm proposed spec limits prior to meeting package submission.",
+        "owner": {
+          "name": "CMC Lead",
+          "role": "CMC Lead"
+        },
+        "due_date": "2026-01-13",
+        "evidence_to_close": "Updated impurity profile summary and controlled package reference linked as evidence item."
+      },
+      {
+        "condition": "Prepare concise tox rationale mapping studies to planned SAD/MAD exposure margins.",
+        "owner": {
+          "name": "Nonclinical Lead",
+          "role": "Nonclinical Lead"
+        },
+        "due_date": "2026-01-13",
+        "evidence_to_close": "Tox rationale document stored in controlled location and linked in evidence packet."
+      }
+    ],
+    "rationale_summary": "Proceed with a focused pre-IND strategy to reduce interpretation risk and obtain actionable FDA feedback on the two highest-impact readiness questions (tox adequacy and impurity controls). This preserves timeline while keeping unresolved areas explicitly owned and time-bounded."
+  },
+  "evidence": {
+    "evidence_items": [
+      {
+        "evidence_id": "E-401",
+        "type": "memo",
+        "title": "Prior FDA written feedback excerpt (impurity characterization)",
+        "source_system": "Regulatory Archive",
+        "location_ref": "REG-ARCH/feedback/2025-12-18.pdf#p2",
+        "owner": {
+          "name": "Regulatory Ops",
+          "role": "Regulatory Ops"
+        },
+        "as_of": "2025-12-18",
+        "relevance": "primary",
+        "quality_notes": "Primary source but context-limited; language is conditional and depends on final impurity profile.",
+        "confidence": "medium"
+      },
+      {
+        "evidence_id": "E-402",
+        "type": "report",
+        "title": "Current impurity profile + proposed spec limits (draft)",
+        "source_system": "CMC Repository",
+        "location_ref": "CMC/specs/impurities-draft-v3.xlsx",
+        "owner": {
+          "name": "CMC Lead",
+          "role": "CMC Lead"
+        },
+        "as_of": "2026-01-09",
+        "relevance": "supporting",
+        "quality_notes": "Draft; pending final analytical confirmation.",
+        "confidence": "low"
+      }
+    ]
+  },
+  "known_gaps_and_assumptions": {
+    "gaps": [
+      {
+        "gap": "Final confirmed impurity profile pending; may shift question framing.",
+        "impact": "Could change FDA expectations and required follow-up work prior to IND submission.",
+        "mitigation_plan": "Bind finalization to owned action ACT-0401 with due date; update meeting package once confirmed."
+      }
+    ],
+    "assumptions": [
+      {
+        "assumption": "FDA meeting feedback will be returned within expected timelines.",
+        "risk_if_wrong": "Delays may compress IND submission schedule and force re-planning of dependent work.",
+        "how_to_verify": "Track FDA correspondence milestones; escalate if response window exceeds agreed timeline."
+      }
+    ]
+  },
+  "risk_assessment": {
+    "key_risks": [
+      {
+        "risk": "Misinterpretation of conditional FDA written feedback could lead to under-scoped CMC work prior to IND submission.",
+        "severity": "high",
+        "likelihood": "possible",
+        "detectability": "moderate",
+        "mitigation": "Capture interpretation risks explicitly and bind follow-up actions to finalize impurity profile and specs before meeting package submission.",
+        "owner": {
+          "name": "Regulatory Lead",
+          "role": "Regulatory Lead"
+        }
+      },
+      {
+        "risk": "Focused question set may omit emerging clinical protocol concerns that surface during the meeting.",
+        "severity": "medium",
+        "likelihood": "unlikely",
+        "detectability": "moderate",
+        "mitigation": "Explicitly scope the interaction to tox adequacy and impurity strategy; schedule a follow-on interaction if additional topics emerge.",
+        "owner": {
+          "name": "Program Lead",
+          "role": "Program Management"
+        }
+      }
+    ],
+    "residual_risk_statement": "Residual risk is acceptable for this stage because conditions are owned and due before meeting package finalization. If impurity confirmation or tox rationale slips past due dates, the decision must be escalated for governance re-review.",
+    "risk_acceptance_required": true
+  },
+  "governance": {
+    "decision_owner": {
+      "name": "Program Lead",
+      "role": "Program Management"
+    },
+    "approvers": [
+      {
+        "name": "Regulatory Lead",
+        "role": "Regulatory Lead"
+      },
+      {
+        "name": "Program Executive Sponsor",
+        "role": "Executive Sponsor"
+      }
+    ],
+    "reviewers": [
+      {
+        "name": "CMC Lead",
+        "role": "CMC Lead"
+      },
+      {
+        "name": "Nonclinical Lead",
+        "role": "Nonclinical Lead"
+      }
+    ],
+    "approval_method": "asynchronous_signoff",
+    "approvals": [
+      {
+        "person": {
+          "name": "Regulatory Lead",
+          "role": "Regulatory Lead"
+        },
+        "decision": "approve",
+        "timestamp": "2026-01-10T16:20:00-05:00",
+        "comments": "Proceed with focused questions; ensure impurity profile is finalized before package submission."
+      },
+      {
+        "person": {
+          "name": "Program Executive Sponsor",
+          "role": "Executive Sponsor"
+        },
+        "decision": "approve",
+        "timestamp": "2026-01-10T16:45:00-05:00",
+        "comments": "Approved with conditions; prioritize clarity and actionability of FDA questions."
+      }
+    ],
+    "final_signoff": {
+      "person": {
+        "name": "Program Executive Sponsor",
+        "role": "Executive Sponsor"
+      },
+      "timestamp": "2026-01-10T16:45:00-05:00",
+      "notes": "Final sign-off recorded."
+    }
+  },
+  "ai_assistance": {
+    "used": false,
+    "use_cases": [],
+    "artifacts": [],
+    "controls": {
+      "prompt_or_instruction_ref": "",
+      "schema_or_format_constraints": "",
+      "versioning": "",
+      "safety_notes": "No AI used for regulatory interpretation; human review only."
+    }
+  },
+  "actions": [
+    {
+      "action_id": "ACT-0401",
+      "description": "Finalize impurity profile summary and confirm proposed spec limits; update pre-IND meeting package accordingly.",
+      "owner": {
+        "name": "CMC Lead",
+        "role": "CMC Lead"
+      },
+      "due_date": "2026-01-13",
+      "success_criteria": "Impurity profile and spec limits finalized; meeting package updated and stored in controlled location; reference added to evidence packet.",
+      "status": "open"
+    },
+    {
+      "action_id": "ACT-0402",
+      "description": "Prepare concise tox rationale mapping studies to planned SAD/MAD exposure margins for submission with meeting materials.",
+      "owner": {
+        "name": "Nonclinical Lead",
+        "role": "Nonclinical Lead"
+      },
+      "due_date": "2026-01-13",
+      "success_criteria": "Tox rationale finalized, reviewed, and stored; reference added to evidence packet.",
+      "status": "open"
+    }
+  ],
+  "dependencies": [
+    "Analytical confirmation of impurity profile",
+    "Finalization of proposed spec limits for key impurities"
+  ],
+  "change_control": {
+    "change_requests": [
+      "CCR-0401"
+    ],
+    "release_or_validation_refs": []
+  },
+  "audit": {
+    "record_version": 1,
+    "change_log": [
+      {
+        "version": 1,
+        "changed_by": {
+          "name": "Program Lead",
+          "role": "Program Management"
+        },
+        "changed_at": "2026-01-10T17:10:00-05:00",
+        "summary": "Initial regulatory interaction decision recorded with conditions, evidence links, and approvals."
+      }
+    ],
+    "supersedes": null,
+    "superseded_by": null,
+    "retention_class": "controlled_record"
+  }
+}
