@@ -17,6 +17,17 @@ Its purpose is to **make phase-gate decisions defensible over time** by explicit
 - what conditions or follow-up actions were required
 - and how governance was exercised
 
+
+## Decision outcomes
+
+RGDS supports the following outcomes:
+
+- `go`
+- `no_go`
+- `conditional_go`
+- `defer`
+- `defer_with_required_evidence` (explicit missing evidence + re-entry conditions)
+
 In regulated environments, the failure mode is rarely “bad intent” or “bad analysis.”  
 It is **implicit assumptions, undocumented trade-offs, and late-discovered misalignment**.  
 The Decision Log exists to surface and record those *before* the gate closes.
@@ -203,3 +214,27 @@ If RGDS were implemented in a real program, the Decision Log would be the artifa
 
 > “Why did you decide this — and who agreed?”
 
+
+
+---
+
+## Decision category
+
+RGDS distinguishes between:
+
+- **internal** — delivery/governance decisions (default)
+- **regulatory_interaction** — decisions primarily about regulatory interactions (e.g., pre-IND strategy, interpreting written feedback)
+
+When `decision_category` is `regulatory_interaction`, the log must include a `regulatory_context` block to capture:
+interaction type, questions submitted, feedback received, interpretation risks, and follow-up actions.
+
+This is intentional: regulatory feedback is not treated as “notes” or “truth” — it is treated as a **decision input** with explicit interpretation risk.
+
+---
+
+## Optional Target Product Profile context
+
+`program_context.target_product_profile` is an optional context block used to ground decisions in development intent.
+It is **not** a claim about label, and it is **not** validated for completeness.
+
+Use it when it helps a reviewer answer: *“Why was this evidence sufficient for this stage?”*
