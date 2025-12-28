@@ -2,28 +2,13 @@
 
 ## Canonical Reference Decisions
 
-If you read only one thing in this repository, read the canonical examples in `examples/`:
+If you read only one thing in this repository, read:
 
-- `rgds-dec-0001.json` — **CANONICAL conditional_go**  
-  GO with explicit conditions, risk posture, and fallback planning
+- `examples/rgds-dec-0001.json` — **CANONICAL conditional_go** (GO with explicit, owned conditions)
+- `examples/rgds-dec-0002-no-go.json` — **CANONICAL no_go** (No-Go with defensible rationale and re-entry path)
+- `examples/rgds-dec-0005-ind-conditional-go-author-at-risk.json` — **CANONICAL IND-style conditional_go** (author-at-risk + reviewer triage + publishing lock points)
 
-- `rgds-dec-0002-no-go.json` — **CANONICAL no_go**  
-  No-Go with defensible rationale and re-entry path
-
-- `rgds-dec-0003-defer-required-evidence.json` — **CANONICAL defer_with_required_evidence**  
-  Deferral with explicit missing evidence and decision re-trigger
-
-- `rgds-dec-0004-regulatory-interaction.json` — **CANONICAL regulatory_interaction_decision**  
-  Pre-IND / FDA interaction strategy as a first-class decision artifact
-
-See `docs/role-decision-artifact-matrix.md` for how these decisions map to real IND roles (PMs, CMC, Regulatory, Writing PM, Ops, Quality).
-
-These examples demonstrate the intended RGDS operating model:
-**human-governed, evidence-linked, schema-validated, and explicitly non-agentic**.
-
-RGDS is a human-governed system for producing **defensible phase-gate decisions** in regulated environments.
-
----
+These examples demonstrate the intended RGDS operating model: human-governed, evidence-linked, schema-validated, and explicitly non-agentic.
 
 ## What Problem This Solves
 
@@ -234,7 +219,7 @@ It assumes familiarity with regulated delivery — not machine learning research
 
 ## Status
 
-**v1.3 — IND-aligned reference implementation.**
+**v1.3.1 — IND-aligned reference implementation.**
 
 Includes:
 
