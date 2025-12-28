@@ -1,5 +1,0 @@
-# This YAML file is intentionally minimal.
-# The authoritative schema is JSON Schema (2020-12):
-# - decision-log/decision-log.schema.json
-version: 0.1
-authoritative_schema: decision-log.schema.json
