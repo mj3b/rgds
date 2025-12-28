@@ -54,6 +54,9 @@ Traceability is preserved through stable identifiers and drill-through links.
 | backlog_ids | string[] | Referenced backlog item identifiers |
 | decision_record_link | string (URL) | Drill-through link to decision log JSON |
 
+**Notation:**  
+Mappings use the form `extract_field ← source_field`.
+
 ---
 
 ## Suggested Transformations
