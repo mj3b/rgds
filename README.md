@@ -12,6 +12,8 @@ If you read only one thing in this repository, read:
 
 These examples demonstrate the intended RGDS operating model: human-governed, evidence-linked, schema-validated, and explicitly non-agentic.
 
+---
+
 ## What’s New in v1.4.0
 
 Version 1.4.0 makes previously implicit governance decisions explicit, based on
@@ -26,6 +28,8 @@ Newly formalized concepts include:
 
 These changes do not introduce automation or autonomy.
 They tighten decision defensibility.
+
+---
 
 ## What Problem This Solves
 
