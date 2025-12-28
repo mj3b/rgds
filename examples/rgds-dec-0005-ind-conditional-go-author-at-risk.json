@@ -1,0 +1,593 @@
+{
+  "decision_id": "RGDS-DEC-0005",
+  "decision_title": "IND submission readiness \u2014 conditional go with author-at-risk, reviewer triage, and publishing lock points",
+  "program_context": {
+    "program_id": "IND-EXAMPLE-ALPHA-001",
+    "asset_or_initiative": "Asset Alpha (small molecule) \u2014 initial IND",
+    "domain": "ind_submission"
+  },
+  "decision_category": "internal",
+  "status": "decided",
+  "created_at": "2026-01-12T09:00:00-05:00",
+  "created_by": {
+    "name": "Principal AI Business Analyst",
+    "role": "Decision Support / Delivery Governance"
+  },
+  "gate": {
+    "gate_name": "IND Readiness Gate",
+    "gate_type": "phase_gate",
+    "gate_date": "2026-01-15",
+    "decision_deadline": "2026-01-15",
+    "meeting_refs": [
+      "Gate Review #3 \u2014 IND readiness (Exec Committee)"
+    ]
+  },
+  "decision_question": "Is the evidence sufficient to submit the initial IND on 2026-01-20 while maintaining regulatory defensibility, given (a) pivotal GLP tox report is currently an audited draft and (b) clinical stability dataset is limited to 1\u2011month at time of submission?",
+  "options_considered": [
+    {
+      "option_id": "A",
+      "description": "Submit the IND as an unconditional go using the current package without explicitly governing audited-draft tox and limited stability.",
+      "pros": [
+        "Maintains target submission date"
+      ],
+      "cons": [
+        "Treats open items as closed; increases likelihood of preventable FDA questions and downstream rework"
+      ],
+      "estimated_impact": "On-time submission but elevated regulatory friction risk due to implied certainty."
+    },
+    {
+      "option_id": "B",
+      "description": "Submit the IND as a conditional go with explicit author-at-risk items, reviewer triage, and publishing lock points, plus owned closure evidence.",
+      "pros": [
+        "Maintains submission date while preserving defensibility",
+        "Creates controlled pathway to reconcile audited-draft tox and rolling stability updates"
+      ],
+      "cons": [
+        "Requires disciplined follow-through and change control"
+      ],
+      "estimated_impact": "On-time submission with medium residual risk managed through explicit conditions, lock points, and triage rules."
+    },
+    {
+      "option_id": "C",
+      "description": "Delay submission 6\u20138 weeks to wait for final signed tox report and additional stability timepoints before filing.",
+      "pros": [
+        "Reduces uncertainty at time of submission"
+      ],
+      "cons": [
+        "Material delay to program timeline; may not materially improve safety posture compared to a governed conditional go"
+      ],
+      "estimated_impact": "Lower uncertainty at filing at the cost of significant schedule impact and potential loss of strategic window."
+    }
+  ],
+  "decision_outcome": {
+    "outcome": "conditional_go",
+    "selected_option_id": "B",
+    "conditions": [
+      {
+        "condition": "Replace audited-draft GLP tox report with final signed report and reconcile any deltas across Module 2 summaries and IB.",
+        "owner": {
+          "name": "Nonclinical Lead",
+          "role": "Toxicology / Safety"
+        },
+        "due_date": "2026-02-10",
+        "evidence_to_close": "Final signed GLP tox report + change propagation log showing updates to Module 2.6 summaries and IB where applicable."
+      },
+      {
+        "condition": "Provide rolling stability update (additional timepoints) and confirm shelf-life statement remains appropriately qualified.",
+        "owner": {
+          "name": "CMC Lead",
+          "role": "CMC / Quality"
+        },
+        "due_date": "2026-03-01",
+        "evidence_to_close": "Updated stability report + revised Module 3 stability section + documented justification for any shelf-life language."
+      },
+      {
+        "condition": "Confirm final eCTD publishing lock points and perform final cross-document consistency QC after lock.",
+        "owner": {
+          "name": "Submission Manager",
+          "role": "Reg Ops / Publishing"
+        },
+        "due_date": "2026-01-19",
+        "evidence_to_close": "Publishing plan with lock approvals + final QC checklist sign-off + version manifest."
+      }
+    ],
+    "rationale_summary": "Evidence is sufficient to submit the initial IND on the target date only if remaining uncertainty is treated as governed work rather than implied certainty. The pivotal tox report is currently an audited draft and the stability dataset is limited at time of submission; both are recorded as author\u2011at\u2011risk items with named owners, due dates, and required closure evidence. Publishing lock points and reviewer triage rules constrain late-breaking changes to prevent cross-document inconsistencies after content freeze. This conditional-go outcome balances speed with defensibility by making commitments explicit and measurable, and by establishing a contingency pathway if final report deltas or stability updates materially change the risk picture."
+  },
+  "evidence": {
+    "evidence_items": [
+      {
+        "evidence_id": "E-001",
+        "type": "report",
+        "title": "GLP pivotal tox study report (audited draft v0.9)",
+        "source_system": "CRO vendor package",
+        "location_ref": "Module 4 source package: tox_audited_draft_v0.9.pdf",
+        "owner": {
+          "name": "Nonclinical Lead",
+          "role": "Toxicology / Safety"
+        },
+        "as_of": "2026-01-10T17:00:00-05:00",
+        "relevance": "primary",
+        "quality_notes": "Audited draft acceptable for drafting and submission only if reconciled to final signed report with documented deltas.",
+        "confidence": "medium"
+      },
+      {
+        "evidence_id": "E-002",
+        "type": "report",
+        "title": "Module 2.6 nonclinical summaries (Draft 2)",
+        "source_system": "Medical writing workspace",
+        "location_ref": "Module 2.6 Draft 2 (tracked changes)",
+        "owner": {
+          "name": "Medical Writing PM",
+          "role": "Medical Writing Project Manager"
+        },
+        "as_of": "2026-01-12T12:00:00-05:00",
+        "relevance": "primary",
+        "quality_notes": "Aligned to audited-draft tox; requires propagation check upon final tox issuance.",
+        "confidence": "medium"
+      },
+      {
+        "evidence_id": "E-003",
+        "type": "dataset",
+        "title": "Clinical batch stability dataset (1-month timepoint)",
+        "source_system": "Stability lab report",
+        "location_ref": "Module 3 stability appendix \u2014 1M timepoint",
+        "owner": {
+          "name": "CMC Lead",
+          "role": "CMC / Quality"
+        },
+        "as_of": "2026-01-08T09:30:00-05:00",
+        "relevance": "primary",
+        "quality_notes": "Limited timepoints; shelf-life statements must remain qualified and updated with rolling stability data.",
+        "confidence": "medium"
+      },
+      {
+        "evidence_id": "E-004",
+        "type": "protocol",
+        "title": "Protocol (Module 5) \u2014 submission-ready draft",
+        "source_system": "Clinical/regulatory document set",
+        "location_ref": "Module 5 protocol vFinal",
+        "owner": {
+          "name": "Clinical Lead",
+          "role": "Clinical Development"
+        },
+        "as_of": "2026-01-11T15:00:00-05:00",
+        "relevance": "supporting",
+        "quality_notes": "Protocol is dependent on tox and CMC reconciliations; ensure cross-document consistency for dosing and handling.",
+        "confidence": "high"
+      },
+      {
+        "evidence_id": "E-005",
+        "type": "validation_artifact",
+        "title": "AI-assisted consistency checklist (informational)",
+        "source_system": "RGDS repo docs/ai-checks",
+        "location_ref": "docs/ai-checks/ind-consistency-scan-0005.md",
+        "owner": {
+          "name": "Principal AI Business Analyst",
+          "role": "Decision Support / Delivery Governance"
+        },
+        "as_of": "2026-01-12T18:00:00-05:00",
+        "relevance": "contextual",
+        "quality_notes": "Checklist output reviewed by required reviewers; not a decision recommendation.",
+        "confidence": "medium"
+      }
+    ]
+  },
+  "known_gaps_and_assumptions": {
+    "gaps": [
+      {
+        "gap": "Pivotal tox report is an audited draft at time of submission (final signatures pending).",
+        "impact": "Potential deltas could require updates across Module 2.6 summaries, IB, and protocol dosing narrative.",
+        "mitigation_plan": "Treat as author-at-risk item with mandatory reconciliation and propagation log; triage re-review if NOAEL/margins change."
+      },
+      {
+        "gap": "Stability dataset limited to early timepoints at time of submission.",
+        "impact": "Shelf-life and storage statements must remain qualified and may prompt FDA questions.",
+        "mitigation_plan": "Use conservative qualifiers; deliver rolling stability update and align language across documents under change control."
+      }
+    ],
+    "assumptions": [
+      {
+        "assumption": "Final tox report will not materially change the NOAEL interpretation or starting dose justification.",
+        "risk_if_wrong": "Could require protocol/IB narrative adjustments and potentially agency communication.",
+        "how_to_verify": "Compare final signed report to audited draft; quantify deltas; re-review per triage rules if thresholds exceeded."
+      },
+      {
+        "assumption": "Additional stability timepoints will support continued qualified shelf-life language without a major change in storage conditions.",
+        "risk_if_wrong": "Could require more conservative shelf-life statements and updates to Module 3 and cross-references.",
+        "how_to_verify": "Review new timepoints upon availability; update qualifiers and obtain CMC + QA approval before incorporation."
+      }
+    ]
+  },
+  "risk_assessment": {
+    "key_risks": [
+      {
+        "risk": "Final tox report deltas vs audited draft affect dose justification and safety margin narrative.",
+        "severity": "high",
+        "likelihood": "possible",
+        "detectability": "moderate",
+        "mitigation": "Condition 1 requires reconciliation and propagation log; triage rule triggers immediate re-review if deltas affect NOAEL or dosing margin.",
+        "owner": {
+          "name": "Nonclinical Lead",
+          "role": "Toxicology / Safety"
+        }
+      },
+      {
+        "risk": "Limited stability dataset prompts FDA questions or requires more conservative shelf-life qualifiers.",
+        "severity": "medium",
+        "likelihood": "likely",
+        "detectability": "easy",
+        "mitigation": "Condition 2 mandates rolling stability update and consistent qualifiers across Module 3, IB, and protocol; CMC + QA sign-off required for qualifier changes.",
+        "owner": {
+          "name": "CMC Lead",
+          "role": "CMC / Quality"
+        }
+      },
+      {
+        "risk": "Late-breaking edits after publishing lock create inter-document inconsistencies in the eCTD package.",
+        "severity": "high",
+        "likelihood": "possible",
+        "detectability": "hard",
+        "mitigation": "Publishing lock points constrain late changes; Submission Manager approval required post-lock; final consistency QC checklist must be completed before package assembly.",
+        "owner": {
+          "name": "Submission Manager",
+          "role": "Reg Ops / Publishing"
+        }
+      }
+    ],
+    "residual_risk_statement": "Residual risk is medium: uncertainties remain at submission time (audited-draft tox and limited stability) but are bounded and managed through explicit conditions, lock points, and triage rules.",
+    "risk_acceptance_required": true
+  },
+  "risk_posture": {
+    "stance": "balanced",
+    "rationale": "Balanced posture: proceed on target date with explicit, owned conditions and change control rather than treating incomplete data as complete or delaying by default.",
+    "trade_offs": [
+      "Maintains schedule while accepting managed uncertainty at submission",
+      "Increases governance overhead slightly to reduce downstream rework and regulatory surprises"
+    ]
+  },
+  "dependency_map": [
+    {
+      "dependency": "Final signed GLP tox report issuance",
+      "why_it_matters": "Changes may require updates across Module 2.6 summaries, IB, and dosing rationale narrative.",
+      "owner": {
+        "name": "Nonclinical Lead",
+        "role": "Toxicology / Safety"
+      }
+    },
+    {
+      "dependency": "Additional stability timepoints",
+      "why_it_matters": "Supports qualified shelf-life statements and may affect CMC narrative in Module 3 and IB.",
+      "owner": {
+        "name": "CMC Lead",
+        "role": "CMC / Quality"
+      }
+    },
+    {
+      "dependency": "eCTD publishing lock schedule",
+      "why_it_matters": "Determines when content freezes and what late changes can be safely incorporated without inconsistency.",
+      "owner": {
+        "name": "Submission Manager",
+        "role": "Reg Ops / Publishing"
+      }
+    }
+  ],
+  "data_readiness_status": [
+    {
+      "data_item": "GLP pivotal tox report",
+      "status": "audited_draft",
+      "expected_by": "2026-02-10",
+      "notes": "Audited draft used for submission; final signed report required for reconciliation."
+    },
+    {
+      "data_item": "Clinical batch stability (1M)",
+      "status": "final",
+      "expected_by": null,
+      "notes": "Limited duration; rolling updates planned."
+    },
+    {
+      "data_item": "Clinical batch stability (3M/6M timepoints)",
+      "status": "in_progress",
+      "expected_by": "2026-03-01",
+      "notes": "Needed for updated shelf-life confidence; may remain post-submission update depending on plan."
+    },
+    {
+      "data_item": "Module 2.6 summaries",
+      "status": "draft",
+      "expected_by": "2026-01-17",
+      "notes": "Draft 2 aligned to audited-draft tox; subject to reconciliation."
+    },
+    {
+      "data_item": "Protocol (Module 5)",
+      "status": "final",
+      "expected_by": null,
+      "notes": "Final for submission; referenced across IB/GIP."
+    }
+  ],
+  "author_at_risk_items": [
+    {
+      "item_id": "AAR-001",
+      "description": "Module 2.6 tox narrative built from audited-draft tox report v0.9",
+      "verification": "Reconcile the Module 2.6 tox narrative, IB, and protocol dosing rationale to the final signed tox report; document any deltas and how they were propagated across all impacted sections.",
+      "owner": {
+        "name": "Medical Writing PM",
+        "role": "Medical Writing Project Manager"
+      },
+      "due_date": "2026-02-12",
+      "fallback": "If the final tox report slips beyond the reconciliation deadline, document why the audited draft remains acceptable for submission and pre-stage an FDA information-request response package referencing the audited-to-final delta analysis.",
+      "status": "open"
+    },
+    {
+      "item_id": "AAR-002",
+      "description": "Shelf-life language is qualified due to 1\u2011month stability limitation",
+      "verification": "Confirm qualifiers are consistent across Module 3, IB, and protocol; update upon new stability timepoints.",
+      "owner": {
+        "name": "CMC Lead",
+        "role": "CMC / Quality"
+      },
+      "due_date": "2026-01-18",
+      "fallback": "If qualifiers cannot be aligned before lock, lock conservative language and document deviation with QA approval.",
+      "status": "open"
+    }
+  ],
+  "review_plan": {
+    "required_reviewers": [
+      {
+        "name": "Regulatory Lead",
+        "role": "Regulatory Strategy"
+      },
+      {
+        "name": "CMC Lead",
+        "role": "CMC / Quality"
+      },
+      {
+        "name": "Medical Writing PM",
+        "role": "Medical Writing Project Manager"
+      },
+      {
+        "name": "Submission Manager",
+        "role": "Reg Ops / Publishing"
+      },
+      {
+        "name": "QA Representative",
+        "role": "Quality"
+      }
+    ],
+    "optional_reviewers": [
+      {
+        "name": "Clinical Lead",
+        "role": "Clinical Development"
+      },
+      {
+        "name": "Program Manager",
+        "role": "Program / Delivery"
+      }
+    ],
+    "triage_rules": [
+      "If final tox deltas change NOAEL or dosing margin interpretation, trigger immediate re-review by Regulatory Lead + Nonclinical Lead + Clinical Lead within 24 hours.",
+      "If stability update changes qualified shelf-life statement, require CMC Lead + QA Representative sign-off before incorporation.",
+      "After publishing lock, only Submission Manager may approve late changes; changes must be accompanied by a propagation checklist entry."
+    ],
+    "review_window": "Standard review: 2 business days; late-breaking inserts: same-day triage with required reviewers only."
+  },
+  "publishing_plan": {
+    "rolling_publish": true,
+    "lock_points": [
+      {
+        "lock_date": "2026-01-18",
+        "what_locks": "Clinical protocol + IB/GIP narrative freeze for publishing formatting",
+        "approved_by": {
+          "name": "Submission Manager",
+          "role": "Reg Ops / Publishing"
+        }
+      },
+      {
+        "lock_date": "2026-01-19",
+        "what_locks": "Final eCTD package assembly begins; only critical fixes permitted with QA approval",
+        "approved_by": {
+          "name": "QA Representative",
+          "role": "Quality"
+        }
+      }
+    ]
+  },
+  "tpp_links": [
+    {
+      "tpp_element": "Indication and initial patient population",
+      "relevance": "Risk posture assumes initial study population and protocol are aligned to TPP minimum viable claim."
+    },
+    {
+      "tpp_element": "Dose regimen and administration route",
+      "relevance": "Dosing rationale depends on tox margins and CMC control; deltas trigger triage per review plan."
+    },
+    {
+      "tpp_element": "Shelf-life and storage conditions",
+      "relevance": "Stability limitations are managed through qualified statements and rolling updates tied to TPP expectations."
+    }
+  ],
+  "governance": {
+    "decision_owner": {
+      "name": "Regulatory Lead",
+      "role": "Regulatory Strategy"
+    },
+    "approvers": [
+      {
+        "name": "Executive Sponsor",
+        "role": "SVP, Development"
+      },
+      {
+        "name": "QA Representative",
+        "role": "Quality"
+      }
+    ],
+    "reviewers": [
+      {
+        "name": "CMC Lead",
+        "role": "CMC / Quality"
+      },
+      {
+        "name": "Medical Writing PM",
+        "role": "Medical Writing Project Manager"
+      },
+      {
+        "name": "Submission Manager",
+        "role": "Reg Ops / Publishing"
+      },
+      {
+        "name": "Program Manager",
+        "role": "Program / Delivery"
+      },
+      {
+        "name": "Principal AI Business Analyst",
+        "role": "Decision Support / Delivery Governance"
+      }
+    ],
+    "approval_method": "meeting_vote",
+    "approvals": [
+      {
+        "person": {
+          "name": "QA Representative",
+          "role": "Quality"
+        },
+        "decision": "approve",
+        "timestamp": "2026-01-15T16:10:00-05:00",
+        "comments": "Approved with conditions and publishing lock controls; deviation logging required for any post-lock changes."
+      },
+      {
+        "person": {
+          "name": "Executive Sponsor",
+          "role": "SVP, Development"
+        },
+        "decision": "approve",
+        "timestamp": "2026-01-15T16:20:00-05:00",
+        "comments": "Proceed as conditional go; escalate immediately if final tox deltas affect dose or population."
+      }
+    ],
+    "final_signoff": {
+      "person": {
+        "name": "Executive Sponsor",
+        "role": "SVP, Development"
+      },
+      "timestamp": "2026-01-15T16:25:00-05:00",
+      "notes": "Conditional go recorded; conditions and lock points acknowledged by owners."
+    }
+  },
+  "ai_assistance": {
+    "used": true,
+    "use_cases": [
+      "compare",
+      "extract",
+      "summarize",
+      "other"
+    ],
+    "artifacts": [
+      {
+        "artifact_id": "AI-001",
+        "description": "Cross-document consistency checklist across Module 2.6 summaries, IB, and protocol (dosing numbers and shelf-life qualifiers).",
+        "input_refs": [
+          "Module 2.6 Draft 2 (tracked changes)",
+          "IB draft for submission",
+          "Protocol vFinal"
+        ],
+        "output_ref": "docs/ai-checks/ind-consistency-scan-0005.md",
+        "human_reviewer": {
+          "name": "Medical Writing PM",
+          "role": "Medical Writing Project Manager"
+        },
+        "disposition": "edited"
+      },
+      {
+        "artifact_id": "AI-002",
+        "description": "Dependency and lock-point summary used in the gate packet.",
+        "input_refs": [
+          "Integrated plan snapshot",
+          "Publishing lock schedule",
+          "CMC and nonclinical readiness notes"
+        ],
+        "output_ref": "docs/ai-checks/ind-dependency-summary-0005.md",
+        "human_reviewer": {
+          "name": "Program Manager",
+          "role": "Program / Delivery"
+        },
+        "disposition": "accepted"
+      }
+    ],
+    "controls": {
+      "prompt_or_instruction_ref": "docs/ai-assistance-policy.md#ind-consistency",
+      "schema_or_format_constraints": "Outputs constrained to checklist format; no decision recommendations permitted.",
+      "versioning": "AI artifacts versioned with the gate packet; references recorded in decision log.",
+      "safety_notes": "AI outputs reviewed by required reviewers; AI cannot approve changes or alter submission materials directly."
+    }
+  },
+  "actions": [
+    {
+      "action_id": "ACT-001",
+      "description": "Prepare final tox reconciliation package and update impacted narratives per triage rules.",
+      "owner": {
+        "name": "Nonclinical Lead",
+        "role": "Toxicology / Safety"
+      },
+      "due_date": "2026-02-10",
+      "success_criteria": "Final signed tox report received; delta analysis completed; propagation log shows updates across Module 2.6, IB, and protocol where required.",
+      "status": "open"
+    },
+    {
+      "action_id": "ACT-002",
+      "description": "Publish lock-point communication and late-change routing protocol to all contributors.",
+      "owner": {
+        "name": "Submission Manager",
+        "role": "Reg Ops / Publishing"
+      },
+      "due_date": "2026-01-17",
+      "success_criteria": "All contributors acknowledge lock points; post-lock change routing protocol distributed; escalation path documented.",
+      "status": "open"
+    },
+    {
+      "action_id": "ACT-003",
+      "description": "Create gate dashboard view for conditions closure tracking (owners, due dates, evidence)",
+      "owner": {
+        "name": "Principal AI Business Analyst",
+        "role": "Decision Support / Delivery Governance"
+      },
+      "due_date": "2026-01-22",
+      "success_criteria": "Dashboard shows condition status, due dates, and closure evidence links; reviewed with decision owner and PM.",
+      "status": "open"
+    }
+  ],
+  "dependencies": [
+    "Vendor final tox report delivery schedule (needed by 2026-02-10)",
+    "Stability lab timepoints and reporting cadence (3M/6M expected by 2026-03-01)",
+    "eCTD publishing lock schedule and final QC window (lock points 2026-01-18 and 2026-01-19)"
+  ],
+  "change_control": {
+    "change_requests": [
+      "CR-001 Post-submission rolling update plan for stability timepoints (owner: CMC Lead; approved at IND Readiness Gate)"
+    ],
+    "release_or_validation_refs": []
+  },
+  "audit": {
+    "record_version": 1,
+    "change_log": [
+      {
+        "version": 1,
+        "changed_by": {
+          "name": "Principal AI Business Analyst",
+          "role": "Decision Support / Delivery Governance"
+        },
+        "changed_at": "2026-01-12T09:00:00-05:00",
+        "summary": "Created decision record draft; populated gate context, evidence set, options, and proposed conditions."
+      },
+      {
+        "version": 1,
+        "changed_by": {
+          "name": "Executive Sponsor",
+          "role": "SVP, Development"
+        },
+        "changed_at": "2026-01-15T16:25:00-05:00",
+        "summary": "Approved conditional go; confirmed conditions, reviewer triage rules, and publishing lock points."
+      }
+    ],
+    "supersedes": null,
+    "superseded_by": null,
+    "retention_class": "controlled_record"
+  }
+}
