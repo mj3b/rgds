@@ -318,6 +318,22 @@
         },
         "final_signoff": {
           "$ref": "#/$defs/final_signoff"
+        },
+        "authority_scope": {
+          "type": "string",
+          "enum": [
+            "recommend",
+            "decide",
+            "veto"
+          ],
+          "default": "decide"
+        },
+        "escalation_path": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/person_ref"
+          },
+          "default": []
         }
       }
     },
@@ -385,6 +401,26 @@
             "versioning": "",
             "safety_notes": ""
           }
+        },
+        "confidence_band": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "low",
+            "medium",
+            "high",
+            null
+          ],
+          "default": null
+        },
+        "human_override": {
+          "type": [
+            "boolean",
+            "null"
+          ],
+          "default": null
         }
       },
       "default": {
@@ -547,11 +583,9 @@
       ],
       "description": "Optional context used only when decision_category is regulatory_interaction."
     },
-
     "risk_posture": {
       "$ref": "#/$defs/risk_posture"
     },
-
     "author_at_risk_items": {
       "type": "array",
       "items": {
@@ -559,11 +593,9 @@
       },
       "default": []
     },
-
     "review_plan": {
       "$ref": "#/$defs/review_plan"
     },
-
     "scope_change_events": {
       "type": "array",
       "items": {
@@ -571,7 +603,6 @@
       },
       "default": []
     },
-
     "dependency_map": {
       "type": "array",
       "items": {
@@ -579,7 +610,6 @@
       },
       "default": []
     },
-
     "data_readiness_status": {
       "type": "array",
       "items": {
@@ -587,15 +617,66 @@
       },
       "default": []
     },
-
     "publishing_plan": {
       "$ref": "#/$defs/publishing_plan"
     },
-
     "tpp_links": {
       "type": "array",
       "items": {
         "$ref": "#/$defs/tpp_link"
+      },
+      "default": []
+    },
+    "evidence_completeness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state"
+      ],
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "complete",
+            "partial",
+            "placeholder"
+          ]
+        },
+        "expected_resolution_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "author_at_risk": {
+          "type": "boolean",
+          "default": false
+        },
+        "notes": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 2000
+        }
+      }
+    },
+    "propagation_required": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "IB",
+          "M2.4",
+          "M2.5",
+          "M2.6",
+          "M2.7",
+          "Protocol",
+          "CMC",
+          "TPP",
+          "Other"
+        ]
       },
       "default": []
     }
@@ -1037,7 +1118,6 @@
         }
       }
     },
-
     "risk_posture": {
       "type": "object",
       "additionalProperties": false,
@@ -1065,10 +1145,23 @@
             "type": "string"
           },
           "default": []
+        },
+        "benchmark_basis": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "precedent_programs",
+              "pre_IND_feedback",
+              "internal_portfolio_norm",
+              "therapeutic_area_norm",
+              "other"
+            ]
+          },
+          "default": []
         }
       }
     },
-
     "author_at_risk_item": {
       "type": "object",
       "additionalProperties": false,
@@ -1122,7 +1215,6 @@
         }
       }
     },
-
     "review_plan": {
       "type": "object",
       "additionalProperties": false,
@@ -1157,7 +1249,6 @@
         }
       }
     },
-
     "scope_change_event": {
       "type": "object",
       "additionalProperties": false,
@@ -1188,7 +1279,6 @@
         }
       }
     },
-
     "dependency_item": {
       "type": "object",
       "additionalProperties": false,
@@ -1219,7 +1309,6 @@
         }
       }
     },
-
     "data_readiness_item": {
       "type": "object",
       "additionalProperties": false,
@@ -1240,7 +1329,8 @@
             "in_progress",
             "draft",
             "audited_draft",
-            "final"
+            "final",
+            "placeholder"
           ]
         },
         "expected_by": {
@@ -1259,7 +1349,6 @@
         }
       }
     },
-
     "publishing_plan": {
       "type": "object",
       "additionalProperties": false,
@@ -1303,7 +1392,6 @@
         }
       }
     },
-
     "tpp_link": {
       "type": "object",
       "additionalProperties": false,

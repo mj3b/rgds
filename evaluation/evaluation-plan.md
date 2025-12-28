@@ -40,6 +40,12 @@ It covers:
 
 ### 1. Decision readiness & confidence
 
+
+Add v1.4.0 checks:
+- **evidence_completeness.state** is declared (complete/partial/placeholder)
+- **data_readiness_status** reflects late source material and placeholders when applicable
+- **propagation_required** is declared for decisions with cross-document impact
+
 **Question:** Was the decision defensible at the time it was made?
 
 Measured by:
@@ -79,6 +85,11 @@ See `evidence-quality-rubric.md`.
 
 ### 4. AI-assisted task performance (if applicable)
 
+
+Add v1.4.0 checks:
+- If AI was used, record **ai_assistance.confidence_band** (coarse) and whether **human_override** occurred
+- Verify AI use remains bounded (support only) and never substitutes for approval ownership
+
 **Question:** Did AI assistance improve efficiency without undermining trust?
 
 Measured at the task level (not the decision level):
@@ -92,6 +103,11 @@ AI outputs are never treated as evidence by default.
 ---
 
 ### 5. Governance execution
+
+
+Add v1.4.0 checks:
+- **governance.authority_scope** is recorded when decision rights are ambiguous
+- **governance.escalation_path** is recorded for compressed timelines / deadlock risk
 
 **Question:** Was governance explicit, timely, and complete?
 

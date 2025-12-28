@@ -234,7 +234,9 @@
       },
       "timestamp": "2026-01-10T16:45:00-05:00",
       "notes": "Final sign-off recorded."
-    }
+    },
+    "authority_scope": "decide",
+    "escalation_path": []
   },
   "ai_assistance": {
     "used": false,
@@ -245,7 +247,9 @@
       "schema_or_format_constraints": "",
       "versioning": "",
       "safety_notes": "No AI used for regulatory interpretation; human review only."
-    }
+    },
+    "confidence_band": null,
+    "human_override": null
   },
   "actions": [
     {
@@ -297,5 +301,12 @@
     "supersedes": null,
     "superseded_by": null,
     "retention_class": "controlled_record"
-  }
+  },
+  "evidence_completeness": {
+    "state": "complete",
+    "expected_resolution_date": null,
+    "author_at_risk": false,
+    "notes": null
+  },
+  "propagation_required": []
 }

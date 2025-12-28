@@ -2,6 +2,24 @@
 
 All notable changes to this repository are documented here.
 
+## v1.4.0 — Explicit evidence completeness, authority, and trust signals
+
+### Added
+- `decision-log` schema fields (non-breaking):
+  - `evidence_completeness` — explicit completeness state (complete/partial/placeholder) + expected resolution timing
+  - `propagation_required[]` — downstream artifacts that must be updated if this decision/evidence changes
+  - `risk_posture.benchmark_basis[]` — basis for risk posture benchmarking (precedent, pre-IND feedback, portfolio norms)
+  - `governance.authority_scope` + `governance.escalation_path[]` — explicit decision rights and deadlock path
+  - `ai_assistance.confidence_band` + `ai_assistance.human_override` — optional non-authoritative trust signals
+
+### Changed
+- Extended `data_readiness_status[].status` enum to include `placeholder`.
+- Updated `decision-log.template.yaml` to include v1.4.0 fields.
+- Updated docs (`docs/decision-log.md`, `docs/governance.md`, `docs/ai-assistance-policy.md`) to reflect v1.4.0 fields.
+- Updated evaluation artifacts (`evaluation/evaluation-plan.md`, `evaluation/scorecard-template.csv`) to measure v1.4.0 governance signals.
+- Updated canonical examples to include v1.4.0 fields.
+
+
 ## v1.3.1 — Canonical IND conditional-go example
 
 ### Added

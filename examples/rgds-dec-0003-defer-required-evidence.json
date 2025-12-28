@@ -219,7 +219,9 @@
       },
       "timestamp": "2025-12-27T12:31:00-05:00",
       "notes": "Defer_with_required_evidence recorded; conditions and actions must close before resubmitting for gate approval."
-    }
+    },
+    "authority_scope": "decide",
+    "escalation_path": []
   },
   "ai_assistance": {
     "used": false,
@@ -230,7 +232,9 @@
       "schema_or_format_constraints": "N/A",
       "versioning": "N/A",
       "safety_notes": "No AI assistance used in this decision."
-    }
+    },
+    "confidence_band": null,
+    "human_override": null
   },
   "actions": [
     {
@@ -284,5 +288,12 @@
     "superseded_by": null,
     "retention_class": "controlled_record"
   },
-  "decision_category": "internal"
+  "decision_category": "internal",
+  "evidence_completeness": {
+    "state": "complete",
+    "expected_resolution_date": null,
+    "author_at_risk": false,
+    "notes": null
+  },
+  "propagation_required": []
 }

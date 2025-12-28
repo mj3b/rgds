@@ -111,3 +111,12 @@ This policy is reviewed periodically and updated as:
 
 All policy changes are versioned and auditable.
 
+
+## v1.4.0 trust signals (non-authoritative)
+RGDS v1.4.0 allows optional disclosure fields inside `ai_assistance`:
+
+- **confidence_band:** `low` | `medium` | `high` (a coarse signal, not a score)
+- **human_override:** whether a human changed, rejected, or replaced AI-supported content
+
+These are recorded for transparency and post-hoc review. They never grant AI decision authority.
+

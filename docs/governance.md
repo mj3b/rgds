@@ -23,6 +23,16 @@ In real IND execution, many failures are **governance failures** that surface la
 - content lock points are unclear during rolling publishing
 
 RGDS v1.3 treats these as *first-class decision elements* through optional fields such as:
+
+
+## v1.4.0 additions: decision authority clarity
+RGDS v1.4.0 extends the governance record with *optional* fields to make decision rights explicit:
+
+- **authority_scope:** `recommend` | `decide` | `veto`
+- **escalation_path:** who resolves deadlock when reviewers disagree or timelines compress
+
+These fields do not change who owns decisions — they make ownership and escalation *auditable*.
+
 `risk_posture`, `author_at_risk_items[]`, `review_plan`, `scope_change_events[]`, `dependency_map[]`, `data_readiness_status[]`, `publishing_plan`, and `tpp_links[]`.
 
 For a cross-role view of who owns what, see `docs/role-decision-artifact-matrix.md`.

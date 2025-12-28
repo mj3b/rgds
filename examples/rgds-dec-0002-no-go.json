@@ -1,6 +1,6 @@
 {
   "decision_id": "RGDS-DEC-0002",
-  "decision_title": "CANONICAL \u2014 No-Go at Data Readiness Gate (traceability + integrity failures)",
+  "decision_title": "CANONICAL — No-Go at Data Readiness Gate (traceability + integrity failures)",
   "program_context": {
     "program_id": "PRG-241",
     "asset_or_initiative": "ABC-101",
@@ -145,7 +145,7 @@
         "severity": "high",
         "likelihood": "possible",
         "detectability": "hard",
-        "mitigation": "Produce lineage validation memo linking source \u2192 transforms \u2192 export; require sign-off prior to gate re-attempt.",
+        "mitigation": "Produce lineage validation memo linking source → transforms → export; require sign-off prior to gate re-attempt.",
         "owner": {
           "name": "Data Steward",
           "role": "Non-clinical Data Operations"
@@ -208,7 +208,9 @@
       },
       "timestamp": "2026-01-06T16:10:00-05:00",
       "notes": "No-Go recorded. Remediation required before returning to gate."
-    }
+    },
+    "authority_scope": "decide",
+    "escalation_path": []
   },
   "ai_assistance": {
     "used": false,
@@ -219,7 +221,9 @@
       "schema_or_format_constraints": "",
       "versioning": "",
       "safety_notes": ""
-    }
+    },
+    "confidence_band": null,
+    "human_override": null
   },
   "actions": [
     {
@@ -285,5 +289,12 @@
     "superseded_by": null,
     "retention_class": "controlled_record"
   },
-  "decision_category": "internal"
+  "decision_category": "internal",
+  "evidence_completeness": {
+    "state": "complete",
+    "expected_resolution_date": null,
+    "author_at_risk": false,
+    "notes": null
+  },
+  "propagation_required": []
 }

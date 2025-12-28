@@ -1,9 +1,9 @@
 {
   "decision_id": "RGDS-DEC-0005",
-  "decision_title": "IND submission readiness \u2014 conditional go with author-at-risk, reviewer triage, and publishing lock points",
+  "decision_title": "IND submission readiness — conditional go with author-at-risk, reviewer triage, and publishing lock points",
   "program_context": {
     "program_id": "IND-EXAMPLE-ALPHA-001",
-    "asset_or_initiative": "Asset Alpha (small molecule) \u2014 initial IND",
+    "asset_or_initiative": "Asset Alpha (small molecule) — initial IND",
     "domain": "ind_submission"
   },
   "decision_category": "internal",
@@ -19,10 +19,10 @@
     "gate_date": "2026-01-15",
     "decision_deadline": "2026-01-15",
     "meeting_refs": [
-      "Gate Review #3 \u2014 IND readiness (Exec Committee)"
+      "Gate Review #3 — IND readiness (Exec Committee)"
     ]
   },
-  "decision_question": "Is the evidence sufficient to submit the initial IND on 2026-01-20 while maintaining regulatory defensibility, given (a) pivotal GLP tox report is currently an audited draft and (b) clinical stability dataset is limited to 1\u2011month at time of submission?",
+  "decision_question": "Is the evidence sufficient to submit the initial IND on 2026-01-20 while maintaining regulatory defensibility, given (a) pivotal GLP tox report is currently an audited draft and (b) clinical stability dataset is limited to 1‑month at time of submission?",
   "options_considered": [
     {
       "option_id": "A",
@@ -49,7 +49,7 @@
     },
     {
       "option_id": "C",
-      "description": "Delay submission 6\u20138 weeks to wait for final signed tox report and additional stability timepoints before filing.",
+      "description": "Delay submission 6–8 weeks to wait for final signed tox report and additional stability timepoints before filing.",
       "pros": [
         "Reduces uncertainty at time of submission"
       ],
@@ -91,7 +91,7 @@
         "evidence_to_close": "Publishing plan with lock approvals + final QC checklist sign-off + version manifest."
       }
     ],
-    "rationale_summary": "Evidence is sufficient to submit the initial IND on the target date only if remaining uncertainty is treated as governed work rather than implied certainty. The pivotal tox report is currently an audited draft and the stability dataset is limited at time of submission; both are recorded as author\u2011at\u2011risk items with named owners, due dates, and required closure evidence. Publishing lock points and reviewer triage rules constrain late-breaking changes to prevent cross-document inconsistencies after content freeze. This conditional-go outcome balances speed with defensibility by making commitments explicit and measurable, and by establishing a contingency pathway if final report deltas or stability updates materially change the risk picture."
+    "rationale_summary": "Evidence is sufficient to submit the initial IND on the target date only if remaining uncertainty is treated as governed work rather than implied certainty. The pivotal tox report is currently an audited draft and the stability dataset is limited at time of submission; both are recorded as author‑at‑risk items with named owners, due dates, and required closure evidence. Publishing lock points and reviewer triage rules constrain late-breaking changes to prevent cross-document inconsistencies after content freeze. This conditional-go outcome balances speed with defensibility by making commitments explicit and measurable, and by establishing a contingency pathway if final report deltas or stability updates materially change the risk picture."
   },
   "evidence": {
     "evidence_items": [
@@ -130,7 +130,7 @@
         "type": "dataset",
         "title": "Clinical batch stability dataset (1-month timepoint)",
         "source_system": "Stability lab report",
-        "location_ref": "Module 3 stability appendix \u2014 1M timepoint",
+        "location_ref": "Module 3 stability appendix — 1M timepoint",
         "owner": {
           "name": "CMC Lead",
           "role": "CMC / Quality"
@@ -143,7 +143,7 @@
       {
         "evidence_id": "E-004",
         "type": "protocol",
-        "title": "Protocol (Module 5) \u2014 submission-ready draft",
+        "title": "Protocol (Module 5) — submission-ready draft",
         "source_system": "Clinical/regulatory document set",
         "location_ref": "Module 5 protocol vFinal",
         "owner": {
@@ -243,7 +243,8 @@
     "trade_offs": [
       "Maintains schedule while accepting managed uncertainty at submission",
       "Increases governance overhead slightly to reduce downstream rework and regulatory surprises"
-    ]
+    ],
+    "benchmark_basis": []
   },
   "dependency_map": [
     {
@@ -318,7 +319,7 @@
     },
     {
       "item_id": "AAR-002",
-      "description": "Shelf-life language is qualified due to 1\u2011month stability limitation",
+      "description": "Shelf-life language is qualified due to 1‑month stability limitation",
       "verification": "Confirm qualifiers are consistent across Module 3, IB, and protocol; update upon new stability timepoints.",
       "owner": {
         "name": "CMC Lead",
@@ -469,7 +470,9 @@
       },
       "timestamp": "2026-01-15T16:25:00-05:00",
       "notes": "Conditional go recorded; conditions and lock points acknowledged by owners."
-    }
+    },
+    "authority_scope": "decide",
+    "escalation_path": []
   },
   "ai_assistance": {
     "used": true,
@@ -516,7 +519,9 @@
       "schema_or_format_constraints": "Outputs constrained to checklist format; no decision recommendations permitted.",
       "versioning": "AI artifacts versioned with the gate packet; references recorded in decision log.",
       "safety_notes": "AI outputs reviewed by required reviewers; AI cannot approve changes or alter submission materials directly."
-    }
+    },
+    "confidence_band": null,
+    "human_override": null
   },
   "actions": [
     {
@@ -589,5 +594,12 @@
     "supersedes": null,
     "superseded_by": null,
     "retention_class": "controlled_record"
-  }
+  },
+  "evidence_completeness": {
+    "state": "partial",
+    "expected_resolution_date": null,
+    "author_at_risk": true,
+    "notes": null
+  },
+  "propagation_required": []
 }
