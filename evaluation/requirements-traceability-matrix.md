@@ -1,19 +1,53 @@
-# IND-aligned Requirements Traceability Matrix (from webinar)
+# Requirements Traceability Matrix (RTM)
 
-Source: *Navigating Successful IND Submissions* webinar transcript.
+This matrix provides end-to-end traceability from external IND requirements to:
+- observed delivery gaps,
+- planned RGDS backlog work, and
+- concrete implementation artifacts.
 
-Legend: ✅ Implemented • 🟡 Partial • ❌ Missing
+It supports governance review, audit readiness, and decision defensibility.
+This RTM documents alignment and intent; it does not prescribe implementation.
 
-| REQ-ID | Requirement | Why (webinar signal) | Acceptance criteria | Repo mapping | Status |
-|---|---|---|---|---|---|
-| IND-PLAN-001 | Kickoff planning captures scope, timelines, source report availability, and review roles (RACI). | Webinar emphasized deep kickoff meeting, scope (how many reports), back-calculated timeline, who reviews/decides, and calendarized meetings. | Decision record includes program_context, gate, governance.roles, dependencies/actions with owners & dates; change_control reflects planned timeline assumptions. | docs/governance.md<br>decision-log/decision-log.schema.json<br>#/$defs/role_assignment<br>#/$defs/action | 🟡 |
-| IND-DEP-002 | Inter-document dependencies are explicit and managed (a change in one module propagates to others). | Speakers stressed CTD module interdependence; changes must be carried over to all affected documents. | Decision record captures dependencies[] and change_control.change_log entries referencing impacted artifacts. | decision-log/decision-log.schema.json (dependencies, change_control)<br>docs/decision-log.md | 🟡 |
-| IND-SSOT-003 | Single source of truth repository for controlled artifacts and locations. | Regulatory team called out SharePoint/collab tools and central truth repository to avoid mismatched versions. | All evidence items include source_system + location_ref; audit retention_class set; change_control references controlled locations. | decision-log/decision-log.schema.json (#/$defs/evidence_item, audit)<br>docs/decision-log.md | 🟡 |
-| IND-PHASE-004 | Author-at-risk and placeholders are allowed but must be flagged with gaps/assumptions and closure conditions. | Medical writing described Draft 1 with placeholders when reports not ready; finalize after audited/final reports. | For any decision relying on placeholder evidence: known_gaps_and_assumptions.gaps populated; conditional_go or defer_with_required_evidence includes conditions/actions to close. | decision-log/decision-log.schema.json (known_gaps_and_assumptions, decision_outcome.conditions, actions) | 🟡 |
-| IND-QC-005 | Consistency and QC checks detect internal contradictions in source reports and derived summaries. | Example given: synopsis numbers didn’t match appendix; need to flag and resolve before submission. | Semantic validation ensures evidence items have quality_notes + confidence; change_control logs corrections; governance review required before approval. | evaluation/evidence-quality-rubric.md<br>scripts/validate_all_examples.py (semantic checks) | 🟡 |
-| IND-RISK-006 | Risk tolerance is explicit and drives decision rationale, including minimum data sets vs. questions risk. | Drew discussed sponsor risk culture and trade-offs; avoid compromising patient safety. | risk_assessment includes residual_risk_statement and risk_acceptance_required; governance approvals required when acceptance is true. | decision-log/decision-log.schema.json (risk_assessment, governance)<br>docs/governance.md | 🟡 |
-| IND-FLEX-007 | Late-breaking studies/safety signals are handled via change control with minimal disruption and traceable updates. | Speakers stressed flexibility, rolling publishing, tight timeline management, and documenting last-minute inserts. | change_control.change_log records what changed, why, and what downstream artifacts were updated; actions include who must review late insert. | decision-log/decision-log.schema.json (change_control, actions)<br>docs/governance.md | 🟡 |
-| IND-PREIND-008 | Regulatory interactions (e.g., pre-IND) are planned as decisions with questions, outcomes, and incorporation back into IND. | Pre-IND timing depends on what needs input; example of pausing IND to get FDA clarification on tox signal. | Decision can be logged as gate 'Regulatory Interaction' with evidence packet, decision_question (what to ask), and decision_outcome (go/conditional/defer). | examples/ (new defer example)<br>decision-log/decision-log.schema.json | ❌ |
-| IND-TPP-009 | Target Product Profile linkage: key claims and development decisions trace back to a living TPP. | TPP described as foundational; links development plan to commercialization and label claims; requires mapping to supporting data. | program_context includes references; evidence items can include TPP sections; decision_question references claim; actions cover studies needed to substantiate. | decision-log/decision-log.schema.json (program_context, evidence) | ❌ |
-| IND-ALIGN-010 | Nomenclature standardization across artifacts (compound name, dosing, storage) is enforced. | Drew highlighted consistent naming across modules; QC enforces. | Evidence and decision log fields use consistent identifiers; semantic checks can optionally enforce pattern for decision_id and controlled vocabulary for gate. | decision-log/decision-log.schema.json (decision_id pattern)<br>docs/decision-log.md | 🟡 |
-| IND-BENCH-011 | Benchmarks and timeline assumptions are recorded, including last-data-to-submit expectations and constraints. | Webinar answered: typical ~3 months writing for mid-size IND; last data could be days to weeks depending on pivotal tox/stability. | program_context includes timeline notes; known gaps capture late reports; change_control reflects schedule moves and why. | decision-log/decision-log.schema.json (program_context, known_gaps_and_assumptions, change_control) | ❌ |
+---
+
+## Traceability Model
+
+Each requirement follows the traceability chain below:
+
+IND Requirement  
+→ Observed Gap (IND-GAP-XXX)  
+→ Backlog Item (P0/P1/P2-BL-XXX)  
+→ RGDS Artifact(s)
+
+---
+
+## Requirements Traceability Table
+
+| Requirement ID | Requirement Description | Gap ID(s) | Backlog Item ID(s) | RGDS Artifact(s) | Status | Notes |
+|----------------|--------------------------|-----------|--------------------|------------------|--------|-------|
+| IND-PREIND-008 | Pre-IND interactions, pauses, and regulatory questions must be traceable and reviewable | IND-GAP-001 | P0-BL-001 | examples/rgds-dec-0003-defer-required-evidence.json<br>docs/decision-log.md<br>docs/governance.md | Planned | Addresses undocumented pre-IND decision pauses |
+| IND-TPP-009 | Program decisions should be traceable to Target Product Profile (TPP) claims | IND-GAP-002 | P0-BL-002 | decision-log/decision-log.schema.json<br>docs/decision-log.md | Planned | Enables label-oriented rationale linkage |
+| IND-PHASE-004 | Conditional decisions must explicitly document unmet evidence and follow-up actions | IND-GAP-003, IND-GAP-005 | P0-BL-003, P1-BL-004 | decision-log/decision-log.schema.json<br>examples/<br>scripts/validate_all_examples.py | Planned | Separates deferral from approval semantics |
+| IND-FLEX-007 | Deferred decisions must retain ownership and accountability | IND-GAP-004 | P0-BL-003 | scripts/validate_all_examples.py<br>.github/workflows/validate.yml | Planned | Prevents accountability loss over time |
+| IND-ALIGN-010 | Identifiers must remain consistent across evidence and decisions | IND-GAP-006 | P1-BL-005 | docs/decision-log.md<br>evaluation/evidence-quality-rubric.md | Planned | Reduces manual reconciliation during review |
+| IND-BENCH-011 | Submission timelines and benchmarks must be explicit at decision time | IND-GAP-007 | P2-BL-006 | decision-log/decision-log.schema.json<br>docs/decision-log.md | Planned | Supports timing-aware decision evaluation |
+
+---
+
+## Artifact References
+
+- Gap Log: evaluation/ind-requirements-gap-log.md  
+- Backlog: backlog/ind-aligned-backlog.md  
+- Decision Schema: decision-log/decision-log.schema.json  
+- Evaluation Plan: evaluation/evaluation-plan.md  
+
+---
+
+## Notes on Usage
+
+- A single requirement may map to multiple gaps and backlog items.
+- Backlog IDs are the authoritative execution linkage.
+- Status reflects planning intent, not implementation completion.
+- This matrix should be updated as backlog items move from Planned to Implemented.
+
+This RTM is expected to evolve alongside the RGDS schema and evaluation artifacts.
