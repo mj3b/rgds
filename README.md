@@ -132,6 +132,25 @@ Stopping early is treated as **risk reduction**, not failure.
 
 ---
 
+#### AI Governance Reference
+
+RGDS supports optional, bounded AI assistance under explicit governance constraints.
+
+The formal governance covenants that define:
+- permitted AI assistance,
+- explicit prohibitions (including non-agentic requirements), and
+- human ownership and approval obligations
+
+are maintained externally to preserve separation of concerns.
+
+RGDS remains fully valid in the absence of AI.
+
+For the authoritative governance definition, see:  
+**RGDS AI Governance (Covenants)**  
+→ [https://github.com/mj3b/rgds-ai-governance]
+
+---
+
 ## Where AI Fits in the System
 
 AI may be used only for bounded, reviewable support tasks such as:
