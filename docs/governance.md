@@ -12,6 +12,23 @@ It is embedded directly into the decision record.
 
 ---
 
+## IND delivery alignment (v1.3)
+
+In real IND execution, many failures are **governance failures** that surface late:
+
+- interdependencies are underestimated
+- vendor inputs arrive late or out of sequence
+- teams draft with placeholders (“author-at-risk”) without making the risk explicit
+- reviewer routing becomes triage under time pressure
+- content lock points are unclear during rolling publishing
+
+RGDS v1.3 treats these as *first-class decision elements* through optional fields such as:
+`risk_posture`, `author_at_risk_items[]`, `review_plan`, `scope_change_events[]`, `dependency_map[]`, `data_readiness_status[]`, `publishing_plan`, and `tpp_links[]`.
+
+For a cross-role view of who owns what, see `docs/role-decision-artifact-matrix.md`.
+
+---
+
 ## Core principles
 
 1. **Humans decide; systems assist**

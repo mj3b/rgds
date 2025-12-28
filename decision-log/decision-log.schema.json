@@ -51,6 +51,7 @@
           "type": "string",
           "enum": [
             "non_clinical_informatics",
+            "ind_submission",
             "cmc",
             "regulatory_ops",
             "other"
@@ -545,6 +546,58 @@
         "interaction_type"
       ],
       "description": "Optional context used only when decision_category is regulatory_interaction."
+    },
+
+    "risk_posture": {
+      "$ref": "#/$defs/risk_posture"
+    },
+
+    "author_at_risk_items": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/author_at_risk_item"
+      },
+      "default": []
+    },
+
+    "review_plan": {
+      "$ref": "#/$defs/review_plan"
+    },
+
+    "scope_change_events": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/scope_change_event"
+      },
+      "default": []
+    },
+
+    "dependency_map": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/dependency_item"
+      },
+      "default": []
+    },
+
+    "data_readiness_status": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/data_readiness_item"
+      },
+      "default": []
+    },
+
+    "publishing_plan": {
+      "$ref": "#/$defs/publishing_plan"
+    },
+
+    "tpp_links": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/tpp_link"
+      },
+      "default": []
     }
   },
   "$defs": {
@@ -981,6 +1034,293 @@
           "type": "string",
           "minLength": 3,
           "maxLength": 2000
+        }
+      }
+    },
+
+    "risk_posture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stance",
+        "rationale"
+      ],
+      "properties": {
+        "stance": {
+          "type": "string",
+          "enum": [
+            "aggressive",
+            "balanced",
+            "conservative"
+          ]
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 2000
+        },
+        "trade_offs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        }
+      }
+    },
+
+    "author_at_risk_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "item_id",
+        "description",
+        "verification",
+        "owner"
+      ],
+      "properties": {
+        "item_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 2000
+        },
+        "verification": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 2000
+        },
+        "owner": {
+          "$ref": "#/$defs/person_ref"
+        },
+        "due_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "fallback": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 2000
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "open",
+            "in_progress",
+            "done",
+            "blocked"
+          ],
+          "default": "open"
+        }
+      }
+    },
+
+    "review_plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "required_reviewers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/person_ref"
+          },
+          "default": []
+        },
+        "optional_reviewers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/person_ref"
+          },
+          "default": []
+        },
+        "triage_rules": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "review_window": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 200
+        }
+      }
+    },
+
+    "scope_change_event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "event_date",
+        "summary",
+        "approved_by"
+      ],
+      "properties": {
+        "event_date": {
+          "type": "string",
+          "format": "date"
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 2000
+        },
+        "impact": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 2000
+        },
+        "approved_by": {
+          "$ref": "#/$defs/person_ref"
+        }
+      }
+    },
+
+    "dependency_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dependency",
+        "why_it_matters"
+      ],
+      "properties": {
+        "dependency": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 400
+        },
+        "why_it_matters": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 2000
+        },
+        "owner": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/person_ref"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+
+    "data_readiness_item": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "data_item",
+        "status"
+      ],
+      "properties": {
+        "data_item": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 400
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "not_started",
+            "in_progress",
+            "draft",
+            "audited_draft",
+            "final"
+          ]
+        },
+        "expected_by": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "notes": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "maxLength": 2000
+        }
+      }
+    },
+
+    "publishing_plan": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "rolling_publish": {
+          "type": "boolean",
+          "default": false
+        },
+        "lock_points": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "lock_date",
+              "what_locks"
+            ],
+            "properties": {
+              "lock_date": {
+                "type": "string",
+                "format": "date"
+              },
+              "what_locks": {
+                "type": "string",
+                "minLength": 3,
+                "maxLength": 1000
+              },
+              "approved_by": {
+                "anyOf": [
+                  {
+                    "$ref": "#/$defs/person_ref"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "default": []
+        }
+      }
+    },
+
+    "tpp_link": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tpp_element",
+        "relevance"
+      ],
+      "properties": {
+        "tpp_element": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 200
+        },
+        "relevance": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 1000
         }
       }
     }

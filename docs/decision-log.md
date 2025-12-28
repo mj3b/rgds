@@ -118,6 +118,52 @@ If something is missing, uncertain, or assumed:
 - its impact is described
 - a mitigation or verification plan is recorded
 
+---
+
+## IND-aligned decision fields (v1.3)
+
+These fields reflect **real IND delivery constraints** (interdependencies, author-at-risk, reviewer triage, lock points) and are optional unless a program chooses to require them by governance policy.
+
+### risk_posture
+**Prevents:** silent risk acceptance and “we never said we were being aggressive.”
+
+Captures the phase-appropriate stance (aggressive / balanced / conservative) and the trade-offs the team is consciously making.
+
+### author_at_risk_items[]
+**Prevents:** placeholders becoming invisible, uncontrolled risk.
+
+Models controlled placeholders and drafting-at-risk as a governed choice with explicit verification criteria, owners, and due dates.
+
+### review_plan
+**Prevents:** late-breaking edits without clear reviewer accountability.
+
+Captures required vs optional reviewers, triage rules, and the review window used when time compresses.
+
+### scope_change_events[]
+**Prevents:** undocumented scope changes that force rework after gates close.
+
+Logs late discoveries (“we also have report X”), approvals, and impact statements.
+
+### dependency_map[]
+**Prevents:** underestimating interdependencies across modules/streams.
+
+Records the few dependencies that actually drive schedule, rework, or risk.
+
+### data_readiness_status[]
+**Prevents:** pretending key datasets are “ready” when they are audited drafts or still in flight.
+
+Provides a lightweight readiness view for the rate-limiting items.
+
+### publishing_plan
+**Prevents:** changes that arrive after lock points and create submission chaos.
+
+Captures rolling publish intent and explicit lock dates for content freezes.
+
+### tpp_links[]
+**Prevents:** decisions that drift away from the Target Product Profile.
+
+Ensures each gate decision can be traced to the TPP elements it supports.
+
 This section is critical.  
 Well-run programs do not avoid assumptions — they **surface them early**.
 
