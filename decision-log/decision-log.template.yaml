@@ -4,6 +4,7 @@ program_context:
   program_id: ""
   asset_or_initiative: ""
   domain: non_clinical_informatics
+
 status: proposed
 created_at: ""
 created_by: {name: "", role: ""}
@@ -16,46 +17,80 @@ gate:
   meeting_refs: []
 
 decision_question: ""
-options_considered: []
 decision_outcome:
-  outcome: defer
-  selected_option_id: null
+  outcome: defer  # go | conditional_go | no_go | defer | defer_with_required_evidence
+  selected_option: null
   conditions: []
-  rationale_summary: ""
+
+options_considered: []
+
+rationale:
+  primary_rationale: ""
+  supporting_points: []
+  dissenting_views: []
 
 evidence:
   evidence_items: []
+  evidence_summary: ""
+
 known_gaps_and_assumptions:
   gaps: []
   assumptions: []
+  unknowns: []
 
-risk_assessment:
-  key_risks: []
-  residual_risk_statement: ""
-  risk_acceptance_required: false
+# v1.4.0 — explicit evidence completeness summary (high-level)
+evidence_completeness:
+  state: partial   # complete | partial | placeholder
+  expected_resolution_date: null
+  author_at_risk: false
+  notes: null
 
+# v1.4.0 — downstream artifacts that must be updated if this decision changes
+propagation_required: []
+
+risk:
+  risks_identified: []
+  mitigations: []
+
+# Governance (decision ownership and signoff)
 governance:
   decision_owner: {name: "", role: ""}
   approvers: []
   reviewers: []
-  approval_method: meeting_vote
+  approval_method: meeting_vote  # meeting_vote | asynchronous_signoff | delegated_authority
   approvals: []
-  final_signoff: {person: {name: "", role: ""}, timestamp: "", notes: ""}
+  final_signoff:
+    signoff_by: {name: "", role: ""}
+    signoff_at: ""
+    signoff_note: ""
+  # v1.4.0 — explicit authority and escalation model
+  authority_scope: decide   # recommend | decide | veto
+  escalation_path: []
 
+# AI assistance disclosure (non-agentic)
 ai_assistance:
   used: false
-  use_cases: []
+  use_cases: []     # summarize | extract | compare | classify | draft | other
   artifacts: []
-  controls: {}
+  controls:
+    prompt_or_instruction_ref: ""
+    schema_or_format_constraints: ""
+    versioning: ""
+    safety_notes: ""
+  # v1.4.0 — optional trust signal (never authority)
+  confidence_band: null   # low | medium | high | null
+  human_override: null    # true | false | null
 
 actions: []
 dependencies: []
 
-# IND-aligned optional fields (v1.3)
+# IND-aligned optional fields
 risk_posture:
   stance: balanced  # aggressive | balanced | conservative
   rationale: ""
   trade_offs: []
+  # v1.4.0 — benchmarking context
+  benchmark_basis: []  # precedent_programs | pre_IND_feedback | internal_portfolio_norm | therapeutic_area_norm | other
 
 author_at_risk_items: []
 

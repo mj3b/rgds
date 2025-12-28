@@ -1,6 +1,6 @@
 {
   "decision_id": "RGDS-DEC-0001",
-  "decision_title": "CANONICAL \u2014 Conditional-Go at Data Readiness Gate (IND-enabling tox evidence packet)",
+  "decision_title": "CANONICAL — Conditional-Go at Data Readiness Gate (IND-enabling tox evidence packet)",
   "program_context": {
     "program_id": "PRG-241",
     "asset_or_initiative": "ABC-101",
@@ -222,7 +222,9 @@
       },
       "timestamp": "2026-01-06T16:35:00-05:00",
       "notes": "Conditional go recorded; conditions must close by due dates."
-    }
+    },
+    "authority_scope": "decide",
+    "escalation_path": []
   },
   "ai_assistance": {
     "used": true,
@@ -251,7 +253,9 @@
       "schema_or_format_constraints": "YAML summary schema v1; citations required for each stated delta.",
       "versioning": "internal-llm:v0.9",
       "safety_notes": "AI output used for drafting only; source documents remain the evidence of record."
-    }
+    },
+    "confidence_band": null,
+    "human_override": null
   },
   "actions": [
     {
@@ -306,5 +310,12 @@
     "superseded_by": null,
     "retention_class": "controlled_record"
   },
-  "decision_category": "internal"
+  "decision_category": "internal",
+  "evidence_completeness": {
+    "state": "complete",
+    "expected_resolution_date": null,
+    "author_at_risk": false,
+    "notes": null
+  },
+  "propagation_required": []
 }

@@ -2,6 +2,10 @@
 
 This log records controlled changes to RGDS schemas, validators, and canonical examples.
 It is intentionally lightweight: enough to support auditability and explain evolution.
+## v1.4.0
+- Added explicit evidence completeness, downstream propagation declaration, risk benchmarking basis, authority scope/escalation path, and optional AI trust signals.
+- Extended data readiness statuses to include placeholder.
+
 
 | Date | Change | Rationale | Impacted Files | Approved By |
 |---|---|---|---|---|

@@ -238,7 +238,7 @@ It assumes familiarity with regulated delivery — not machine learning research
 
 ## Status
 
-**v1.3.1 — IND-aligned reference implementation.**
+**v1.4.0 — Reference implementation with explicit governance deltas.**
 
 Includes:
 
