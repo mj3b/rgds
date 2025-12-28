@@ -50,6 +50,31 @@ ai_assistance:
 
 actions: []
 dependencies: []
+
+# IND-aligned optional fields (v1.3)
+risk_posture:
+  stance: balanced  # aggressive | balanced | conservative
+  rationale: ""
+  trade_offs: []
+
+author_at_risk_items: []
+
+review_plan:
+  required_reviewers: []
+  optional_reviewers: []
+  triage_rules: []
+  review_window: null
+
+scope_change_events: []
+dependency_map: []
+data_readiness_status: []
+
+publishing_plan:
+  rolling_publish: false
+  lock_points: []
+
+tpp_links: []
+
 change_control:
   change_requests: []
   release_or_validation_refs: []

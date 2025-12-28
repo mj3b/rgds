@@ -16,11 +16,7 @@ If you read only one thing in this repository, read the canonical examples in `e
 - `rgds-dec-0004-regulatory-interaction.json` — **CANONICAL regulatory_interaction_decision**  
   Pre-IND / FDA interaction strategy as a first-class decision artifact
 
-- `rgds-dec-0005-conditional-go-author-at-risk.json` — **CANONICAL author_at_risk conditional_go**  
-  Controlled placeholder drafting with verification criteria and fallback
-
-- `rgds-dec-0006-go-pre-ind-strategy.json` — **CANONICAL go with regulatory posture**  
-  Phase-appropriate risk posture with contingency planning
+See `docs/role-decision-artifact-matrix.md` for how these decisions map to real IND roles (PMs, CMC, Regulatory, Writing PM, Ops, Quality).
 
 These examples demonstrate the intended RGDS operating model:
 **human-governed, evidence-linked, schema-validated, and explicitly non-agentic**.
@@ -103,29 +99,25 @@ The Decision Log is the **system of record for governance**.
 
 ---
 
-### Risk Posture & Conditional Decisions (v1.2)
+### IND Delivery Alignment (v1.3)
 
-RGDS v1.2 makes previously implicit judgment calls explicit:
+RGDS v1.3 makes previously implicit judgment calls explicit:
 
-- **risk_posture**  
-  Phase-appropriate tolerance and trade-offs are stated, not inferred.
 
-- **author_at_risk_items[]**  
-  Placeholder drafting is treated as a governed risk with verification criteria.
+- **risk_posture**: phase-appropriate tolerance and trade-offs are stated, not inferred.
+- **author_at_risk_items[]**: placeholder drafting is treated as governed risk with verification criteria.
+- **review_plan**: reviewer triage (required vs optional) is captured explicitly.
+- **scope_change_events[]**: late discoveries and scope volatility become auditable decision inputs.
+- **dependency_map[]**: interdependencies are captured as decision inputs (prevents cascading surprises).
+- **data_readiness_status[]**: tracks rate-limiting evidence readiness (draft → audited draft → final).
+- **publishing_plan**: rolling publishing and lock points become explicit constraints.
+- **tpp_links[]**: tie decisions back to Target Product Profile expectations.
 
-- **review_plan**  
-  Reviewer triage (required vs optional) is captured as a decision, not process trivia.
-
-- **scope_change_events[]**  
-  Late discoveries and scope volatility become auditable decision inputs.
-
-- **regulatory_interaction_decision**  
-  FDA / pre-IND interaction strategy is modeled as a first-class decision.
-
-- **fallback_plan (required for conditional_go)**  
-  Proceeding under uncertainty requires an explicit contingency.
+The existing `decision_category` + `regulatory_context` fields model pre-IND / FDA interaction strategy as a first-class decision.
 
 These additions reflect real execution realities without introducing automation risk.
+
+For a cross-role view of who owns what, see: `docs/role-decision-artifact-matrix.md`.
 
 ---
 
@@ -193,8 +185,6 @@ rgds/
 │   ├── rgds-dec-0002-no-go.json
 │   ├── rgds-dec-0003-defer-required-evidence.json
 │   ├── rgds-dec-0004-regulatory-interaction.json
-│   ├── rgds-dec-0005-conditional-go-author-at-risk.json
-│   ├── rgds-dec-0006-go-pre-ind-strategy.json
 │   └── README.md
 ├── evaluation/
 │   ├── evaluation-plan.md
@@ -244,7 +234,7 @@ It assumes familiarity with regulated delivery — not machine learning research
 
 ## Status
 
-**v1.2 — Reference implementation complete.**
+**v1.3 — IND-aligned reference implementation.**
 
 Includes:
 
