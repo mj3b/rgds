@@ -6,6 +6,8 @@ If you read only one thing in this repository, read:
 
 - `examples/rgds-dec-0001.json` — **CANONICAL conditional_go** (GO with explicit, owned conditions)
 - `examples/rgds-dec-0002-no-go.json` — **CANONICAL no_go** (No-Go with defensible rationale and re-entry path)
+- `examples/rgds-dec-0003-defer-required-evidence.json` — **CANONICAL defer / abstain** (Decision deferred pending required evidence; explicit gaps)
+- `examples/rgds-dec-0004-regulatory-interaction.json` — **CANONICAL regulatory interaction / escalation** (Pre-engagement or agency-facing decision logic + rationale capture)
 - `examples/rgds-dec-0005-ind-conditional-go-author-at-risk.json` — **CANONICAL IND-style conditional_go** (author-at-risk + reviewer triage + publishing lock points)
 
 These examples demonstrate the intended RGDS operating model: human-governed, evidence-linked, schema-validated, and explicitly non-agentic.
