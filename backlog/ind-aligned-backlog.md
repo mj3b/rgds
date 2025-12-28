@@ -1,12 +1,13 @@
-# IND-aligned Backlog (derived from requirements gaps)
+# IND-aligned Backlog (derived from documented IND requirement gaps)
 
-> **Backlog artifact (planning):**  
-> This backlog converts IND webinar requirements into sprint-ready RGDS work items.  
-> It is a planning and traceability artifact, not a normative specification. Items may be completed, superseded, or archived as the RGDS schema and documentation evolve.
+This backlog converts IND webinar requirement gaps into sprint-ready RGDS work items.
+It is a planning and traceability artifact, not a normative specification.
+
+See: `evaluation/ind-requirements-gap-log.md` for source gap traceability.
 
 ---
 
-## P0 — Add IND / Regulatory Interaction decision pattern + example  
+## P0-BL-001 — Add IND / Regulatory Interaction decision pattern + example  
 *(pre-IND pause, questions, outcomes)*
 
 - Status: Planned
@@ -20,7 +21,7 @@
 
 ---
 
-## P0 — Link decisions to Target Product Profile (TPP) claims  
+## P0-BL-002 — Link decisions to Target Product Profile (TPP) claims  
 *(minimal, non-domain-specific field)*
 
 - Status: Planned
@@ -29,11 +30,11 @@
   - `decision-log/decision-log.schema.json`
   - `docs/decision-log.md`
 - Description:  
-  Add an optional `program_context.tpp_refs[]` field (strings or lightweight objects) and document usage. This ensures decision rationale can be traced to label-oriented program targets without embedding domain logic.
+  Add an optional `program_context.tpp_refs[]` field and document usage so decision rationale can be traced to label-oriented program targets without embedding domain logic.
 
 ---
 
-## P0 — Add semantic validator enforcing completeness for gated decisions
+## P0-BL-003 — Add semantic validator enforcing completeness for gated decisions
 
 - Status: Planned
 - Requirement(s): IND-PHASE-004, IND-FLEX-007
@@ -48,7 +49,7 @@
 
 ---
 
-## P1 — Add decision_outcome enum: `defer_with_required_evidence`
+## P1-BL-004 — Add decision_outcome enum: `defer_with_required_evidence`
 
 - Status: Planned
 - Requirement(s): IND-PHASE-004
@@ -60,7 +61,7 @@
 
 ---
 
-## P1 — Add nomenclature / identifier guidance + optional consistency checks
+## P1-BL-005 — Add nomenclature / identifier guidance + optional consistency checks
 
 - Status: Planned
 - Requirement(s): IND-ALIGN-010
@@ -68,11 +69,11 @@
   - `docs/decision-log.md`
   - `evaluation/evidence-quality-rubric.md`
 - Description:  
-  Document guidance for maintaining consistent compound, study, and artifact identifiers across decisions and evidence. Provide recommended controlled vocabulary for gates and optional hooks for consistency checks.
+  Document guidance for maintaining consistent compound, study, and artifact identifiers across decisions and evidence. Provide recommended controlled vocabulary for gates and optional consistency check hooks.
 
 ---
 
-## P2 — Add timeline and benchmark capture fields in `program_context`
+## P2-BL-006 — Add timeline and benchmark capture fields in `program_context`
 
 - Status: Planned
 - Requirement(s): IND-BENCH-011
@@ -80,4 +81,4 @@
   - `decision-log/decision-log.schema.json`
   - `docs/decision-log.md`
 - Description:  
-  Add fields to record planned submission date, last-data-cut date, and key assumptions to support timeline-aware decision-making (“start with the end in mind”).
+  Add fields to record planned submission date, last-data-cut date, and key assumptions to support timeline-aware decision-making.
