@@ -15,8 +15,8 @@ This RTM documents alignment and intent; it does not prescribe implementation.
 Each requirement follows the traceability chain below:
 
 IND Requirement  
-→ Observed Gap (IND-GAP-XXX)  
-→ Backlog Item (P0/P1/P2-BL-XXX)  
+→ Observed Gap ([IND-GAP-XXX](./ind-requirements-gap-log.md))  
+→ Backlog Item ([P0/P1/P2-BL-XXX](../backlog/ind-aligned-backlog.md))  
 → RGDS Artifact(s)
 
 ---
@@ -25,21 +25,21 @@ IND Requirement
 
 | Requirement ID | Requirement Description | Gap ID(s) | Backlog Item ID(s) | RGDS Artifact(s) | Status | Notes |
 |----------------|--------------------------|-----------|--------------------|------------------|--------|-------|
-| IND-PREIND-008 | Pre-IND interactions, pauses, and regulatory questions must be traceable and reviewable | IND-GAP-001 | P0-BL-001 | examples/rgds-dec-0003-defer-required-evidence.json<br>docs/decision-log.md<br>docs/governance.md | Planned | Addresses undocumented pre-IND decision pauses |
-| IND-TPP-009 | Program decisions should be traceable to Target Product Profile (TPP) claims | IND-GAP-002 | P0-BL-002 | decision-log/decision-log.schema.json<br>docs/decision-log.md | Planned | Enables label-oriented rationale linkage |
-| IND-PHASE-004 | Conditional decisions must explicitly document unmet evidence and follow-up actions | IND-GAP-003, IND-GAP-005 | P0-BL-003, P1-BL-004 | decision-log/decision-log.schema.json<br>examples/<br>scripts/validate_all_examples.py | Planned | Separates deferral from approval semantics |
-| IND-FLEX-007 | Deferred decisions must retain ownership and accountability | IND-GAP-004 | P0-BL-003 | scripts/validate_all_examples.py<br>.github/workflows/validate.yml | Planned | Prevents accountability loss over time |
-| IND-ALIGN-010 | Identifiers must remain consistent across evidence and decisions | IND-GAP-006 | P1-BL-005 | docs/decision-log.md<br>evaluation/evidence-quality-rubric.md | Planned | Reduces manual reconciliation during review |
-| IND-BENCH-011 | Submission timelines and benchmarks must be explicit at decision time | IND-GAP-007 | P2-BL-006 | decision-log/decision-log.schema.json<br>docs/decision-log.md | Planned | Supports timing-aware decision evaluation |
+| IND-PREIND-008 | Pre-IND interactions, pauses, and regulatory questions must be traceable and reviewable | [IND-GAP-001](./ind-requirements-gap-log.md#ind-gap-001) | [P0-BL-001](../backlog/ind-aligned-backlog.md#p0-bl-001--add-ind--regulatory-interaction-decision-pattern--example) | [rgds-dec-0003-defer-required-evidence.json](../examples/rgds-dec-0003-defer-required-evidence.json)<br>[decision-log.md](../docs/decision-log.md)<br>[governance.md](../docs/governance.md) | Planned | Addresses undocumented pre-IND decision pauses |
+| IND-TPP-009 | Program decisions should be traceable to Target Product Profile (TPP) claims | [IND-GAP-002](./ind-requirements-gap-log.md#ind-gap-002) | [P0-BL-002](../backlog/ind-aligned-backlog.md#p0-bl-002--link-decisions-to-target-product-profile-tpp-claims) | [decision-log.schema.json](../decision-log/decision-log.schema.json)<br>[decision-log.md](../docs/decision-log.md) | Planned | Enables label-oriented rationale linkage |
+| IND-PHASE-004 | Conditional decisions must explicitly document unmet evidence and follow-up actions | [IND-GAP-003](./ind-requirements-gap-log.md#ind-gap-003), [IND-GAP-005](./ind-requirements-gap-log.md#ind-gap-005) | [P0-BL-003](../backlog/ind-aligned-backlog.md#p0-bl-003--add-semantic-validator-enforcing-completeness-for-gated-decisions), [P1-BL-004](../backlog/ind-aligned-backlog.md#p1-bl-004--add-decision_outcome-enum-defer_with_required_evidence) | [decision-log.schema.json](../decision-log/decision-log.schema.json)<br>[examples/](../examples/)<br>[validate_all_examples.py](../scripts/validate_all_examples.py) | Planned | Separates deferral from approval semantics |
+| IND-FLEX-007 | Deferred decisions must retain ownership and accountability | [IND-GAP-004](./ind-requirements-gap-log.md#ind-gap-004) | [P0-BL-003](../backlog/ind-aligned-backlog.md#p0-bl-003--add-semantic-validator-enforcing-completeness-for-gated-decisions) | [validate_all_examples.py](../scripts/validate_all_examples.py)<br>[validate.yml](../.github/workflows/validate.yml) | Planned | Prevents accountability loss over time |
+| IND-ALIGN-010 | Identifiers must remain consistent across evidence and decisions | [IND-GAP-006](./ind-requirements-gap-log.md#ind-gap-006) | [P1-BL-005](../backlog/ind-aligned-backlog.md#p1-bl-005--add-nomenclature--identifier-guidance--optional-consistency-checks) | [decision-log.md](../docs/decision-log.md)<br>[evidence-quality-rubric.md](./evidence-quality-rubric.md) | Planned | Reduces manual reconciliation during review |
+| IND-BENCH-011 | Submission timelines and benchmarks must be explicit at decision time | [IND-GAP-007](./ind-requirements-gap-log.md#ind-gap-007) | [P2-BL-006](../backlog/ind-aligned-backlog.md#p2-bl-006--add-timeline-and-benchmark-capture-fields-in-program_context) | [decision-log.schema.json](../decision-log/decision-log.schema.json)<br>[decision-log.md](../docs/decision-log.md) | Planned | Supports timing-aware decision evaluation |
 
 ---
 
 ## Artifact References
 
-- Gap Log: evaluation/ind-requirements-gap-log.md  
-- Backlog: backlog/ind-aligned-backlog.md  
-- Decision Schema: decision-log/decision-log.schema.json  
-- Evaluation Plan: evaluation/evaluation-plan.md  
+- Gap Log: [evaluation/ind-requirements-gap-log.md](./ind-requirements-gap-log.md)
+- Backlog: [backlog/ind-aligned-backlog.md](../backlog/ind-aligned-backlog.md)
+- Decision Schema: [decision-log/decision-log.schema.json](../decision-log/decision-log.schema.json)
+- Evaluation Plan: [evaluation/evaluation-plan.md](./evaluation-plan.md)
 
 ---
 
