@@ -51,6 +51,8 @@ submission discussions, regulatory strategy perspectives, and operational interv
 These sources are treated as signal inputs, not prescriptions, and are translated
 into explicit, auditable decision structure.
 
+For the evidence-to-design rationale behind RGDS, see: `docs/why-rgds-exists.md`.
+
 ---
 
 ## What This Repository Is (and Is Not)
@@ -92,6 +94,8 @@ Each decision record shows:
 - what risks and gaps were accepted
 - who owned, reviewed, and approved the decision
 - what conditions, follow-ups, or fallback actions exist
+- the completeness state of evidence (complete, partial, placeholder)
+- whether downstream artifacts must be updated if this decision changes
 
 Executives, quality reviewers, and auditors should be able to understand **why a decision was reasonable** without reading code.
 
@@ -145,15 +149,14 @@ For a cross-role view of who owns what, see: `docs/role-decision-artifact-matrix
 ### Evaluation
 
 RGDS evaluates:
-- decision readiness and confidence
-- evidence quality and sufficiency
-- time-to-decision
-- governance execution
-- AI-assisted task performance (when used)
+- explicit authority scope, escalation paths, and downstream propagation requirements
+- disclosure of AI assistance usage when applicable
 
 Evaluation focuses on **decision quality**, not model performance in isolation.
 
 Evaluation is performed through structured review criteria and scorecards, not automated model metrics.
+
+Evaluation explicitly considers evidence completeness, declared risk posture, and downstream propagation awareness.
 
 ---
 
@@ -272,10 +275,12 @@ rgds/
 │   ├── evidence-quality-rubric.md
 │   └── scorecard-template.csv
 ├── docs/
+│   ├── why-rgds-exists.md
 │   ├── decision-log.md
 │   ├── governance.md
 │   ├── change-control-log.md
-│   └── ai-assistance-policy.md
+│   ├── ai-assistance-policy.md
+│   └── role-decision-artifact-matrix.md
 ├── scripts/
 │   ├── validate_decision_log.py
 │   └── validate_all_examples.py
@@ -284,6 +289,15 @@ rgds/
 ├── Makefile
 └── requirements.txt
 ```
+
+---
+
+## Key Docs
+
+- `docs/why-rgds-exists.md` — evidence-to-design rationale (signals → RGDS mechanisms)
+- `docs/decision-log.md` — how to interpret decision logs
+- `docs/governance.md` — governance rules and enforcement intent
+
 ---
 
 ## Why This Matters in Production
@@ -291,10 +305,11 @@ rgds/
 RGDS prevents failure modes that routinely appear in regulated delivery:
 
 - silent risk acceptance  
-- undocumented scope changes  
+- undocumented scope changes and downstream ripple effects
 - unclear reviewer accountability  
 - decisions without fallback planning  
-- late discovery of misalignment after a gate closes  
+- late discovery of misalignment after a gate closes
+- false confidence created by undocumented placeholders
 
 By forcing decisions, evidence, risk, ownership, and contingency into a single governed record, RGDS enables faster decisions without sacrificing auditability.
 
