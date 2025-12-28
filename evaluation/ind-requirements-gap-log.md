@@ -1,6 +1,7 @@
 # IND Requirements Gap Log
 
 This log documents observed gaps between IND regulatory expectations and common delivery practices, as identified through IND-focused webinars and practitioner discussion.  
+
 Each gap is traceably linked to one or more RGDS backlog items.
 
 This artifact exists to provide **evidence-backed justification** for RGDS backlog work and to preserve traceability from external requirements to internal execution decisions.
