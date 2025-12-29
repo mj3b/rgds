@@ -135,16 +135,33 @@ Relationships:
 
 ---
 
-## Relationship to RGDS Artifacts
+## Relationship to RGDS Artifacts (Clickable)
 
-- Decision Gate Extract definition:
-  - `evaluation/decision-gate-extract.md`
-- Gap Log:
-  - `evaluation/ind-requirements-gap-log.md`
-- Backlog:
-  - `backlog/ind-aligned-backlog.md`
-- Requirements Traceability Matrix:
-  - `evaluation/requirements-traceability-matrix.md`
+This sample Power BI schema and dataflow is grounded in the following RGDS artifacts:
+
+- **Decision Gate Extract (definition)**  
+  [evaluation/decision-gate-extract.md](./decision-gate-extract.md)
+
+- **IND Requirements Gap Log**  
+  [evaluation/ind-requirements-gap-log.md](./ind-requirements-gap-log.md)
+
+- **IND-aligned Backlog**  
+  [backlog/ind-aligned-backlog.md](../backlog/ind-aligned-backlog.md)
+
+- **Requirements Traceability Matrix (RTM)**  
+  [evaluation/requirements-traceability-matrix.md](./requirements-traceability-matrix.md)
+
+- **Decision Log Schema (source of truth)**  
+  [decision-log/decision-log.schema.json](../decision-log/decision-log.schema.json)
+
+- **Canonical Decision Examples**  
+  [examples/](../examples/)
+
+Reviewers are encouraged to:
+1. Start with the **Decision Gate Extract definition**  
+2. Inspect a **canonical decision example**  
+3. Trace gaps → backlog → requirements using the RTM  
+4. Return to this sample to understand how decisions surface in BI
 
 ---
 
