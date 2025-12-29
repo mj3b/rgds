@@ -26,8 +26,8 @@ RGDS supports the following outcomes:
 - `no_go`
 - `conditional_go`
 - `defer`
-- `defer_with_required_evidence` (explicit missing evidence + re-entry conditions)
-
+- `defer_with_required_evidence` is a governed deferment that explicitly records missing evidence and re-entry criteria
+  
 In regulated environments, the failure mode is rarely “bad intent” or “bad analysis.”  
 It is **implicit assumptions, undocumented trade-offs, and late-discovered misalignment**.  
 The Decision Log exists to surface and record those *before* the gate closes.
@@ -47,6 +47,7 @@ The Decision Log exists to surface and record those *before* the gate closes.
 - A replacement for expert judgment
 - A log of AI outputs or recommendations
 - A compliance checkbox or documentation exercise
+- A system that optimizes for speed at the expense of accountability
 
 AI assistance, if used, is explicitly disclosed and bounded.  
 AI outputs are **never treated as evidence by default**.
@@ -122,7 +123,11 @@ If something is missing, uncertain, or assumed:
 
 ## IND-aligned decision fields (v1.3)
 
-These fields reflect **real IND delivery constraints** (interdependencies, author-at-risk, reviewer triage, lock points) and are optional unless a program chooses to require them by governance policy.
+The following fields reflect **real IND delivery constraints**—interdependencies, author-at-risk drafting, reviewer triage, and lock points.  
+They are often the difference between defensible speed and downstream rework.
+
+These fields are **optional by default**, but may be required by program governance.  
+Once required, they are enforced as part of the decision record.
 
 ### risk_posture
 **Prevents:** silent risk acceptance and “we never said we were being aggressive.”
@@ -132,7 +137,7 @@ Captures the phase-appropriate stance (aggressive / balanced / conservative) and
 ### author_at_risk_items[]
 **Prevents:** placeholders becoming invisible, uncontrolled risk.
 
-Models controlled placeholders and drafting-at-risk as a governed choice with explicit verification criteria, owners, and due dates.
+Models drafting-at-risk as a governed choice with explicit verification criteria, owners, and due dates.
 
 ### review_plan
 **Prevents:** late-breaking edits without clear reviewer accountability.
@@ -145,14 +150,14 @@ Captures required vs optional reviewers, triage rules, and the review window use
 Logs late discoveries (“we also have report X”), approvals, and impact statements.
 
 ### dependency_map[]
-**Prevents:** underestimating interdependencies across modules/streams.
+**Prevents:** underestimating interdependencies across modules or workstreams.
 
-Records the few dependencies that actually drive schedule, rework, or risk.
+Records only the dependencies that materially affect schedule, rework, or risk.
 
 ### data_readiness_status[]
 **Prevents:** pretending key datasets are “ready” when they are audited drafts or still in flight.
 
-Provides a lightweight readiness view for the rate-limiting items.
+Provides a lightweight readiness view for rate-limiting items at decision time.
 
 ### publishing_plan
 **Prevents:** changes that arrive after lock points and create submission chaos.
@@ -164,8 +169,8 @@ Captures rolling publish intent and explicit lock dates for content freezes.
 
 Ensures each gate decision can be traced to the TPP elements it supports.
 
-This section is critical.  
-Well-run programs do not avoid assumptions — they **surface them early**.
+These fields do not eliminate assumptions.  
+They ensure assumptions are **explicit, owned, and surfaced before the gate closes**.
 
 ---
 
