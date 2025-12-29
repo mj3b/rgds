@@ -1,3 +1,4 @@
-decision_id,gate_name,decision_outcome,decision_confidence_rating,evidence_completeness_state,propagation_declared,time_to_decision_days,evidence_high_count,evidence_medium_count,evidence_low_count,ai_used,ai_confidence_band,ai_override_rate,missed_risk_notes,risk_benchmark_basis_recorded,governance_complete,authority_scope_recorded,reviewer_comments
-RGDS-DEC-0001,Data Readiness,conditional_go,High,,,5,2,1,0,Yes,,0.33,No missed critical risks identified,,Yes,,Decision defensible with bounded conditions
-RGDS-DEC-0002,Data Readiness,no_go,High,,,4,1,1,1,No,,,,,Yes,,No-Go appropriate given integrity failures
+decision_id,program_id,gate,decision_outcome,decision_confidence_rating,evidence_completeness_state,propagation_declared,time_to_decision_days,evidence_high_count,evidence_medium_count,evidence_low_count,gap_ids,backlog_ids,ai_used,ai_confidence_band,ai_override_rate,missed_risk_notes,risk_benchmark_basis_recorded,governance_complete,authority_scope_recorded,reviewer_comments
+RGDS-DEC-0001,PROG-001,Data Readiness,conditional_go,High,partial,Yes,5,2,1,0,IND-GAP-003|IND-GAP-005,P0-BL-003|P1-BL-004,Yes,Medium,0.33,No missed critical risks identified,Yes,Yes,Yes,Decision defensible with bounded conditions
+RGDS-DEC-0002,PROG-001,Data Readiness,no_go,High,partial,No,4,1,1,1,IND-GAP-004,P0-BL-003,No,,0.00,Critical data integrity risks unresolved,Yes,Yes,Yes,No-Go appropriate given integrity failures
+
