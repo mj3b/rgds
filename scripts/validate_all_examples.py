@@ -18,7 +18,7 @@ HARD FAILS (block CI):
 - Missing required governance elements for certain decision outcomes
 - Inconsistent AI disclosure when AI is marked as used
 
-WARNINGS (do NOT block CI):
+WARNINGS (do NOT block CI by default):
 - Weak but allowed governance patterns
 - Missing strongly recommended fields
 - Situations that increase risk but may be intentional
@@ -26,29 +26,26 @@ WARNINGS (do NOT block CI):
 Warnings are signals, not noise.
 They are printed to force explicit consideration.
 
-What this script does NOT do
-----------------------------
-- It does NOT judge whether a decision is "correct"
-- It does NOT approve or reject decisions
-- It does NOT automate governance
-
-Passing this script means:
-- The decision record is structurally sound
-- Governance intent is preserved
-- Auditability is maintained
-
-Human judgment remains required.
+Strict mode (optional)
+----------------------
+If run with --strict (or --warn-as-error), warnings become failures.
+This is a program-policy lever for higher-assurance environments.
 
 Typical usage
 -------------
     python3 scripts/validate_all_examples.py
 
+Strict usage (program policy)
+-----------------------------
+    python3 scripts/validate_all_examples.py --strict
+
 Exit codes
 ----------
-0 — All examples pass (warnings allowed)
-1 — Schema or semantic invariant failure (CI should block)
+0 — All examples pass (warnings allowed unless strict)
+1 — Schema, semantic invariant, or (in strict mode) warning failure
 2 — Script/configuration error (missing files, unreadable JSON)
 """
+
 import json
 import sys
 from pathlib import Path
@@ -60,6 +57,7 @@ EXAMPLES_DIR = ROOT / "examples"
 
 
 def load_json(path: Path):
+    """Load JSON from disk or exit with a clear error."""
     try:
         return json.loads(path.read_text(encoding="utf-8"))
     except Exception as e:
@@ -68,6 +66,7 @@ def load_json(path: Path):
 
 
 def format_path(err_path) -> str:
+    """Format jsonschema error paths as a JSONPath-like string."""
     out = "$"
     for p in err_path:
         if isinstance(p, int):
@@ -78,22 +77,16 @@ def format_path(err_path) -> str:
 
 
 def semantic_checks(instance: dict) -> tuple[list[str], list[str]]:
-     """
+    """
     Semantic governance checks that JSON Schema alone cannot express.
 
     Returns:
         errors   -> semantic violations that FAIL CI
-        warnings -> strong governance recommendations (non-fatal)
+        warnings -> strong governance recommendations (non-fatal unless --strict)
 
     Design principle:
-    -----------------
-    Schema enforces structure.
-    Semantic checks enforce decision discipline.
-
-    If a rule appears here, it exists because:
-    - A real delivery failure was observed
-    - The failure was preventable by explicit recording
-    - The schema alone could not enforce it
+    - Schema enforces structure.
+    - Semantic checks enforce decision discipline.
     """
     errs: list[str] = []
     warns: list[str] = []
@@ -105,14 +98,20 @@ def semantic_checks(instance: dict) -> tuple[list[str], list[str]]:
     actions = instance.get("actions") or []
     gaps = (instance.get("known_gaps_and_assumptions", {}) or {}).get("gaps") or []
 
-    # --- Outcome invariants (hard fail) ---
+    # ---------------------------------------------------------------------
+    # Outcome invariants
+    # ---------------------------------------------------------------------
+
+    # v1.0+ (core RGDS): conditional_go must have explicit conditions.
     if outcome == "conditional_go":
         if len(conditions) == 0:
             errs.append("conditional_go requires decision_outcome.conditions (at least 1)")
-        # Strongly recommended but not required by schema
+
+        # v1.0+ (recommended): conditions should be operationalized via actions.
         if len(actions) == 0:
             warns.append("conditional_go has no actions; consider adding actions to operationalize conditions")
 
+    # v1.1+ (introduced defer_with_required_evidence): must include explicit gaps + re-entry mechanics.
     if outcome == "defer_with_required_evidence":
         if len(gaps) == 0:
             errs.append("defer_with_required_evidence requires known_gaps_and_assumptions.gaps (at least 1)")
@@ -121,44 +120,55 @@ def semantic_checks(instance: dict) -> tuple[list[str], list[str]]:
         if len(actions) == 0:
             errs.append("defer_with_required_evidence requires actions (at least 1)")
 
+    # v1.0+ (recommended): defer should not be a content-free pause.
     if outcome == "defer":
-        # Not a schema requirement, but helps prevent "content-free defer"
         if len(gaps) == 0 and len(actions) == 0:
             warns.append("defer has no gaps or actions; consider recording re-entry criteria or follow-up actions")
 
-    # --- Evidence completeness coherence (v1.4.0) ---
-    # Top-level evidence_completeness is optional; if present and partial/placeholder, it should be supported
+    # ---------------------------------------------------------------------
+    # Evidence completeness coherence
+    # ---------------------------------------------------------------------
+
+    # v1.4.0 (introduced evidence_completeness): incomplete evidence should be explicitly supported.
     ec = instance.get("evidence_completeness")
     if isinstance(ec, dict):
         state = ec.get("state")
         if state in ("partial", "placeholder"):
-            # If evidence is incomplete, strongly prefer gaps or author-at-risk signaling
+            # v1.4.0 (recommended): if evidence is incomplete, record gaps and/or author-at-risk items.
             author_at_risk_items = instance.get("author_at_risk_items") or []
             if len(gaps) == 0 and len(author_at_risk_items) == 0:
                 warns.append(
                     "evidence_completeness is partial/placeholder, but no known gaps or author_at_risk_items recorded"
                 )
-            # If placeholder, expected_resolution_date is strongly recommended
+
+            # v1.4.0 (recommended): placeholders benefit from an expected resolution date.
             if state == "placeholder" and not ec.get("expected_resolution_date"):
                 warns.append("evidence_completeness.state=placeholder; consider setting expected_resolution_date")
 
-    # --- Governance coherence (v1.4.0 authority/escalation) ---
+    # ---------------------------------------------------------------------
+    # Governance coherence (authority / escalation)
+    # ---------------------------------------------------------------------
+
+    # v1.4.0 (introduced governance.authority_scope + governance.escalation_path)
     gov = instance.get("governance", {}) or {}
     authority_scope = gov.get("authority_scope")
     escalation_path = gov.get("escalation_path") or []
 
-    # Schema already validates enum/defaults; semantic checks focus on "non-empty when used"
+    # v1.4.0+: if authority_scope is present, a decision_owner must exist (auditable authority).
     if authority_scope in ("recommend", "decide", "veto"):
         owner = gov.get("decision_owner")
         if not owner:
             errs.append("governance.authority_scope is present but governance.decision_owner is missing")
 
-    # Escalation path is optional, but if present should contain at least one person_ref
-    # (Your schema allows empty array by default; treat as warning, not error)
+    # v1.4.0 (recommended): if escalation_path key exists, prefer at least one resolver.
     if "escalation_path" in gov and isinstance(escalation_path, list) and len(escalation_path) == 0:
         warns.append("governance.escalation_path is present but empty; consider specifying deadlock resolver(s)")
 
-    # --- AI assistance disclosure integrity ---
+    # ---------------------------------------------------------------------
+    # AI assistance disclosure integrity
+    # ---------------------------------------------------------------------
+
+    # v1.0+ (AI policy): AI use must be explicit and reviewable when used=true.
     ai = instance.get("ai_assistance", {}) or {}
     used = ai.get("used", False)
 
@@ -167,33 +177,35 @@ def semantic_checks(instance: dict) -> tuple[list[str], list[str]]:
         artifacts = ai.get("artifacts") or []
         controls = ai.get("controls") or {}
 
-        # These are required by schema, but semantic checks improve diagnostics and catch empty content
         if len(use_cases) == 0:
             errs.append("ai_assistance.used=true requires ai_assistance.use_cases (at least 1)")
         if len(artifacts) == 0:
             errs.append("ai_assistance.used=true requires ai_assistance.artifacts (at least 1)")
-        # Controls required fields exist by schema; check for non-empty strings to avoid hollow compliance
+
+        # v1.0+ (recommended): controls fields should not be empty strings.
         for k in ("prompt_or_instruction_ref", "schema_or_format_constraints", "versioning", "safety_notes"):
             v = controls.get(k)
             if not isinstance(v, str) or not v.strip():
                 warns.append(f"ai_assistance.controls.{k} is empty; consider adding a concrete reference")
 
-        # Optional trust signals: schema validates types/enums; semantic checks ensure they make sense together
+        # v1.4.0 (optional trust signals): if confidence_band is set, consider recording override status.
         conf_band = ai.get("confidence_band")
         human_override = ai.get("human_override")
         if conf_band is not None and human_override is None:
             warns.append("ai_assistance.confidence_band is set but human_override is null; consider recording override status")
 
     else:
-        # If not used, but fields are populated, warn about inconsistency
+        # v1.0+ (recommended): avoid ambiguous disclosure where used=false but content exists.
         if ai.get("use_cases") or ai.get("artifacts"):
-            warns.append("ai_assistance.used=false but use_cases/artifacts are present; consider setting used=true or clearing fields")
+            warns.append(
+                "ai_assistance.used=false but use_cases/artifacts are present; consider setting used=true or clearing fields"
+            )
 
     return errs, warns
 
 
 def main():
-     """
+    """
     Entry point.
 
     Validates every JSON file in /examples:
@@ -201,11 +213,12 @@ def main():
     - Semantic validation second
 
     Output conventions:
-    -------------------
-    [PASS]  — schema + semantic invariants satisfied
-    [WARN]  — governance recommendations (non-fatal)
-    [FAIL]  — schema or semantic invariant violation (blocks CI)
+    - [PASS]  — schema + semantic invariants satisfied
+    - [WARN]  — governance recommendations (non-fatal unless --strict)
+    - [FAIL]  — schema or semantic invariant violation (blocks CI)
     """
+    strict = ("--strict" in sys.argv) or ("--warn-as-error" in sys.argv)
+
     if not SCHEMA_PATH.exists():
         print(f"[ERROR] Schema not found: {SCHEMA_PATH}")
         sys.exit(2)
@@ -241,6 +254,14 @@ def main():
                 print(f"  - {msg}")
             continue
 
+        # If strict, warnings are treated as failures
+        if sem_warns and strict:
+            failed = True
+            print(f"\n[FAIL] {example.name} (warnings treated as errors --strict)")
+            for msg in sem_warns:
+                print(f"  - {msg}")
+            continue
+
         print(f"[PASS] {example.name} (schema + semantic)")
 
         if sem_warns:
@@ -256,7 +277,7 @@ def main():
         print("\nAll example decision logs conform to schema and semantic invariants (with warnings).")
     else:
         print("\nAll example decision logs conform to schema and semantic invariants.")
-        print("\nLegend: PASS = schema + semantic invariants satisfied; WARN = recommendations (non-fatal).")
+    print("\nLegend: PASS = schema + semantic invariants satisfied; WARN = recommendations (non-fatal unless --strict).")
     sys.exit(0)
 
 
