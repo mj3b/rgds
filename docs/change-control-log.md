@@ -19,10 +19,10 @@ Introduced explicit authority and escalation modeling, strengthened evidence com
 
 | Date | Change | Rationale | Impacted Files | Approved By |
 |---|---|---|---|---|
-| 2025-12-27 | Added evidence completeness, propagation declaration, and risk benchmarking basis | Make downstream impact and evidence sufficiency explicit at decision time | `decision-log/decision-log.schema.json` | N/A (reference implementation) |
-| 2025-12-27 | Added authority scope and escalation path fields | Make decision rights and deadlock resolution auditable | `decision-log/decision-log.schema.json`, `docs/governance.md` | N/A |
-| 2025-12-27 | Added optional AI transparency signals | Support post-hoc review without granting AI authority | `decision-log/decision-log.schema.json`, `docs/ai-assistance-policy.md` | N/A |
-| 2025-12-27 | Extended data readiness statuses | Explicitly model placeholders and in-flight data | `decision-log/decision-log.schema.json` | N/A |
+| 2025-12-27 | Added evidence completeness, propagation declaration, and risk benchmarking basis | Make downstream impact and evidence sufficiency explicit at decision time | [`decision-log.schema.json`](../decision-log/decision-log.schema.json) | N/A (reference implementation) |
+| 2025-12-27 | Added authority scope and escalation path fields | Make decision rights and deadlock resolution auditable | [`decision-log.schema.json`](../decision-log/decision-log.schema.json), [`governance.md`](governance.md) | N/A |
+| 2025-12-27 | Added optional AI transparency signals | Support post-hoc review without granting AI authority | [`decision-log.schema.json`](../decision-log/decision-log.schema.json), [`ai-assistance-policy.md`](ai-assistance-policy.md) | N/A |
+| 2025-12-27 | Extended data readiness statuses | Explicitly model placeholders and in-flight data | [`decision-log.schema.json`](../decision-log/decision-log.schema.json) | N/A |
 
 ---
 
@@ -33,10 +33,10 @@ Expanded RGDS to model real IND execution constraints such as author-at-risk dra
 
 | Date | Change | Rationale | Impacted Files | Approved By |
 |---|---|---|---|---|
-| 2025-12-26 | Introduced IND-aligned decision fields | Capture delivery realities that commonly cause late failure | `decision-log/decision-log.schema.json`, `docs/decision-log.md` | N/A |
-| 2025-12-26 | Added author-at-risk modeling | Prevent silent placeholder risk | `decision-log/decision-log.schema.json` | N/A |
-| 2025-12-26 | Added review plan and triage rules | Make compressed review governance explicit | `decision-log/decision-log.schema.json` | N/A |
-| 2025-12-26 | Added dependency map and publishing plan | Surface interdependencies and lock points | `decision-log/decision-log.schema.json` | N/A |
+| 2025-12-27 | Introduced IND-aligned decision fields | Capture delivery realities that commonly cause late failure | [`decision-log.schema.json`](../decision-log/decision-log.schema.json), [`decision-log.md`](decision-log.md) | N/A |
+| 2025-12-27 | Added author-at-risk modeling | Prevent silent placeholder risk | [`decision-log.schema.json`](../decision-log/decision-log.schema.json) | N/A |
+| 2025-12-27 | Added review plan and triage rules | Make compressed review governance explicit | [`decision-log.schema.json`](../decision-log/decision-log.schema.json) | N/A |
+| 2025-12-27 | Added dependency map and publishing plan | Surface interdependencies and lock points | [`decision-log.schema.json`](../decision-log/decision-log.schema.json) | N/A |
 
 ---
 
@@ -47,8 +47,8 @@ Established RGDS as a human-governed decision system rather than a delivery trac
 
 | Date | Change | Rationale | Impacted Files | Approved By |
 |---|---|---|---|---|
-| 2025-12-25 | Clarified decision outcomes and lifecycle | Distinguish go, no-go, conditional, and defer decisions | `decision-log/decision-log.schema.json`, `docs/decision-log.md` | N/A |
-| 2025-12-25 | Added explicit governance sections | Ensure ownership, approval, and auditability | `docs/governance.md` | N/A |
+| 2025-12-26 | Clarified decision outcomes and lifecycle | Distinguish go, no-go, conditional, and defer decisions | [`decision-log.schema.json`](../decision-log/decision-log.schema.json), [`decision-log.md`](decision-log.md) | N/A |
+| 2025-12-26 | Added explicit governance sections | Ensure ownership, approval, and auditability | [`governance.md`](governance.md) | N/A |
 
 ---
 
@@ -59,8 +59,8 @@ Added explicit support for pausing decisions when evidence is insufficient but t
 
 | Date | Change | Rationale | Impacted Files | Approved By |
 |---|---|---|---|---|
-| 2025-12-27 | Added `defer_with_required_evidence` outcome | Support defensible pause-and-re-enter decisions | `decision-log/decision-log.schema.json` | N/A |
-| 2025-12-27 | Added canonical defer example | Provide concrete exemplar for reviewers | `examples/rgds-dec-0003-defer-required-evidence.json` | N/A |
+| 2025-12-25 | Added `defer_with_required_evidence` outcome | Support defensible pause-and-re-enter decisions | [`decision-log.schema.json`](../decision-log/decision-log.schema.json) | N/A |
+| 2025-12-25 | Added canonical defer example | Provide concrete exemplar for reviewers | [`rgds-dec-0003-defer-required-evidence.json`](../examples/rgds-dec-0003-defer-required-evidence.json) | N/A |
 
 ---
 
@@ -71,6 +71,6 @@ Established the core RGDS decision log schema and validation approach as a refer
 
 | Date | Change | Rationale | Impacted Files | Approved By |
 |---|---|---|---|---|
-| 2025-12-24 | Initial decision log schema | Create a structured, auditable decision record | `decision-log/decision-log.schema.json` | N/A |
-| 2025-12-24 | Initial canonical examples | Demonstrate intended usage patterns | `examples/` | N/A |
-| 2025-12-24 | Initial validation scripts | Ensure examples conform to schema | `scripts/validate_all_examples.py` | N/A |
+| 2025-12-24 | Initial decision log schema | Create a structured, auditable decision record | [`decision-log.schema.json`](../decision-log/decision-log.schema.json) | N/A |
+| 2025-12-24 | Initial canonical examples | Demonstrate intended usage patterns | [`examples/`](../examples/) | N/A |
+| 2025-12-24 | Initial validation scripts | Ensure examples conform to schema | [`validate_all_examples.py`](../scripts/validate_all_examples.py) | N/A |
