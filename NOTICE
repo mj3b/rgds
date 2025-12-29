@@ -1,0 +1,15 @@
+RGDS — Regulated Gate Decision Support
+Copyright © 2025 Mark Julius Banasihan
+
+This repository contains an independent, non-commercial reference implementation
+demonstrating decision-governance patterns for regulated, phase-gated environments.
+
+RGDS is provided for research, educational, and illustrative purposes only.
+It does not constitute regulatory advice, compliance guidance, or an approved
+delivery framework.
+
+All decisions, interpretations, and uses of this material remain the sole
+responsibility of the adopting organization and its authorized decision-makers.
+
+Licensed under the Apache License, Version 2.0.
+See the LICENSE file for details.
