@@ -6,7 +6,7 @@ This repository demonstrates the RGDS operating model: **human-governed, evidenc
 
 ---
 
-## 📑 Table of Contents
+## Table of Contents
 
 - [Canonical Reference Decisions](#canonical-reference-decisions)
 - [What’s New in v1.4.0](#whats-new-in-v140)
