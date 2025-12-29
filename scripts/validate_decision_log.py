@@ -2,13 +2,13 @@
 import json
 import sys
 from pathlib import Path
-
 from jsonschema import Draft202012Validator
 
 ROOT = Path(__file__).resolve().parents[1]
 
 DEFAULT_SCHEMA = ROOT / "decision-log" / "decision-log.schema.json"
 DEFAULT_INSTANCE = ROOT / "examples" / "rgds-dec-0001.json"
+
 
 def load_json(path: Path):
     try:
@@ -17,9 +17,114 @@ def load_json(path: Path):
         print(f"[ERROR] Failed to read JSON: {path}\n  {e}")
         sys.exit(2)
 
+
+def format_path(err_path) -> str:
+    out = "$"
+    for p in err_path:
+        if isinstance(p, int):
+            out += f"[{p}]"
+        else:
+            out += f".{p}"
+    return out
+
+
+def semantic_checks(instance: dict) -> tuple[list[str], list[str]]:
+    """
+    Returns (errors, warnings).
+    Keep this aligned with validate_all_examples.py.
+    """
+    errs: list[str] = []
+    warns: list[str] = []
+
+    decision_outcome = instance.get("decision_outcome", {}) or {}
+    outcome = decision_outcome.get("outcome")
+
+    conditions = decision_outcome.get("conditions") or []
+    actions = instance.get("actions") or []
+    gaps = (instance.get("known_gaps_and_assumptions", {}) or {}).get("gaps") or []
+
+    # Outcome invariants
+    if outcome == "conditional_go":
+        if len(conditions) == 0:
+            errs.append("conditional_go requires decision_outcome.conditions (at least 1)")
+        if len(actions) == 0:
+            warns.append("conditional_go has no actions; consider adding actions to operationalize conditions")
+
+    if outcome == "defer_with_required_evidence":
+        if len(gaps) == 0:
+            errs.append("defer_with_required_evidence requires known_gaps_and_assumptions.gaps (at least 1)")
+        if len(conditions) == 0:
+            errs.append("defer_with_required_evidence requires decision_outcome.conditions (at least 1)")
+        if len(actions) == 0:
+            errs.append("defer_with_required_evidence requires actions (at least 1)")
+
+    if outcome == "defer":
+        if len(gaps) == 0 and len(actions) == 0:
+            warns.append("defer has no gaps or actions; consider recording re-entry criteria or follow-up actions")
+
+    # Evidence completeness coherence (top-level)
+    ec = instance.get("evidence_completeness")
+    if isinstance(ec, dict):
+        state = ec.get("state")
+        if state in ("partial", "placeholder"):
+            author_at_risk_items = instance.get("author_at_risk_items") or []
+            if len(gaps) == 0 and len(author_at_risk_items) == 0:
+                warns.append("evidence_completeness is partial/placeholder, but no known gaps or author_at_risk_items recorded")
+            if state == "placeholder" and not ec.get("expected_resolution_date"):
+                warns.append("evidence_completeness.state=placeholder; consider setting expected_resolution_date")
+
+    # Governance coherence (authority/escalation)
+    gov = instance.get("governance", {}) or {}
+    authority_scope = gov.get("authority_scope")
+    escalation_path = gov.get("escalation_path") or []
+
+    if authority_scope in ("recommend", "decide", "veto"):
+        owner = gov.get("decision_owner")
+        if not owner:
+            errs.append("governance.authority_scope is present but governance.decision_owner is missing")
+
+    if "escalation_path" in gov and isinstance(escalation_path, list) and len(escalation_path) == 0:
+        warns.append("governance.escalation_path is present but empty; consider specifying deadlock resolver(s)")
+
+    # AI assistance disclosure integrity
+    ai = instance.get("ai_assistance", {}) or {}
+    used = ai.get("used", False)
+
+    if used:
+        use_cases = ai.get("use_cases") or []
+        artifacts = ai.get("artifacts") or []
+        controls = ai.get("controls") or {}
+
+        if len(use_cases) == 0:
+            errs.append("ai_assistance.used=true requires ai_assistance.use_cases (at least 1)")
+        if len(artifacts) == 0:
+            errs.append("ai_assistance.used=true requires ai_assistance.artifacts (at least 1)")
+
+        for k in ("prompt_or_instruction_ref", "schema_or_format_constraints", "versioning", "safety_notes"):
+            v = controls.get(k)
+            if not isinstance(v, str) or not v.strip():
+                warns.append(f"ai_assistance.controls.{k} is empty; consider adding a concrete reference")
+
+        conf_band = ai.get("confidence_band")
+        human_override = ai.get("human_override")
+        if conf_band is not None and human_override is None:
+            warns.append("ai_assistance.confidence_band is set but human_override is null; consider recording override status")
+
+    else:
+        if ai.get("use_cases") or ai.get("artifacts"):
+            warns.append("ai_assistance.used=false but use_cases/artifacts are present; consider setting used=true or clearing fields")
+
+    return errs, warns
+
+
 def main():
-    schema_path = Path(sys.argv[1]).resolve() if len(sys.argv) > 1 else DEFAULT_SCHEMA
-    instance_path = Path(sys.argv[2]).resolve() if len(sys.argv) > 2 else DEFAULT_INSTANCE
+    # Usage:
+    #   validate_decision_log.py [schema.json] [instance.json] [--semantic]
+    semantic = "--semantic" in sys.argv
+    args = [a for a in sys.argv[1:] if a != "--semantic"]
+
+    schema_path = Path(args[0]).resolve() if len(args) > 0 else DEFAULT_SCHEMA
+    instance_path = Path(args[1]).resolve() if len(args) > 1 else DEFAULT_INSTANCE
 
     if not schema_path.exists():
         print(f"[ERROR] Schema not found: {schema_path}")
@@ -37,14 +142,30 @@ def main():
     if errors:
         print("[FAIL] Decision log does NOT conform to schema.")
         for e in errors:
-            path = "$" + "".join([f"[{repr(p)}]" if isinstance(p, int) else f".{p}" for p in e.path])
-            print(f" - {path}: {e.message}")
+            print(f" - {format_path(e.path)}: {e.message}")
         sys.exit(1)
 
-    print("[PASS] Decision log conforms to schema.")
+    print("[PASS] Decision log conforms to schema (schema-only).")
     print(f"  Schema:   {schema_path}")
     print(f"  Instance: {instance_path}")
+
+    if semantic:
+        sem_errs, sem_warns = semantic_checks(instance)
+        if sem_errs:
+            print("\n[FAIL] Semantic invariants failed.")
+            for msg in sem_errs:
+                print(f" - {msg}")
+            sys.exit(1)
+
+        if sem_warns:
+            print("\n[WARN] Semantic recommendations:")
+            for msg in sem_warns:
+                print(f" - {msg}")
+
+        print("\n[PASS] Semantic invariants satisfied (with possible warnings).")
+
     sys.exit(0)
+
 
 if __name__ == "__main__":
     main()
