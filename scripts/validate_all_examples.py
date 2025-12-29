@@ -166,7 +166,7 @@ def main():
                 print(f"  - {msg}")
             continue
 
-        print(f"[PASS] {example.name}")
+        print(f"[PASS] {example.name} (schema + semantic)")
 
         if sem_warns:
             warned_any = True
@@ -181,6 +181,7 @@ def main():
         print("\nAll example decision logs conform to schema and semantic invariants (with warnings).")
     else:
         print("\nAll example decision logs conform to schema and semantic invariants.")
+        print("\nLegend: PASS = schema + semantic invariants satisfied; WARN = recommendations (non-fatal).")
     sys.exit(0)
 
 
