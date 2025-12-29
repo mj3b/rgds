@@ -1,6 +1,7 @@
 # Decision Gate Extract — Sample Power BI Schema & Dataflow
 
-This document provides a **concrete example** of how the RGDS Decision Gate Extract
+This document provides a concrete example of how the
+[RGDS Decision Gate Extract](./decision-gate-extract.md)
 can be operationalized in a BI tool such as Power BI.
 
 It is illustrative, not prescriptive.
@@ -51,7 +52,8 @@ This table is **read-only** in BI.
 ## Sample Power BI Dataflow (Source → Transform → Load)
 
 ### Source
-- RGDS decision log JSON files
+- RGDS decision log JSON files  
+  (see [decision-log/decision-log.schema.json](../decision-log/decision-log.schema.json))
 - Location:
   - GitHub repository
   - or document store / data lake
