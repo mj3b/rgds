@@ -1,4 +1,54 @@
 #!/usr/bin/env python3
+"""
+RGDS Validation Script — validate_all_examples.py
+
+Purpose
+-------
+Validates all canonical RGDS decision examples against:
+1) The JSON Schema (structural correctness)
+2) Semantic governance invariants (decision discipline)
+
+This script is intentionally conservative.
+It blocks changes that would weaken decision defensibility.
+
+What this script enforces
+-------------------------
+HARD FAILS (block CI):
+- JSON Schema violations
+- Missing required governance elements for certain decision outcomes
+- Inconsistent AI disclosure when AI is marked as used
+
+WARNINGS (do NOT block CI):
+- Weak but allowed governance patterns
+- Missing strongly recommended fields
+- Situations that increase risk but may be intentional
+
+Warnings are signals, not noise.
+They are printed to force explicit consideration.
+
+What this script does NOT do
+----------------------------
+- It does NOT judge whether a decision is "correct"
+- It does NOT approve or reject decisions
+- It does NOT automate governance
+
+Passing this script means:
+- The decision record is structurally sound
+- Governance intent is preserved
+- Auditability is maintained
+
+Human judgment remains required.
+
+Typical usage
+-------------
+    python3 scripts/validate_all_examples.py
+
+Exit codes
+----------
+0 — All examples pass (warnings allowed)
+1 — Schema or semantic invariant failure (CI should block)
+2 — Script/configuration error (missing files, unreadable JSON)
+"""
 import json
 import sys
 from pathlib import Path
@@ -28,10 +78,22 @@ def format_path(err_path) -> str:
 
 
 def semantic_checks(instance: dict) -> tuple[list[str], list[str]]:
-    """
-    Returns (errors, warnings).
-    - errors: fail CI (semantic invariants)
-    - warnings: printed but do not fail CI (strong recommendations)
+     """
+    Semantic governance checks that JSON Schema alone cannot express.
+
+    Returns:
+        errors   -> semantic violations that FAIL CI
+        warnings -> strong governance recommendations (non-fatal)
+
+    Design principle:
+    -----------------
+    Schema enforces structure.
+    Semantic checks enforce decision discipline.
+
+    If a rule appears here, it exists because:
+    - A real delivery failure was observed
+    - The failure was preventable by explicit recording
+    - The schema alone could not enforce it
     """
     errs: list[str] = []
     warns: list[str] = []
@@ -131,6 +193,19 @@ def semantic_checks(instance: dict) -> tuple[list[str], list[str]]:
 
 
 def main():
+     """
+    Entry point.
+
+    Validates every JSON file in /examples:
+    - Schema validation first
+    - Semantic validation second
+
+    Output conventions:
+    -------------------
+    [PASS]  — schema + semantic invariants satisfied
+    [WARN]  — governance recommendations (non-fatal)
+    [FAIL]  — schema or semantic invariant violation (blocks CI)
+    """
     if not SCHEMA_PATH.exists():
         print(f"[ERROR] Schema not found: {SCHEMA_PATH}")
         sys.exit(2)
