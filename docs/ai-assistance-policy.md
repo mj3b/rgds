@@ -11,71 +11,87 @@ This policy defines how AI assistance may be used within RGDS while preserving:
 - auditability
 - regulatory defensibility
 
-AI in RGDS assists with **preparation and analysis**, not approval or risk acceptance.
+AI in RGDS supports **preparation and analysis** only.  
+It never approves decisions, accepts risk, or exercises authority.
+
+---
+
+## Scope
+
+This policy applies to any use of AI within RGDS workflows, including:
+
+- decision preparation
+- evidence analysis
+- narrative drafting
+- structured data extraction
+- comparison and classification tasks
+
+This policy applies regardless of tool, vendor, or deployment model.
 
 ---
 
 ## Permitted AI use cases
 
-AI assistance may be used for:
+AI assistance **may** be used for:
 
 - summarization of existing documents
 - extraction of structured data from unstructured sources
-- comparison of versions or datasets
-- drafting of narratives or checklists
-- classification of known categories
+- comparison of document versions or datasets
+- drafting of narratives, summaries, or checklists
+- classification into predefined categories
 
-All AI-assisted outputs must be reviewable by humans.
+All AI-assisted outputs must be **human-reviewable and reversible**.
 
 ---
 
 ## Prohibited AI use cases
 
-AI assistance must not:
+AI assistance must **not**:
 
-- make approval or rejection decisions
-- accept or reject risk
+- make approval, rejection, or go/no-go decisions
+- accept, reject, or optimize risk posture
 - generate evidence of record
-- override human judgment
-- operate autonomously across gates
+- override or substitute for expert judgment
+- operate autonomously across phase gates
+- initiate actions without explicit human instruction
 
-AI outputs are not authoritative by default.
+AI outputs are **never authoritative by default**.
 
 ---
 
 ## Disclosure requirements
 
-When AI assistance is used:
+When AI assistance is used, the following must be recorded in the Decision Log:
 
-- the use case is disclosed in the Decision Log
-- inputs and outputs are referenced
-- human disposition is recorded (accepted / edited / rejected)
-- controls and constraints are documented
+- the AI use case
+- references to inputs and outputs
+- human disposition (`accepted` / `edited` / `rejected`)
+- applicable controls and constraints
 
-Silent AI usage is not permitted.
+Silent or undisclosed AI usage is **not permitted**.
 
 ---
 
 ## Controls and constraints
 
-Each AI-assisted artifact must document:
+Each AI-assisted artifact must document, at minimum:
 
 - prompt or instruction reference
-- schema or format constraints
-- versioning information
-- safety or limitation notes
+- schema, template, or format constraints
+- versioning or configuration identifiers
+- known limitations or safety notes
 
-These controls ensure repeatability and traceability.
+These controls exist to ensure **traceability, repeatability, and audit readiness**.
 
 ---
 
 ## Review and acceptance
 
-- AI outputs are reviewed by qualified humans
+- All AI outputs are reviewed by qualified humans
 - Reviewers may accept, edit, or reject outputs
 - Rejection does not require justification, but disposition is recorded
 
-Human review is mandatory.
+Human review is **mandatory and non-delegable**.
 
 ---
 
@@ -83,10 +99,13 @@ Human review is mandatory.
 
 AI assistance is treated as a **potential risk amplifier** if misused.
 
-Therefore:
-- AI use is optional, not assumed
-- decisions must remain defensible without AI outputs
-- removal of AI assistance must not block the decision process
+Accordingly:
+
+- AI use is optional, never assumed
+- decisions must remain defensible without AI assistance
+- removal or failure of AI tools must not block decision-making
+
+AI is a support mechanism, not a dependency.
 
 ---
 
@@ -94,29 +113,34 @@ Therefore:
 
 If AI is used outside this policy:
 
-- the decision must be paused or re-reviewed
-- misuse is documented
+- the affected decision is paused or re-reviewed
+- misuse is documented in the governance record
 - corrective action is taken before proceeding
 
-Governance takes precedence over convenience.
+Governance takes precedence over convenience or speed.
 
 ---
 
 ## Policy evolution
 
 This policy is reviewed periodically and updated as:
+
 - regulatory expectations evolve
-- tooling changes
+- tooling or deployment models change
 - new risks are identified
 
-All policy changes are versioned and auditable.
+All policy changes are versioned, approved, and auditable.
 
+---
 
-## v1.4.0 trust signals (non-authoritative)
-RGDS v1.4.0 allows optional disclosure fields inside `ai_assistance`:
+## v1.4.0 transparency signals (non-authoritative)
 
-- **confidence_band:** `low` | `medium` | `high` (a coarse signal, not a score)
-- **human_override:** whether a human changed, rejected, or replaced AI-supported content
+RGDS v1.4.0 supports optional transparency fields within `ai_assistance`:
 
-These are recorded for transparency and post-hoc review. They never grant AI decision authority.
+- **`confidence_band`** — `low` | `medium` | `high`  
+  *(a coarse signal for context, not a performance score)*
 
+- **`human_override`** — whether a human changed, rejected, or replaced AI-supported content
+
+These fields exist solely for **transparency and post-hoc review**.  
+They never grant AI decision authority or evidentiary weight.
