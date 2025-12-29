@@ -8,13 +8,13 @@ decisions fail **after** they are made.
 
 These failures are not primarily caused by lack of expertise or analytical capability.
 They emerge from **implicit judgment, undocumented trade-offs, and governance gaps** that
-only surface under time pressure or external scrutiny.
+surface only under time pressure or external scrutiny.
 
 RGDS translates these recurring patterns into **explicit, auditable decision structure**.
 
 ---
 
-## Source Attribution Note
+## Source attribution note
 
 The signal patterns described in this document are derived from:
 
@@ -30,7 +30,7 @@ They are cited as **signal sources**, not as decision owners, endorsers, or eval
 ## Signal Group 1 — Execution & Writing Reality  
 *(Kasturi — Medical Writing, Public IND Webinar)*
 
-### Observed Execution Patterns
+### Observed execution patterns
 
 Across IND execution discussions, the following patterns recur:
 
@@ -44,7 +44,7 @@ Across IND execution discussions, the following patterns recur:
   A change in one module requires mental tracking of narrative and data propagation.
 
 - **Placeholder discomfort is cultural, not technical**  
-  Risk aversion leads to delayed acknowledgment of uncertainty.
+  Risk aversion delays explicit acknowledgment of uncertainty.
 
 - **Reviewer bottlenecks appear late**  
   Required reviewers are identified only after content is already drafted.
@@ -58,29 +58,29 @@ Across IND execution discussions, the following patterns recur:
 - **Parallel authoring increases narrative drift**  
   Speed optimizations create misalignment across sections.
 
-### Failure Modes if Unmanaged
+### Failure modes if unmanaged
 
 - late rework and timeline slips  
 - internally inconsistent narratives  
 - reviewer confusion or distrust  
 - increased regulatory questioning  
-- erosion of credibility at submission  
+- erosion of submission credibility  
 
-### RGDS Design Response (v1.4.0)
+### RGDS design response (v1.4.0)
 
 These signals directly informed:
 
 - **evidence_completeness**  
-  Explicit declaration of complete / partial / placeholder evidence.
+  Explicit declaration of complete, partial, or placeholder evidence.
 
 - **propagation_required**  
   Required downstream updates are declared at decision time.
 
-- **author-at-risk handling**  
+- **author-at-risk modeling**  
   Placeholder drafting is treated as governed risk, not informal practice.
 
 - **review_plan**  
-  Reviewer necessity is explicit, not assumed.
+  Reviewer requirements are explicit, not assumed.
 
 - **dependency awareness**  
   Cross-artifact impacts are recorded as decision inputs.
@@ -93,7 +93,7 @@ It prevents **undocumented uncertainty**.
 ## Signal Group 2 — Regulatory Strategy & Risk  
 *(Drew — Regulatory Leadership, Public IND Webinar)*
 
-### Observed Strategic Patterns
+### Observed strategic patterns
 
 Regulatory planning discussions consistently surface:
 
@@ -110,7 +110,7 @@ Regulatory planning discussions consistently surface:
   Misalignment is discovered by regulators, not resolved internally.
 
 - **Pre-IND timing is under-structured**  
-  Engagement decisions are made without explicit trade-off capture.
+  Engagement decisions lack explicit trade-off capture.
 
 - **Novel approaches lack justification trails**  
   Innovation decisions are hard to defend retroactively.
@@ -119,23 +119,23 @@ Regulatory planning discussions consistently surface:
   “What if FDA says no?” is rarely logged as a decision.
 
 - **Complex CMC maturity gates dominate timelines**  
-  Acceptance decisions are made without explicit dependency logic.
+  Acceptance decisions lack explicit dependency logic.
 
 - **Target Product Profile drift occurs silently**  
-  Decisions slowly detach from original intent.
+  Decisions detach from original development intent.
 
 - **Claims outpace substantiation**  
   Support gaps surface late, often at NDA stage.
 
-### Failure Modes if Unmanaged
+### Failure modes if unmanaged
 
 - decision paralysis or over-conservatism  
 - regulatory surprises  
-- rework at later, more expensive stages  
+- late-stage rework at higher cost  
 - loss of institutional confidence  
 - weakened regulatory trust  
 
-### RGDS Design Response (v1.4.0)
+### RGDS design response (v1.4.0)
 
 These signals informed:
 
@@ -149,7 +149,7 @@ These signals informed:
   “Why this was sufficient” is preserved.
 
 - **authority_scope + escalation_path**  
-  Strategic ownership is visible.
+  Strategic ownership is visible and auditable.
 
 - **re-entry paths**  
   No-go and defer decisions include forward options.
@@ -165,7 +165,7 @@ It ensures strategy is **explainable**.
 ## Signal Group 3 — Operations, Culture, and AI Adoption  
 *(Gabby — Operations & AI Enablement, Structured Interview)*
 
-### Observed Operational Patterns
+### Observed operational patterns
 
 Operational and AI adoption discussions reveal:
 
@@ -173,7 +173,7 @@ Operational and AI adoption discussions reveal:
   Authority is unclear across teams.
 
 - **Process friction accumulates quietly**  
-  “Red tape” masks missing decision clarity.
+  “Red tape” obscures missing decision clarity.
 
 - **Resource constraints drive hidden trade-offs**  
   Capacity limits are rarely explicit at decision time.
@@ -184,15 +184,15 @@ Operational and AI adoption discussions reveal:
 - **Executive reporting abstracts away decision logic**  
   Status decks replace decision traceability.
 
-### Failure Modes if Unmanaged
+### Failure modes if unmanaged
 
 - delayed decisions  
 - burnout and quality erosion  
-- adoption failure of new systems  
+- failed adoption of new systems  
 - executive misalignment  
 - loss of delivery confidence  
 
-### RGDS Design Response (v1.4.0)
+### RGDS design response (v1.4.0)
 
 These signals informed:
 
@@ -215,7 +215,7 @@ RGDS treats culture as a **governance input**, not an afterthought.
 
 ---
 
-## What RGDS Explicitly Rejects
+## What RGDS explicitly rejects
 
 RGDS is intentionally **not**:
 
@@ -233,7 +233,7 @@ It explicitly rejects:
 
 ---
 
-## Why This Is a System (Not a Template)
+## Why this is a system (not a template)
 
 Templates capture information.  
 Systems enforce **decision discipline**.
@@ -246,8 +246,8 @@ RGDS combines:
 - validation tooling  
 - canonical examples  
 
-to ensure that decisions remain **defensible under scrutiny**, not just reasonable at the
-time they were made.
+to ensure decisions remain **defensible under scrutiny**, not merely reasonable at the
+moment they were made.
 
 ---
 
@@ -272,4 +272,3 @@ RGDS exists because regulated programs do not fail for lack of intelligence.
 They fail when **decisions cannot be reconstructed, defended, or trusted**.
 
 This repository represents one principled response to that reality.
-
