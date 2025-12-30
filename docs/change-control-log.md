@@ -19,6 +19,7 @@ Introduced explicit authority and escalation modeling, strengthened evidence com
 
 | Date | Change | Rationale | Impacted Files | Approved By |
 |---|---|---|---|---|
+| 2025-12-30 | Added canonical AI-assisted conditional_go example | Demonstrate bounded AI assistance with explicit disclosure and preserved human authority | [`rgds-dec-0006-ai-assisted-conditional-go.json`](../examples/rgds-dec-0006-ai-assisted-conditional-go.json) | N/A |
 | 2025-12-27 | Added evidence completeness, propagation declaration, and risk benchmarking basis | Make downstream impact and evidence sufficiency explicit at decision time | [`decision-log.schema.json`](../decision-log/decision-log.schema.json) | N/A (reference implementation) |
 | 2025-12-27 | Added authority scope and escalation path fields | Make decision rights and deadlock resolution auditable | [`decision-log.schema.json`](../decision-log/decision-log.schema.json), [`governance.md`](governance.md) | N/A |
 | 2025-12-27 | Added optional AI transparency signals | Support post-hoc review without granting AI authority | [`decision-log.schema.json`](../decision-log/decision-log.schema.json), [`ai-assistance-policy.md`](ai-assistance-policy.md) | N/A |
