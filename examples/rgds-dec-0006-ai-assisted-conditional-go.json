@@ -1,0 +1,8 @@
+"ai_assistance": {
+  "used": true,
+  "use_case": "evidence gap surfacing",
+  "inputs": ["nc_summary_v1.2", "tox_audited_draft"],
+  "constraints": ["non-agentic-ai-contract-v1.0"],
+  "output_disposition": "reviewed_and_edited",
+  "known_limitations": "AI cannot assess clinical relevance or accept risk"
+}
