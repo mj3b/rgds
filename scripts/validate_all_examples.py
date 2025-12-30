@@ -49,7 +49,7 @@ Exit codes
 import json
 import sys
 from pathlib import Path
-from jsonschema import Draft202012Validator
+from jsonschema import Draft202012Validator, FormatChecker
 
 ROOT = Path(__file__).resolve().parents[1]
 SCHEMA_PATH = ROOT / "decision-log" / "decision-log.schema.json"
@@ -224,7 +224,7 @@ def main():
         sys.exit(2)
 
     schema = load_json(SCHEMA_PATH)
-    validator = Draft202012Validator(schema)
+    validator = Draft202012Validator(schema, format_checker=FormatChecker())
 
     examples = sorted(EXAMPLES_DIR.glob("*.json"))
     if not examples:
