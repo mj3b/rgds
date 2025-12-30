@@ -45,6 +45,7 @@ The following optional fields clarify authority without changing ownership:
 
 - **`authority_scope`** — `recommend` | `decide` | `veto`
 - **`escalation_path`** — defines who resolves deadlock when reviewers disagree or timelines compress
+- Examples intentionally leave escalation_path empty to demonstrate validator warnings and encourage explicit deadlock resolution in real programs.
 
 These fields do not redistribute power.  
 They make authority, limits, and escalation **explicit and reviewable**.
