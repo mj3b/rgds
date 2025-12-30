@@ -51,7 +51,10 @@ This repository demonstrates the RGDS operating model: **human-governed, evidenc
 
 ## Canonical Reference Decisions
 
-If you read only one thing in this repository, read:
+If you read only **one place** in this repository, start here.
+
+The following canonical decision records demonstrate the RGDS operating model
+in concrete, reviewable form.
 
 | File | Canonical scenario demonstrated |
 |---|---|
