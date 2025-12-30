@@ -341,9 +341,9 @@ These fields are **enforced by schema**, **governed by policy**, and
 
 | Disclosure | Field | Meaning |
 |---|---|---|
-| AI used? | `ai_assist.used` | transparency |
-| Confidence band | `ai_assist.confidence_band` | informational only |
-| Human override | `ai_assist.human_override` | records corrective intervention |
+| AI used? | `ai_assistance.used` | transparency |
+| Confidence band | `ai_assistance.confidence_band` | informational only |
+| Human override | `ai_assistance.human_override` | records corrective intervention |
 
 - **Schema enforcement:**  
   → [`decision-log/decision-log.schema.json`](decision-log/decision-log.schema.json)
