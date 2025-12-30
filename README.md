@@ -331,7 +331,11 @@ AI must not:
 
 ### What Gets Logged When AI Is Used (v1.4.0)
 
-If AI assistance is used for a decision artifact, the usage must be disclosed in the decision log:
+If AI assistance is used for a decision artifact, the usage must be disclosed
+in the decision log using explicit, schema-defined fields.
+
+These fields are **enforced by schema**, **governed by policy**, and
+**demonstrated in canonical examples**.
 
 | Disclosure | Field | Meaning |
 |---|---|---|
@@ -339,8 +343,18 @@ If AI assistance is used for a decision artifact, the usage must be disclosed in
 | Confidence band | `ai_assist.confidence_band` | informational only |
 | Human override | `ai_assist.human_override` | records corrective intervention |
 
-This disclosure is informational only. It does not change accountability:  
-**the decision owner remains responsible for final content and outcome.**
+- **Schema enforcement:**  
+  → [`decision-log/decision-log.schema.json`](decision-log/decision-log.schema.json)
+
+- **Governance policy:**  
+  → [`docs/ai-assistance-policy.md`](docs/ai-assistance-policy.md)
+
+- **Worked example:**  
+  → [`examples/rgds-dec-0006-ai-assisted-conditional-go.json`](examples/rgds-dec-0006-ai-assisted-conditional-go.json)
+
+This disclosure is **informational only**.
+It does not change accountability:
+the **human decision owner remains responsible** for final content and outcome.
 
 ### Evidence Rule
 
