@@ -423,9 +423,9 @@ rgds/
 
 | File | What it is |
 |---|---|
-| `docs/why-rgds-exists.md` | Evidence-to-design rationale (signals → RGDS mechanisms) |
-| `docs/decision-log.md` | How to interpret decision logs |
-| `docs/governance.md` | Governance rules and enforcement intent |
+| [`docs/why-rgds-exists.md`](docs/why-rgds-exists.md) | Evidence-to-design rationale (signals → RGDS mechanisms) |
+| [`docs/decision-log.md`](docs/decision-log.md) | How to interpret decision logs |
+| [`docs/governance.md`](docs/governance.md) | Governance rules and enforcement intent |
 
 ## Complete Documentation Index
 
