@@ -221,7 +221,10 @@
       "notes": "Defer_with_required_evidence recorded; conditions and actions must close before resubmitting for gate approval."
     },
     "authority_scope": "decide",
-    "escalation_path": []
+    "escalation_path": [
+       { "name": "QA Representative", "role": "Quality (Deadlock resolver)" },
+       { "name": "Executive Sponsor", "role": "VP, Development (Final escalation)" }
+    ]
   },
   "ai_assistance": {
     "used": false,
