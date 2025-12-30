@@ -162,7 +162,10 @@ human decision-makers and organizations using this material.
 
 ## How to Read This Repository (Non-Technical Overview)
 
-This repository is organized around **decisions**, not tools or models.
+This repository is organized around **decisions**, not tools, models, or automation.
+
+RGDS is intentionally learned **by example first**, with documentation and schemas
+serving to explain what those examples enforce.
 
 Start with the `examples/` directory.
 
@@ -170,11 +173,15 @@ Start with the `examples/` directory.
 
 | Step | What to read | Why |
 |---|---|---|
-| 1 | one canonical example ([`0001`](examples/rgds-dec-0001.json), [`0003`](examples/rgds-dec-0003-defer-required-evidence.json), or [`0005`](examples/rgds-dec-0005-ind-conditional-go-author-at-risk.json)) | see the operating model in a real decision |
-| 2 | the decision-log schema ([`decision-log.schema.json`](decision-log/decision-log.schema.json)) | see what is enforced vs. optional |
-| 3 | the evaluation plan ([`evaluation-plan.md`](evaluation/evaluation-plan.md)) | see how decision quality is assessed |
+| 1 | one canonical decision example ([`0001`](examples/rgds-dec-0001.json), [`0003`](examples/rgds-dec-0003-defer-required-evidence.json), or [`0005`](examples/rgds-dec-0005-ind-conditional-go-author-at-risk.json)) | see the operating model in a real decision |
+| 2 | the decision-log schema ([`decision-log.schema.json`](decision-log/decision-log.schema.json)) | understand what is enforced vs. optional |
+| 3 | the evaluation plan ([`evaluation/evaluation-plan.md`](evaluation/evaluation-plan.md)) | see how decision quality is assessed |
 
-Each file represents a single, concrete decision at a gate, such as a conditional-go, defer, or no-go.
+Each decision record represents a single, concrete phase-gate outcome
+(e.g., conditional-go, defer, no-go, or escalation).
+
+Documentation explains **why** the system is designed this way.
+Examples show **how it actually works**.
 
 ### Each decision record shows
 
