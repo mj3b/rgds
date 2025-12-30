@@ -13,6 +13,11 @@ That log records:
 - rationale for decisions
 - effective dates for each version
 
+- ## v1.4.0
+- Added canonical example demonstrating bounded AI-assisted conditional_go
+  with explicit disclosure and preserved human authority
+  (`rgds-dec-0006-ai-assisted-conditional-go.json`).
+
 ---
 
 ## Notes
