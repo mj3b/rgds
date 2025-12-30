@@ -1,4 +1,17 @@
 # RGDS — Regulated Gate Decision Support
+<!-- RGDS governance + repository signals -->
+[![Status: Independent Case Study](https://img.shields.io/badge/status-independent%20case%20study-5b6cff)](#status)
+[![Human Governed](https://img.shields.io/badge/governance-human--governed-3bb273)](#governance)
+[![Non-Agentic](https://img.shields.io/badge/AI-explicitly%20non--agentic-2d7ff9)](#prohibited-uses-non-agentic-boundary)
+[![Decision Defensibility](https://img.shields.io/badge/outcome-decision%20defensibility-6f42c1)](#what-problem-this-solves)
+[![Audit Ready](https://img.shields.io/badge/property-audit--ready%20artifacts-0aa2c0)](#evaluation)
+[![No Autonomy](https://img.shields.io/badge/constraint-no%20autonomous%20execution-ff7a00)](#what-this-repository-is-and-is-not)
+
+[![License](https://img.shields.io/github/license/mj3b/rgds)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/mj3b/rgds)](https://github.com/mj3b/rgds/stargazers)
+[![CI Validation](https://img.shields.io/github/actions/workflow/status/mj3b/rgds/validate.yml)](https://github.com/mj3b/rgds/actions/workflows/validate.yml)
+
+[![Schema Enforced](https://img.shields.io/badge/schema-decision%20log%20enforced-1f6feb)](#decision-log)
 
 A human-governed system for producing defensible, phase-gate decisions in regulated environments.
 
