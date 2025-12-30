@@ -17,7 +17,7 @@
     "gate_name": "IND Readiness Gate",
     "gate_type": "phase_gate",
     "gate_date": "2026-01-15",
-    "decision_deadline": "2026-01-15",
+   "decision_deadline": "2026-01-15T23:59:59Z",
     "meeting_refs": [
       "Gate Review #3 — IND readiness (Exec Committee)"
     ]
