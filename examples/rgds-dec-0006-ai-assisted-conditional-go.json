@@ -194,7 +194,10 @@
       "notes": "Human accountability confirmed; AI assistance treated as non-authoritative drafting/review support only."
     },
     "authority_scope": "decide",
-    "escalation_path": []
+    "escalation_path": [
+      { "name": "QA Representative", "role": "Quality (Deadlock resolver)" },
+      { "name": "Executive Sponsor", "role": "SVP, Development (Escalation authority)" }
+    ]
   },
   "ai_assistance": {
     "used": true,
