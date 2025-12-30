@@ -130,7 +130,7 @@
           "name": "CMC Lead",
           "role": "CMC Lead"
         },
-        "as_of": "2026-01-09",
+        "as_of": "2026-01-09T00:00:00Z",
         "relevance": "supporting",
         "quality_notes": "Draft; pending final analytical confirmation.",
         "confidence": "low"
