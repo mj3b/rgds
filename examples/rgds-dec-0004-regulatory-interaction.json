@@ -115,7 +115,7 @@
           "name": "Regulatory Ops",
           "role": "Regulatory Ops"
         },
-        "as_of": "2025-12-18",
+        "as_of": "2025-12-18T00:00:00Z",
         "relevance": "primary",
         "quality_notes": "Primary source but context-limited; language is conditional and depends on final impurity profile.",
         "confidence": "medium"
