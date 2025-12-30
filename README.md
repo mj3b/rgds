@@ -375,6 +375,7 @@ rgds/
 │   ├── rgds-dec-0003-defer-required-evidence.json
 │   ├── rgds-dec-0004-regulatory-interaction.json
 │   ├── rgds-dec-0005-ind-conditional-go-author-at-risk.json
+│   ├── rgds-dec-0006-ai-assisted-conditional-go.json
 │   └── README.md
 ├── evaluation/
 │   ├── evaluation-plan.md
