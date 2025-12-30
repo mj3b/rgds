@@ -399,6 +399,81 @@ rgds/
 | `docs/decision-log.md` | How to interpret decision logs |
 | `docs/governance.md` | Governance rules and enforcement intent |
 
+## Complete Documentation Index
+
+This index provides direct links to **all human-readable documentation** in the RGDS repository.
+It is intended to help reviewers quickly locate authoritative explanations, governance rules,
+and evaluation criteria without navigating the full directory tree.
+
+---
+
+### Root Orientation
+
+| File | Purpose |
+|---|---|
+| [`README.md`](README.md) | Primary orientation document explaining RGDS purpose, scope, governance stance, and how to read the repository |
+
+---
+
+### `docs/` — Governance, Rationale, and Interpretation
+
+| File | What it explains |
+|---|---|
+| [`docs/why-rgds-exists.md`](docs/why-rgds-exists.md) | Evidence-to-design rationale (delivery signals → RGDS mechanisms) |
+| [`docs/decision-log.md`](docs/decision-log.md) | How to read, interpret, and review RGDS decision logs |
+| [`docs/governance.md`](docs/governance.md) | Governance rules, authority separation, and enforcement intent |
+| [`docs/ai-assistance-policy.md`](docs/ai-assistance-policy.md) | Bounded AI usage policy: permitted use, prohibitions, disclosure, and controls |
+| [`docs/change-control-log.md`](docs/change-control-log.md) | Versioned record of governance and schema changes |
+| [`docs/role-decision-artifact-matrix.md`](docs/role-decision-artifact-matrix.md) | Cross-role ownership matrix for decisions and supporting artifacts |
+
+---
+
+### `examples/` — Canonical Decision Records
+
+| File | Canonical scenario demonstrated |
+|---|---|
+| [`examples/README.md`](examples/README.md) | How to read and compare example decisions |
+| [`examples/rgds-dec-0001.json`](examples/rgds-dec-0001.json) | Canonical **conditional_go** (explicit conditions, owned follow-ups) |
+| [`examples/rgds-dec-0002-no-go.json`](examples/rgds-dec-0002-no-go.json) | Canonical **no_go** with defensible rationale and re-entry logic |
+| [`examples/rgds-dec-0003-defer-required-evidence.json`](examples/rgds-dec-0003-defer-required-evidence.json) | Canonical **defer / abstain** due to missing required evidence |
+| [`examples/rgds-dec-0004-regulatory-interaction.json`](examples/rgds-dec-0004-regulatory-interaction.json) | Regulatory interaction or escalation decision logic |
+| [`examples/rgds-dec-0005-ind-conditional-go-author-at-risk.json`](examples/rgds-dec-0005-ind-conditional-go-author-at-risk.json) | IND-style **conditional_go** (author-at-risk drafting, reviewer triage, publishing lock points) |
+
+> All example decisions are **schema-validated** and demonstrate the intended RGDS operating model.
+
+---
+
+### `evaluation/` — Decision Quality and Governance Assessment
+
+| File | Evaluation role |
+|---|---|
+| [`evaluation/evaluation-plan.md`](evaluation/evaluation-plan.md) | How RGDS decisions are evaluated for quality and defensibility |
+| [`evaluation/evidence-quality-rubric.md`](evaluation/evidence-quality-rubric.md) | Criteria for assessing evidence completeness and confidence |
+| `evaluation/scorecard-template.csv` | Structured scorecard for decision review (CSV; non-Markdown) |
+
+---
+
+### External Governance Reference (Authoritative)
+
+RGDS defers AI authority boundaries and non-agentic constraints to a separate governance
+repository to preserve separation of concerns.
+
+| Resource | Purpose |
+|---|---|
+| **RGDS AI Governance (Covenants)** | Non-agentic AI contract, authority boundaries, and removability guarantees |
+| https://github.com/mj3b/rgds-ai-governance | Canonical source of AI governance definitions |
+
+---
+
+### Reviewer Navigation Guide
+
+- **Executives / Approvers**: `README.md` → one canonical example (`0001` or `0005`)
+- **Quality / Governance reviewers**: `docs/governance.md` → `docs/decision-log.md` → evaluation docs
+- **AI governance reviewers**: `docs/ai-assistance-policy.md` → AI Governance repository
+- **Auditors**: example decisions + evaluation artifacts (traceability and completeness)
+
+This index is intended to make RGDS review **finite, navigable, and auditable**.
+
 ---
 
 ## Why This Matters in Production
