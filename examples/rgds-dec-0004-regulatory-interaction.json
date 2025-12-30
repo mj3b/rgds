@@ -236,7 +236,10 @@
       "notes": "Final sign-off recorded."
     },
     "authority_scope": "decide",
-    "escalation_path": []
+    "escalation_path": [
+       { "name": "QA Representative", "role": "Quality (Deadlock resolver)" },
+       { "name": "Executive Sponsor", "role": "VP, Development (Final escalation)" }
+    ]
   },
   "ai_assistance": {
     "used": false,
