@@ -1,8 +1,105 @@
-"ai_assistance": {
-  "used": true,
-  "use_case": "evidence gap surfacing",
-  "inputs": ["nc_summary_v1.2", "tox_audited_draft"],
-  "constraints": ["non-agentic-ai-contract-v1.0"],
-  "output_disposition": "reviewed_and_edited",
-  "known_limitations": "AI cannot assess clinical relevance or accept risk"
+{
+  "decision_id": "RGDS-DEC-0006",
+  "decision_title": "AI-Assisted Conditional Go — IND Readiness (Non-Clinical Package)",
+  "decision_type": "conditional_go",
+  "phase_gate": "IND Readiness Review",
+  "program_area": "Non-Clinical / Regulatory Integration",
+  "decision_date": "YYYY-MM-DD",
+
+  "decision_owner": {
+    "role": "VP Regulatory Affairs",
+    "authority_scope": "Final decision authority"
+  },
+
+  "reviewers": [
+    {
+      "role": "Head of Non-Clinical Toxicology",
+      "authority_scope": "Scientific adequacy"
+    },
+    {
+      "role": "CMC Lead",
+      "authority_scope": "Manufacturing and stability readiness"
+    },
+    {
+      "role": "Quality Representative",
+      "authority_scope": "cGxP compliance and audit readiness"
+    }
+  ],
+
+  "decision_rationale": {
+    "summary": "Proceed to IND submission with explicit conditions due to incomplete long-term stability data and pending final GLP tox report sign-off.",
+    "confidence_level": "High with conditions"
+  },
+
+  "evidence_assessed": {
+    "non_clinical_reports": [
+      "GLP_Tox_Study_Audited_Draft_v1.1",
+      "Pharmacology_Summary_v2.0",
+      "PK_Summary_v1.3"
+    ],
+    "clinical_material": [],
+    "cmc_material": [
+      "Stability_Data_1_Month_vFinal",
+      "Manufacturing_Control_Strategy_v1.0"
+    ],
+    "evidence_completeness_state": "Partial — acceptable with conditions"
+  },
+
+  "ai_assistance": {
+    "used": true,
+    "use_case": "Evidence gap identification and cross-document consistency scan",
+    "inputs_reviewed": [
+      "Non-Clinical Summaries",
+      "Audited Draft GLP Tox Report",
+      "CMC Stability Tables"
+    ],
+    "constraints_applied": [
+      "non-agentic-ai-contract-v1.0",
+      "rgds-ai-assistance-policy-v1.0"
+    ],
+    "output_summary": "AI highlighted missing 3-month stability linkage across Module 2 summaries and flagged inconsistent tox margin phrasing.",
+    "output_disposition": "Reviewed and edited by human reviewers",
+    "known_limitations": [
+      "AI cannot assess clinical relevance",
+      "AI cannot accept or waive regulatory risk",
+      "AI cannot approve decisions"
+    ]
+  },
+
+  "conditions": [
+    {
+      "condition_id": "C-001",
+      "description": "Submit final signed GLP tox report prior to IND filing",
+      "owner": "Head of Non-Clinical Toxicology",
+      "due_by": "YYYY-MM-DD",
+      "verification_required": true
+    },
+    {
+      "condition_id": "C-002",
+      "description": "Submit 3-month stability data amendment within 30 days post-IND filing",
+      "owner": "CMC Lead",
+      "due_by": "YYYY-MM-DD",
+      "verification_required": true
+    }
+  ],
+
+  "risk_statement": {
+    "identified_risks": [
+      "Limited stability duration at time of filing"
+    ],
+    "risk_acceptance": "Accepted by Decision Owner with documented conditions",
+    "ai_role_in_risk": "Risk surfaced only; no acceptance authority"
+  },
+
+  "decision_outcome": {
+    "status": "Conditional Go",
+    "effective_date": "YYYY-MM-DD",
+    "escalation_required": false
+  },
+
+  "governance_attestation": {
+    "human_accountability_confirmed": true,
+    "ai_non_authoritative_confirmed": true,
+    "audit_ready": true
+  }
 }
