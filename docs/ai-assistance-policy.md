@@ -74,6 +74,12 @@ Silent or undisclosed AI usage is **not permitted**.
 
 ## Controls and constraints
 
+AI usage within RGDS is governed by the **Non-Agentic AI Contract** and the
+**AI Removability Proof** maintained in the AI Governance repository.
+
+These documents define system-level prohibitions and guarantees that apply
+regardless of implementation, tooling, or workflow context.
+
 Each AI-assisted artifact must document, at minimum:
 
 - prompt or instruction reference
