@@ -169,29 +169,32 @@
     "residual_risk_statement": "Residual risk is accepted as bounded and governed, contingent on completion of explicit closure evidence for tox sign-off and stability amendment commitments.",
     "risk_acceptance_required": true
   },
- "governance": {
-  "decision_owner": { "name": "VP Regulatory Affairs", "role": "Decision Owner (Final authority)" },
-  "approvers": [
-    { "name": "VP Regulatory Affairs", "role": "Decision Owner (Final authority)" }
-  ],
-  "reviewers": [
-    { "name": "Head of Non-Clinical Toxicology", "role": "Scientific adequacy reviewer" },
-    { "name": "CMC Lead", "role": "CMC readiness reviewer" },
-    { "name": "Quality Representative", "role": "Audit readiness reviewer" }
-  ],
-  "approval_method": "meeting_vote",
-  "approvals": [ ... ],
-  "final_signoff": { ... },
-  "authority_scope": "decide",
-  "escalation_path": []
-}
+  "governance": {
+    "decision_owner": { "name": "VP Regulatory Affairs", "role": "Decision Owner (Final authority)" },
+    "approvers": [
+      { "name": "VP Regulatory Affairs", "role": "Decision Owner (Final authority)" }
+    ],
+    "reviewers": [
+      { "name": "Head of Non-Clinical Toxicology", "role": "Scientific adequacy reviewer" },
+      { "name": "CMC Lead", "role": "CMC readiness reviewer" },
+      { "name": "Quality Representative", "role": "Audit readiness reviewer" }
+    ],
+    "approval_method": "meeting_vote",
+    "approvals": [
+      {
+        "person": { "name": "VP Regulatory Affairs", "role": "Decision Owner (Final authority)" },
+        "decision": "approve",
+        "timestamp": "2025-12-30T18:30:00Z",
+        "comments": "Approved as conditional_go with explicit conditions and governed closure evidence."
+      }
     ],
     "final_signoff": {
       "person": { "name": "VP Regulatory Affairs", "role": "Decision Owner (Final authority)" },
       "timestamp": "2025-12-30T18:35:00Z",
       "notes": "Human accountability confirmed; AI assistance treated as non-authoritative drafting/review support only."
     },
-    "authority_scope": "decide"
+    "authority_scope": "decide",
+    "escalation_path": []
   },
   "ai_assistance": {
     "used": true,
