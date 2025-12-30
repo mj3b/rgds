@@ -53,13 +53,15 @@ This repository demonstrates the RGDS operating model: **human-governed, evidenc
 
 If you read only one thing in this repository, read:
 
-| File | Canonical Outcome | What it demonstrates |
-|---|---|---|
-| `examples/rgds-dec-0001.json` | **CANONICAL conditional_go** | GO with explicit, owned conditions |
-| `examples/rgds-dec-0002-no-go.json` | **CANONICAL no_go** | No-Go with defensible rationale and re-entry path |
-| `examples/rgds-dec-0003-defer-required-evidence.json` | **CANONICAL defer / abstain** | Decision deferred pending required evidence; explicit gaps |
-| `examples/rgds-dec-0004-regulatory-interaction.json` | **CANONICAL regulatory interaction / escalation** | Pre-engagement or agency-facing decision logic + rationale capture |
-| `examples/rgds-dec-0005-ind-conditional-go-author-at-risk.json` | **CANONICAL IND-style conditional_go** | author-at-risk + reviewer triage + publishing lock points |
+| File | Canonical scenario demonstrated |
+|---|---|
+| [`examples/README.md`](examples/README.md) | How to read and compare example decisions |
+| [`examples/rgds-dec-0001.json`](examples/rgds-dec-0001.json) | Canonical **conditional_go** (explicit conditions, owned follow-ups) |
+| [`examples/rgds-dec-0002-no-go.json`](examples/rgds-dec-0002-no-go.json) | Canonical **no_go** with defensible rationale and re-entry logic |
+| [`examples/rgds-dec-0003-defer-required-evidence.json`](examples/rgds-dec-0003-defer-required-evidence.json) | Canonical **defer / abstain** due to missing required evidence |
+| [`examples/rgds-dec-0004-regulatory-interaction.json`](examples/rgds-dec-0004-regulatory-interaction.json) | Regulatory interaction or escalation decision logic |
+| [`examples/rgds-dec-0005-ind-conditional-go-author-at-risk.json`](examples/rgds-dec-0005-ind-conditional-go-author-at-risk.json) | IND-style **conditional_go** (author-at-risk drafting, reviewer triage, publishing lock points) |
+| [`examples/rgds-dec-0006-ai-assisted-conditional-go.json`](examples/rgds-dec-0006-ai-assisted-conditional-go.json) | **AI-assisted conditional_go** (bounded AI disclosure, human authority preserved) |
 
 These examples demonstrate the intended RGDS operating model: **human-governed, evidence-linked, schema-validated, and explicitly non-agentic.**
 
@@ -106,7 +108,7 @@ These sources are treated as signal inputs, not prescriptions, and are translate
 into explicit, auditable decision structure.
 
 For the evidence-to-design rationale behind RGDS, see:  
-→ `docs/why-rgds-exists.md`
+→ [`docs/why-rgds-exists.md`](docs/why-rgds-exists.md)
 
 ---
 
@@ -165,9 +167,9 @@ Start with the `examples/` directory.
 
 | Step | What to read | Why |
 |---|---|---|
-| 1 | one canonical example (`0001`, `0003`, or `0005`) | see the operating model in a real decision |
-| 2 | the decision-log schema | see what is enforced vs. optional |
-| 3 | the evaluation plan | see how decision quality is assessed |
+| 1 | one canonical example ([`0001`](examples/rgds-dec-0001.json), [`0003`](examples/rgds-dec-0003-defer-required-evidence.json), or [`0005`](examples/rgds-dec-0005-ind-conditional-go-author-at-risk.json)) | see the operating model in a real decision |
+| 2 | the decision-log schema ([`decision-log.schema.json`](decision-log/decision-log.schema.json)) | see what is enforced vs. optional |
+| 3 | the evaluation plan ([`evaluation-plan.md`](evaluation/evaluation-plan.md)) | see how decision quality is assessed |
 
 Each file represents a single, concrete decision at a gate, such as a conditional-go, defer, or no-go.
 
@@ -233,7 +235,8 @@ The existing `decision_category` + `regulatory_context` fields model pre-IND / F
 These additions reflect real execution realities without introducing automation risk.
 
 For a cross-role view of who owns what, see:  
-→ `docs/role-decision-artifact-matrix.md`
+→ [`docs/role-decision-artifact-matrix.md`](docs/role-decision-artifact-matrix.md)
+
 
 ---
 
@@ -449,8 +452,8 @@ and evaluation criteria without navigating the full directory tree.
 |---|---|
 | [`evaluation/evaluation-plan.md`](evaluation/evaluation-plan.md) | How RGDS decisions are evaluated for quality and defensibility |
 | [`evaluation/evidence-quality-rubric.md`](evaluation/evidence-quality-rubric.md) | Criteria for assessing evidence completeness and confidence |
-| `evaluation/scorecard-template.csv` | Structured scorecard for decision review (CSV; non-Markdown) |
-
+ [`evaluation/scorecard-template.csv`](evaluation/scorecard-template.csv) | Structured scorecard for decision review (CSV; used for scoring and audit evidence) |
+ 
 ---
 
 ### External Governance Reference (Authoritative)
