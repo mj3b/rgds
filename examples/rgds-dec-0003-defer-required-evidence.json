@@ -98,7 +98,7 @@
           "name": "Study Lead",
           "role": "Non-clinical Study Lead"
         },
-       "as_of": "2025-12-26T00:00:00Z",
+        "as_of": "2025-12-26T00:00:00Z",
         "relevance": "primary",
         "quality_notes": "Audited draft available; final signed report pending. Synopsis vs appendix reconciliation pending.",
         "confidence": "medium"
@@ -113,7 +113,7 @@
           "name": "Nonclinical Safety Lead",
           "role": "Toxicology"
         },
-       "as_of": "2025-12-26T00:00:00Z",
+        "as_of": "2025-12-26T00:00:00Z",
         "relevance": "supporting",
         "quality_notes": "Working notes; must be reconciled into adjudication memo.",
         "confidence": "low"
