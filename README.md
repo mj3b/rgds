@@ -15,7 +15,9 @@
 
 A human-governed system for producing defensible, phase-gate decisions in regulated environments.
 
-This repository demonstrates the RGDS operating model: **human-governed, evidence-linked, schema-validated, and explicitly non-agentic.**
+This repository demonstrates the RGDS operating model:
+**human-governed, evidence-linked, schema-validated, and explicitly non-agentic**—
+designed to preserve decision accountability, auditability, and regulatory trust.
 
 ---
 
