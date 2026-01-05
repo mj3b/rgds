@@ -283,21 +283,6 @@ It **locks in the discipline** required to make these signal-driven lessons dura
 
 ---
 
-## Relationship to v1.4.0
-
-Version 1.4.0 formalizes what these signals demanded:
-
-- explicit evidence completeness  
-- downstream propagation awareness  
-- authority and escalation clarity  
-- risk benchmarking  
-- AI assistance disclosure  
-
-RGDS v1.4.0 is not more complex.  
-It is more **honest**.
-
----
-
 ## Closing
 
 RGDS exists because regulated programs do not fail for lack of intelligence.
