@@ -1,7 +1,7 @@
 # AI Consistency Check — RGDS-DEC-0005
 
 **Artifact type:** Informational consistency check  
-**Decision linkage:** RGDS-DEC-0005  
+**Decision linkage:** RGDS-DEC-0005 (informational only; not part of the decision record)  
 **Reviewed by:** Human reviewers only  
 **Authority:** None (non-decision-support)
 
@@ -9,14 +9,16 @@
 
 ## Purpose
 
-This artifact provides a **human-reviewable checklist** of potential inconsistencies across IND submission artifacts.
+This artifact provides a **human-reviewable checklist** of potential inconsistencies
+across IND submission artifacts.
 
 It exists to:
 - surface cross-document mismatches early
 - support reviewer triage under time pressure
 - reduce silent propagation errors
 
-This artifact **does not recommend decisions**, assign risk posture, or override human judgment.
+This artifact **does not recommend decisions**, assign risk posture,
+or override human judgment.
 
 ---
 
@@ -28,7 +30,8 @@ This check focuses on consistency across:
 - Investigator’s Brochure (IB)  
 - Protocol (Module 5)
 
-References to Module 3 are limited to how CMC information is *described*, not evaluated.
+References to Module 3 are limited to how CMC information is *described*,
+not evaluated or approved.
 
 ---
 
@@ -37,16 +40,17 @@ References to Module 3 are limited to how CMC information is *described*, not ev
 - Informational only  
 - Must be reviewed by required human reviewers  
 - Findings do not constitute evidence  
-- Disposition must be recorded by a human
+- Disposition must be recorded by a human  
 
-AI assistance may be used to populate this checklist, but **humans determine relevance and action**.
+AI assistance may be used to populate this checklist,
+but **humans determine relevance, materiality, and action**.
 
 ---
 
 ## Checklist
 
 ### Dosing and safety margins
-- [ ] NOAEL values and units consistent across Module 2.6, IB, and protocol rationale
+- [ ] NOAEL values and units consistent across Module 2.6, IB, and protocol
 - [ ] Human equivalent dose (HED) calculations reference consistent assumptions
 - [ ] Starting dose and escalation rules align across protocol text and synopsis tables
 - [ ] Safety factor language is consistent (no conflicting qualifiers or implied certainty)
@@ -57,7 +61,7 @@ AI assistance may be used to populate this checklist, but **humans determine rel
 - [ ] Shelf-life statements are consistently qualified given available timepoints  
   *(e.g., “supported through 1-month data”)*
 - [ ] Storage conditions and handling instructions match across IB and protocol
-- [ ] Any rolling-update language does not imply finalized timepoints prematurely
+- [ ] Rolling-update language does not imply finalized timepoints prematurely
 
 ---
 
@@ -110,8 +114,10 @@ AI assistance may be used to populate this checklist, but **humans determine rel
 
 This artifact supports **decision quality**, not decision authority.
 
-If material inconsistencies are identified:
-- they must be resolved, or
+If material inconsistencies are identified, they must be:
+- resolved prior to decision finalization, or
 - explicitly accepted and recorded in the Decision Log
+  (e.g., rationale, risk assessment, or conditions).
 
-Unreviewed AI outputs are not valid governance inputs.
+Unreviewed or undisclosed AI-generated outputs
+are **not valid governance inputs**.
