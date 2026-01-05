@@ -100,7 +100,7 @@ When AI assistance is used, the following must be recorded in the Decision Log:
 
 - the AI use case
 - references to inputs and outputs
-- human disposition (`accepted` / `edited` / `rejected`)
+- human disposition recorded in ai_assistance.human_review[] (`accepted` / `edited` / `rejected`)
 - applicable controls and constraints
 
 Silent or undisclosed AI usage is **not permitted**.
@@ -182,14 +182,12 @@ They never grant AI decision authority or evidentiary weight.
 
 Minimum disclosure fields:
 
-- **`ai_assistance.tool_name`** — the AI system used (and, where applicable, version/config)
-- **`ai_assistance.tool_purpose`** — the bounded task performed (e.g., extraction, summarization, diffing)
-- **`ai_assistance.human_review[]`** — review tier(s), reviewer identity/role, and findings/disposition
-- **`ai_assistance.human_override_log[]`** — what the AI suggested vs. what was accepted/changed, and why
-- **`ai_assistance.ai_risk_assessment`** — a simple assessment of reliance risk, including:
-  - confidence band (coarse signal only)
-  - known limitations relevant to the decision context
-  - cautions and constraints applied
+- `ai_assistance.tool_name` (and version/config where applicable)
+- `ai_assistance.tool_purpose`
+- limitations relevant to the decision context (captured in `ai_assistance.ai_risk_assessment`)
+- `ai_assistance.human_review[]` (review tier(s) + reviewer identity)
+- `ai_assistance.human_override_log[]` (what changed and why) when applicable
+- `ai_assistance.ai_risk_assessment` (confidence band + cautions)
 
 These disclosures are **informational only**:
 they do not transfer authority, approval rights, or risk ownership.
