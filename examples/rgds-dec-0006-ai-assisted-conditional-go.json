@@ -57,13 +57,19 @@
     "conditions": [
       {
         "condition": "Finalize and submit the signed GLP tox report prior to IND filing.",
-        "owner": { "name": "Head of Non-Clinical Toxicology", "role": "Scientific adequacy owner" },
+        "owner": {
+          "name": "Head of Non-Clinical Toxicology",
+          "role": "Scientific adequacy owner"
+        },
         "due_date": "2026-01-05",
         "evidence_to_close": "Final signed GLP tox report (controlled version) referenced in evidence registry."
       },
       {
         "condition": "Submit 3-month stability data amendment within 30 days post-IND filing, with cross-module linkage updated.",
-        "owner": { "name": "CMC Lead", "role": "Manufacturing and stability readiness owner" },
+        "owner": {
+          "name": "CMC Lead",
+          "role": "Manufacturing and stability readiness owner"
+        },
         "due_date": "2026-02-01",
         "evidence_to_close": "3-month stability dataset + updated Module 2 summaries and CMC tables reflecting the new data."
       }
@@ -78,11 +84,15 @@
         "title": "GLP Tox Study — Audited Draft v1.1",
         "source_system": "Document Repository",
         "location_ref": "GLP_Tox_Study_Audited_Draft_v1.1",
-        "owner": { "name": "Head of Non-Clinical Toxicology", "role": "Evidence owner" },
+        "owner": {
+          "name": "Head of Non-Clinical Toxicology",
+          "role": "Evidence owner"
+        },
         "as_of": "2025-12-29T18:00:00Z",
         "relevance": "primary",
         "quality_notes": "Audited draft pending final sign-off; acceptable for conditional_go with explicit closure condition.",
-        "confidence": "high"
+        "confidence": "high",
+        "completeness_state": "partial"
       },
       {
         "evidence_id": "EVID-PHARM-001",
@@ -90,11 +100,15 @@
         "title": "Pharmacology Summary v2.0",
         "source_system": "Document Repository",
         "location_ref": "Pharmacology_Summary_v2.0",
-        "owner": { "name": "Head of Non-Clinical Toxicology", "role": "Evidence owner" },
+        "owner": {
+          "name": "Head of Non-Clinical Toxicology",
+          "role": "Evidence owner"
+        },
         "as_of": "2025-12-28T18:00:00Z",
         "relevance": "supporting",
         "quality_notes": "Summary aligns with non-clinical package; reviewed for consistency with tox margins.",
-        "confidence": "medium"
+        "confidence": "medium",
+        "completeness_state": "complete"
       },
       {
         "evidence_id": "EVID-PK-001",
@@ -102,11 +116,15 @@
         "title": "PK Summary v1.3",
         "source_system": "Document Repository",
         "location_ref": "PK_Summary_v1.3",
-        "owner": { "name": "Head of Non-Clinical Toxicology", "role": "Evidence owner" },
+        "owner": {
+          "name": "Head of Non-Clinical Toxicology",
+          "role": "Evidence owner"
+        },
         "as_of": "2025-12-28T18:00:00Z",
         "relevance": "supporting",
         "quality_notes": "Reviewed for internal consistency across Module 2 narrative references.",
-        "confidence": "medium"
+        "confidence": "medium",
+        "completeness_state": "complete"
       },
       {
         "evidence_id": "EVID-CMC-001",
@@ -114,11 +132,15 @@
         "title": "Stability Data — 1 Month (Final)",
         "source_system": "CMC Data Store",
         "location_ref": "Stability_Data_1_Month_vFinal",
-        "owner": { "name": "CMC Lead", "role": "Evidence owner" },
+        "owner": {
+          "name": "CMC Lead",
+          "role": "Evidence owner"
+        },
         "as_of": "2025-12-27T18:00:00Z",
         "relevance": "primary",
         "quality_notes": "Duration limited at time of filing; longer-term data required via post-filing condition.",
-        "confidence": "medium"
+        "confidence": "medium",
+        "completeness_state": "complete"
       },
       {
         "evidence_id": "EVID-CMC-002",
@@ -126,11 +148,15 @@
         "title": "Manufacturing Control Strategy v1.0",
         "source_system": "Document Repository",
         "location_ref": "Manufacturing_Control_Strategy_v1.0",
-        "owner": { "name": "CMC Lead", "role": "Evidence owner" },
+        "owner": {
+          "name": "CMC Lead",
+          "role": "Evidence owner"
+        },
         "as_of": "2025-12-27T18:00:00Z",
         "relevance": "supporting",
         "quality_notes": "Adequate for current scope; reviewed for alignment with stability commitments.",
-        "confidence": "medium"
+        "confidence": "medium",
+        "completeness_state": "complete"
       }
     ]
   },
@@ -163,45 +189,90 @@
         "likelihood": "possible",
         "detectability": "moderate",
         "mitigation": "Explicit condition to deliver 3-month stability amendment and update dependent narratives/tables.",
-        "owner": { "name": "CMC Lead", "role": "Risk owner" }
+        "owner": {
+          "name": "CMC Lead",
+          "role": "Risk owner"
+        }
       }
     ],
     "residual_risk_statement": "Residual risk is accepted as bounded and governed, contingent on completion of explicit closure evidence for tox sign-off and stability amendment commitments.",
-    "risk_acceptance_required": true
+    "risk_acceptance_required": true,
+    "residual_risk_items": [
+      {
+        "risk": "Limited stability duration at time of filing may be challenged or require post-filing commitments.",
+        "mitigation": "Explicit condition to deliver 3-month stability amendment and update dependent narratives/tables.",
+        "trigger": "If the risk condition materializes or a governed condition is not met by due date.",
+        "owner": {
+          "name": "CMC Lead",
+          "role": "Risk owner"
+        }
+      }
+    ]
   },
   "governance": {
-    "decision_owner": { "name": "VP Regulatory Affairs", "role": "Decision Owner (Final authority)" },
+    "decision_owner": {
+      "name": "VP Regulatory Affairs",
+      "role": "Decision Owner (Final authority)"
+    },
     "approvers": [
-      { "name": "VP Regulatory Affairs", "role": "Decision Owner (Final authority)" }
+      {
+        "name": "VP Regulatory Affairs",
+        "role": "Decision Owner (Final authority)"
+      }
     ],
     "reviewers": [
-      { "name": "Head of Non-Clinical Toxicology", "role": "Scientific adequacy reviewer" },
-      { "name": "CMC Lead", "role": "CMC readiness reviewer" },
-      { "name": "Quality Representative", "role": "Audit readiness reviewer" }
+      {
+        "name": "Head of Non-Clinical Toxicology",
+        "role": "Scientific adequacy reviewer"
+      },
+      {
+        "name": "CMC Lead",
+        "role": "CMC readiness reviewer"
+      },
+      {
+        "name": "Quality Representative",
+        "role": "Audit readiness reviewer"
+      }
     ],
     "approval_method": "meeting_vote",
     "approvals": [
       {
-        "person": { "name": "VP Regulatory Affairs", "role": "Decision Owner (Final authority)" },
+        "person": {
+          "name": "VP Regulatory Affairs",
+          "role": "Decision Owner (Final authority)"
+        },
         "decision": "approve",
         "timestamp": "2025-12-30T18:30:00Z",
         "comments": "Approved as conditional_go with explicit conditions and governed closure evidence."
       }
     ],
     "final_signoff": {
-      "person": { "name": "VP Regulatory Affairs", "role": "Decision Owner (Final authority)" },
+      "person": {
+        "name": "VP Regulatory Affairs",
+        "role": "Decision Owner (Final authority)"
+      },
       "timestamp": "2025-12-30T18:35:00Z",
       "notes": "Human accountability confirmed; AI assistance treated as non-authoritative drafting/review support only."
     },
     "authority_scope": "decide",
     "escalation_path": [
-      { "name": "QA Representative", "role": "Quality (Deadlock resolver)" },
-      { "name": "Executive Sponsor", "role": "SVP, Development (Escalation authority)" }
+      {
+        "name": "QA Representative",
+        "role": "Quality (Deadlock resolver)"
+      },
+      {
+        "name": "Executive Sponsor",
+        "role": "SVP, Development (Escalation authority)"
+      }
     ]
   },
   "ai_assistance": {
     "used": true,
-    "use_cases": ["compare", "extract", "draft"],
+    "use_cases": [
+      "compare",
+      "extract",
+      "draft"
+    ],
     "artifacts": [
       {
         "artifact_id": "AI-ART-0006-01",
@@ -213,7 +284,10 @@
           "Stability_Data_1_Month_vFinal"
         ],
         "output_ref": "AI_Output_Consistency_Findings_0006-01",
-        "human_reviewer": { "name": "Quality Representative", "role": "Human reviewer" },
+        "human_reviewer": {
+          "name": "Quality Representative",
+          "role": "Human reviewer"
+        },
         "disposition": "edited"
       }
     ],
@@ -224,13 +298,41 @@
       "safety_notes": "AI cannot approve decisions, accept risk, or create evidence of record. Outputs must be reviewable, reversible, and source-linked."
     },
     "confidence_band": "high",
-    "human_override": true
+    "human_override": true,
+    "tool_name": "ChatGPT-style assistant",
+    "tool_purpose": "Bounded decision-support drafting and structured consistency checks; no autonomy; human review required.",
+    "disclosure_notes": "AI outputs treated as drafts; reviewers confirm source fidelity, remove unsupported claims, and record overrides.",
+    "tool_characteristics": {
+      "model_type": "LLM",
+      "training_data_notes": "Not pinned; treat as opaque tool; do not assume domain grounding.",
+      "benchmarks_or_validation": "Not used as evidence; tool outputs validated via human review and source cross-check.",
+      "limitations": "May hallucinate, omit constraints, or misinterpret regulatory context; cannot approve decisions or accept risk."
+    },
+    "human_review": [
+      {
+        "tier": "tier2",
+        "reviewer": {
+          "name": "Quality Representative",
+          "role": "Human reviewer"
+        },
+        "finding_summary": "Reviewed AI output for fidelity and removed unsupported claims.",
+        "actions_taken": "edited"
+      }
+    ],
+    "human_override_log": [],
+    "ai_risk_assessment": {
+      "confidence_band": "high",
+      "cautions": "Use for synthesis only; verify all factual claims against controlled sources."
+    }
   },
   "actions": [
     {
       "action_id": "ACT-0006-01",
       "description": "Deliver final signed GLP tox report and update evidence registry reference for EVID-TOX-001.",
-      "owner": { "name": "Head of Non-Clinical Toxicology", "role": "Action owner" },
+      "owner": {
+        "name": "Head of Non-Clinical Toxicology",
+        "role": "Action owner"
+      },
       "due_date": "2026-01-05",
       "success_criteria": "Final signed report is stored as a controlled record and linked in the decision evidence registry.",
       "status": "open"
@@ -238,7 +340,10 @@
     {
       "action_id": "ACT-0006-02",
       "description": "Deliver 3-month stability data amendment and update dependent Module 2 narratives/CMC tables.",
-      "owner": { "name": "CMC Lead", "role": "Action owner" },
+      "owner": {
+        "name": "CMC Lead",
+        "role": "Action owner"
+      },
       "due_date": "2026-02-01",
       "success_criteria": "3-month stability dataset is stored and all dependent narratives/tables are updated with traceable references.",
       "status": "open"
@@ -247,7 +352,9 @@
   "dependencies": [],
   "change_control": {
     "change_requests": [],
-    "release_or_validation_refs": ["CI: validate_all_examples.py"]
+    "release_or_validation_refs": [
+      "CI: validate_all_examples.py"
+    ]
   },
   "audit": {
     "record_version": 1,
@@ -256,19 +363,16 @@
     "superseded_by": null,
     "retention_class": "controlled_record"
   },
-  "risk_posture": {
-    "stance": "balanced",
-    "rationale": "Proceeding is acceptable under explicit, owned conditions due to time constraints and sufficient core non-clinical adequacy at decision time.",
-    "trade_offs": [
-      "Accept limited stability duration at filing with controlled post-filing amendment commitment"
-    ],
-    "benchmark_basis": ["internal_portfolio_norm", "other"]
-  },
+  "risk_posture": "risk_neutral",
   "evidence_completeness": {
     "state": "partial",
     "expected_resolution_date": "2026-02-01",
     "author_at_risk": false,
     "notes": "Partial evidence accepted only under explicit closure conditions for tox sign-off and stability amendment."
   },
-  "propagation_required": ["M2.6", "CMC", "Other"]
+  "propagation_required": [
+    "M2.6",
+    "CMC",
+    "Other"
+  ]
 }
