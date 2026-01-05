@@ -147,7 +147,7 @@ Regulatory planning discussions consistently surface:
 - loss of institutional confidence  
 - weakened regulatory trust  
 
-### RGDS design response (v1.4.0)
+### RGDS design response (introduced v1.4.0, enforced in v2.0.0)
 
 These signals informed:
 
