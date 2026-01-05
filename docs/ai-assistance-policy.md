@@ -174,14 +174,24 @@ All policy changes are versioned, approved, and auditable.
 
 ---
 
-## v1.4.0 transparency signals (non-authoritative)
+## v2.0.0 AI disclosure signals (non-authoritative)
 
-RGDS v1.4.0 supports optional transparency fields within `ai_assistance`:
-
-- **`confidence_band`** — `low` | `medium` | `high`  
-  *(a coarse signal for context, not a performance score)*
-
-- **`human_override`** — whether a human changed, rejected, or replaced AI-supported content
-
-These fields exist solely for **transparency and post-hoc review**.  
+RGDS v2.0.0 requires structured AI disclosure when AI is used (`ai_assistance.used = true`).
+These fields exist solely for **transparency and post-hoc review**.
 They never grant AI decision authority or evidentiary weight.
+
+Minimum disclosure fields:
+
+- **`ai_assistance.tool_name`** — the AI system used (and, where applicable, version/config)
+- **`ai_assistance.tool_purpose`** — the bounded task performed (e.g., extraction, summarization, diffing)
+- **`ai_assistance.human_review[]`** — review tier(s), reviewer identity/role, and findings/disposition
+- **`ai_assistance.human_override_log[]`** — what the AI suggested vs. what was accepted/changed, and why
+- **`ai_assistance.ai_risk_assessment`** — a simple assessment of reliance risk, including:
+  - confidence band (coarse signal only)
+  - known limitations relevant to the decision context
+  - cautions and constraints applied
+
+These disclosures are **informational only**:
+they do not transfer authority, approval rights, or risk ownership.
+The **human decision owner remains fully responsible** for content, evidence interpretation, and outcome.
+
