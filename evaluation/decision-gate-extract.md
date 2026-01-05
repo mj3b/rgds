@@ -3,7 +3,7 @@
 This document defines a **flattened decision view** derived from RGDS decision logs.
 It is designed for **phase-gate forums**, portfolio review, and BI dashboards (e.g., Power BI).
 
-This extract is **not a source of truth**.
+This extract is **not a source of truth**.  
 The authoritative record remains the validated RGDS decision log JSON.
 
 ---
@@ -12,104 +12,133 @@ The authoritative record remains the validated RGDS decision log JSON.
 
 The Decision Gate Extract exists to:
 
-- enable cross-program and portfolio-level visibility,
-- support executive and governance review forums,
-- surface evidence posture and risk signals at decision time,
-- preserve drill-through access to auditable decision records.
+- enable cross-program and portfolio-level visibility
+- support executive and governance review forums
+- surface evidence posture and residual risk at decision time
+- preserve drill-through access to auditable decision records
 
 This extract intentionally trades schema richness for **reviewability and comparability**.
+It must never reinterpret, score, or override decisions.
 
 ---
 
 ## Traceability Context
 
-Decision-gate fields are derived from RGDS decisions that are traceable to:
+Decision-gate fields are derived from RGDS decisions that are traceable across:
 
-IND Requirement  
-→ Observed Gap ([IND-GAP-XXX](./ind-requirements-gap-log.md))  
-→ Backlog Item ([P0/P1/P2-BL-XXX](../backlog/ind-aligned-backlog.md))  
-→ RGDS Decision Artifact (JSON)
+External IND expectation  
+→ Observed gap ([IND-GAP-XXX](./ind-requirements-gap-log.md))  
+→ Backlog item ([P0/P1/P2-BL-XXX](../backlog/ind-aligned-backlog.md))  
+→ RGDS decision record (JSON)
 
 Traceability is preserved through stable identifiers and drill-through links.
 
 ---
 
-## Canonical Extract Fields
+## Logical Extract Schema (Read-Only)
 
-| Field | Type | Purpose |
-|------|------|---------|
-| decision_id | string | Stable join key across artifacts |
-| program_id | string | Portfolio and program rollups |
-| gate | string | Phase-gate anchor (e.g., IND-enabling, CMC readiness) |
-| decision_category | enum | `internal` or `regulatory_interaction` |
-| decision_outcome | enum | `go`, `conditional_go`, `no_go`, `defer`, `defer_with_required_evidence` |
-| decision_status | enum | `draft`, `in_review`, `approved`, `superseded` |
-| evidence_coverage_score | number | Executive-level signal of evidence posture (0–100) |
-| missing_evidence_count | number | Count of declared evidence gaps |
-| residual_risk_level | enum | `low`, `medium`, `high` |
-| approver_roles | string[] | Accountability surface (roles, not names) |
-| decision_date | date-time | Time-to-decision tracking |
-| reentry_due_date | date | For deferred decisions, expected re-entry timing |
-| gap_ids | string[] | Referenced IND-GAP identifiers |
-| backlog_ids | string[] | Referenced backlog item identifiers |
-| decision_record_link | string (URL) | Drill-through link to decision log JSON |
+### Core Table: `DecisionGateExtract`
 
-**Notation:**  
-Mappings use the form `extract_field ← source_field`.
+| Column Name | Type | Description |
+|------------|------|-------------|
+| decision_id | Text | Stable decision identifier |
+| program_id | Text | Program / asset identifier |
+| gate | Text | Phase gate (e.g., IND-enabling) |
+| decision_category | Text | internal / regulatory_interaction |
+| decision_outcome | Text | go / conditional_go / no_go / defer / defer_with_required_evidence |
+| decision_lifecycle_state | Text | draft / in_review / decided / superseded |
+| evidence_items_incomplete | Whole Number | Count of evidence items marked `partial` or `placeholder` |
+| residual_risk_summary | Text | Human-authored residual risk statement |
+| decision_date | DateTime | Decision approval timestamp |
+| reentry_due_date | Date | Expected re-entry date (if applicable) |
+| gap_ids | Text | Comma-separated IND-GAP identifiers |
+| backlog_ids | Text | Comma-separated backlog identifiers |
+| decision_record_link | URL | Drill-through to decision log JSON |
 
----
-
-## Suggested Transformations
-
-From RGDS decision log JSON:
-
-- `program_id` ← `program_context.program_id`
-- `gate` ← `decision_context.gate`
-- `decision_category` ← `decision_context.category`
-- `decision_outcome` ← `decision_outcome.outcome`
-- `decision_status` ← `governance.status`
-- `missing_evidence_count` ← `len(evidence_gaps)`
-- `evidence_coverage_score` ← derived from evaluation summary (not computed in BI)
-- `residual_risk_level` ← `risk_summary.residual_risk_level`
-- `approver_roles` ← unique roles in `governance.approvals[]`
-- `reentry_due_date` ← earliest due date in `actions[]` linked to re-entry conditions
-- `gap_ids` ← referenced `IND-GAP-XXX` identifiers
-- `backlog_ids` ← referenced `P*-BL-XXX` identifiers
-- `decision_record_link` ← URL to decision log JSON in repo or system of record
+All fields are derived.
+No column confers approval authority.
 
 ---
 
-## Power BI Usage Notes
+## Derivation Rules (Conceptual)
 
-- Treat this extract as a **read-only semantic layer**.
-- Use `decision_id` as the primary join key.
-- Preserve `decision_record_link` for audit drill-through.
-- Do **not** infer or compute confidence, evidence quality, or risk in BI.
-  These must be explicitly captured in the decision log.
-- Filters commonly used in governance forums:
-  - gate
-  - decision_outcome
-  - residual_risk_level
-  - missing_evidence_count
-  - reentry_due_date
+Typical mappings from RGDS decision logs:
+
+- `program_context.program_id` → `program_id`
+- `decision_context.gate` → `gate`
+- `decision_category` → `decision_category`
+- `decision_outcome.outcome` → `decision_outcome`
+- `governance.lifecycle_state` → `decision_lifecycle_state`
+- count of `evidence.evidence_items[].completeness_state != complete`
+  → `evidence_items_incomplete`
+- `risk_assessment.residual_risk_statement` → `residual_risk_summary`
+- `governance.decision_timestamp` → `decision_date`
+- earliest re-entry action due date → `reentry_due_date`
+- referenced `IND-GAP-XXX` → `gap_ids`
+- referenced backlog identifiers → `backlog_ids`
+- canonical JSON URL → `decision_record_link`
+
+Explicit exclusions:
+- no scoring or confidence computation
+- no inference of evidence sufficiency
+- no mutation of decision outcomes
 
 ---
 
-## Relationship to Other Artifacts
+## Intended Dashboard Views
 
-- Gap Log: [evaluation/ind-requirements-gap-log.md](./ind-requirements-gap-log.md)
-- Backlog: [backlog/ind-aligned-backlog.md](../backlog/ind-aligned-backlog.md)
-- Requirements Traceability Matrix:  
-  [evaluation/requirements-traceability-matrix.md](./requirements-traceability-matrix.md)
-- Decision Schema:  
-  [decision-log/decision-log.schema.json](../decision-log/decision-log.schema.json)
+### Phase-Gate Overview
+- Decisions by gate
+- Outcome distribution
+- Conditional and deferred decisions
+
+### Evidence Posture
+- Decisions with incomplete evidence items
+- Distribution of completeness states
+
+### Residual Risk Visibility
+- Human-authored residual risk summaries by gate
+- Decisions proceeding with explicit residual risk
+
+### Re-entry Tracking
+- Upcoming re-entry dates
+- Overdue deferred decisions
+
+### Drill-Through
+- Open `decision_record_link` to inspect the full RGDS decision log
+
+---
+
+## Governance Guardrails
+
+- BI outputs are **decision-support only**
+- Humans remain the sole decision authorities
+- RGDS decision logs remain the audit record
+- Dashboards must never approve, reject, or reinterpret decisions
+
+---
+
+## Relationship to RGDS Artifacts
+
+This extract is grounded in:
+
+- Decision Gate Extract definition  
+  → `evaluation/decision-gate-extract.md`
+- IND Requirements Gap Log  
+  → `evaluation/ind-requirements-gap-log.md`
+- IND-aligned backlog  
+  → `backlog/ind-aligned-backlog.md`
+- Requirements Traceability Matrix  
+  → `evaluation/requirements-traceability-matrix.md`
+- Decision Log schema (source of truth)  
+  → `decision-log/decision-log.schema.json`
+- Canonical decision examples  
+  → `examples/`
 
 ---
 
 ## Notes
 
-- This extract may evolve as governance needs change, but field additions should remain backward-compatible.
-- Any new fields must remain derivable from the decision log JSON.
-- BI tooling must not become a decision authority.
+This extract demonstrates how RGDS decisions can be surfaced at scale
+without compromising governance, accountability, or auditability.
 
-The Decision Gate Extract exists to **support decisions, not replace them**.
