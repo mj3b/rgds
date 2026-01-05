@@ -13,22 +13,31 @@ It is a governance record.
 ---
 
 
-## v2.0.0 — Whitepaper-aligned decision discipline
+## v2.0.0 — Whitepaper-aligned decision discipline (breaking)
 
 **Summary**  
-Aligned RGDS documentation, schema, validators, and canonical examples to the whitepaper’s minimum decision record requirements:
-options enumeration, evidence completeness classification per evidence item, explicit residual risk capture, named human accountability,
-and structured AI assistance disclosure when AI is used.
+Formalized the RGDS minimum decision record requirements described in the RGDS whitepaper.
+This release converts previously optional or implicit practices into **mandatory, schema-enforced governance controls**.
 
-**Key controlled changes**
-- **Schema**: evidence items now require `completeness_state`; decisions require `options_considered` and `risk_posture`; AI assistance requires structured disclosure fields when `used=true`.
-- **Validation**: semantic checks enforce minimum options count and strengthen AI disclosure integrity.
-- **Examples**: all canonical decision logs updated to include evidence completeness per item, residual risk items, and (when applicable) whitepaper-aligned AI disclosure fields.
-- **Templates**: decision log template updated to reflect the new minimum fields and AI disclosure structure.
+v2.0.0 is a **breaking governance update**: decision records that passed validation under v1.x may fail under v2.0.0 if required fields are missing.
+
+### Controlled changes
+
+| Date | Change | Rationale | Impacted Files | Approved By |
+|---|---|---|---|---|
+| 2026-01-04 | Required explicit options enumeration (`options_considered[]`, ≥2) | Prevent false binary framing and undocumented “default” decisions | [`decision-log.schema.json`](../decision-log/decision-log.schema.json), [`decision-log.schema.yaml`](../decision-log/decision-log.schema.yaml) | N/A (reference implementation) |
+| 2026-01-04 | Enforced evidence completeness per evidence item (`completeness_state`) | Eliminate false confidence from placeholders and in-flight data | [`decision-log.schema.json`](../decision-log/decision-log.schema.json) | N/A |
+| 2026-01-04 | Added explicit residual risk capture | Make accepted risk visible *after* decision execution | [`decision-log.schema.json`](../decision-log/decision-log.schema.json) | N/A |
+| 2026-01-04 | Required named human accountability (owner + approvers) | Preserve decision authority and auditability under compressed timelines | [`decision-log.schema.json`](../decision-log/decision-log.schema.json), [`docs/governance.md`](governance.md) | N/A |
+| 2026-01-04 | Replaced optional AI transparency with structured AI disclosure when used | Make AI assistance reviewable without granting authority | [`decision-log.schema.json`](../decision-log/decision-log.schema.json), [`docs/ai-assistance-policy.md`](ai-assistance-policy.md) | N/A |
+| 2026-01-04 | Strengthened semantic validation for options count and AI disclosure integrity | Prevent formally valid but governance-incomplete decisions | [`validate_decision_log.py`](../scripts/validate_decision_log.py) | N/A |
+| 2026-01-04 | Updated all canonical examples to meet v2.0.0 minimum requirements | Ensure examples remain authoritative and reviewable | [`examples/`](../examples/) | N/A |
+| 2026-01-04 | Updated decision log template to reflect new minimum fields | Prevent drift between schema and authoring practice | [`decision-log.template.yaml`](../decision-log/decision-log.template.yaml) | N/A |
 
 **Effective date**  
 2026-01-04
 
+---
 
 ## v1.4.0 — Decision authority & trust transparency
 
