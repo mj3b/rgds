@@ -17,7 +17,7 @@ RGDS is designed to support coordinated decision-making across the following rol
 - Regulatory Operations and Submission Management  
 - Quality and Compliance  
 - Principal AI Business Analyst  
-  *(phase-gate facilitation, decision-support reporting, AI governance)*
+  *(phase-gate facilitation, decision discipline enforcement, decision-support reporting, AI governance and non-agentic boundary oversight)*
 
 RGDS does **not** replace these roles.  
 It provides a shared decision record that makes cross-functional ownership explicit.
@@ -47,7 +47,7 @@ These are decision points—not execution details—and require explicit ownersh
 
 ---
 
-## RGDS fields that capture IND delivery reality (v1.3)
+## RGDS fields that capture IND delivery reality (v1.3 → v2.0.0)
 
 The following RGDS fields exist specifically to record these cross-functional decision surfaces:
 
@@ -60,8 +60,25 @@ The following RGDS fields exist specifically to record these cross-functional de
 - `publishing_plan` *(rolling publish intent and lock points)*  
 - `tpp_links[]`
 
-These fields are **optional by default**, but may be required by program governance.  
-Once required, they are enforced as part of the controlled decision record.
+Some fields remain **program-optional**, while others are **mandatory as of v2.0.0**.
+
+- The following are **mandatory governance requirements**:
+  - `options_considered`
+  - explicit residual risk capture
+  - named human accountability
+  - AI assistance disclosure (when AI is used)
+
+- The following remain **program-governed extensions**, enforced once required:
+  - `author_at_risk_items[]`
+  - `review_plan`
+  - `scope_change_events[]`
+  - `dependency_map[]`
+  - `data_readiness_status[]`
+  - `publishing_plan`
+  - `tpp_links[]`
+
+This distinction ensures governance discipline is consistent across programs,
+while preserving flexibility for execution-specific constraints.
 
 ---
 
@@ -71,3 +88,5 @@ Once required, they are enforced as part of the controlled decision record.
 - **`docs/governance.md`** defines how enforcement, escalation, and approval authority are applied.
 
 This matrix exists to ensure that ownership is explicit **before** decisions are made—not reconstructed afterward.
+
+In v2.0.0, this matrix also clarifies responsibility for **decision structure and governance completeness**, not just functional content ownership.
