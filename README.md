@@ -4,6 +4,9 @@
 [![Human Governed](https://img.shields.io/badge/governance-human--governed-3bb273)](#governance)
 [![Non-Agentic](https://img.shields.io/badge/AI-explicitly%20non--agentic-2d7ff9)](#prohibited-uses-non-agentic-boundary)
 [![Decision Defensibility](https://img.shields.io/badge/outcome-decision%20defensibility-6f42c1)](#what-problem-this-solves)
+[![RTM Coverage](https://img.shields.io/badge/RTM-100%25%20coverage-2ea44f)](#requirements-traceability-matrix-rtm)
+[![Governance Traceability](https://img.shields.io/badge/governance-end--to--end%20traceable-4c82ff)](#requirements-traceability-matrix-rtm)
+[![Audit Ready](https://img.shields.io/badge/audit-reviewer--ready-6f42c1)](#reviewer-navigation-guide)
 [![Audit Ready](https://img.shields.io/badge/property-audit--ready%20artifacts-0aa2c0)](#evaluation)
 [![No Autonomy](https://img.shields.io/badge/constraint-no%20autonomous%20execution-ff7a00)](#what-this-repository-is-and-is-not)
 
