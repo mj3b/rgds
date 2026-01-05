@@ -4,8 +4,8 @@ This document provides a concrete example of how the
 [RGDS Decision Gate Extract](./decision-gate-extract.md)
 can be operationalized in a BI tool such as Power BI.
 
-It is illustrative, not prescriptive.
-The RGDS decision log JSON remains the authoritative source of truth.
+It is **illustrative, not prescriptive**.  
+The RGDS decision log JSON remains the **authoritative source of truth**.
 
 ---
 
@@ -17,16 +17,18 @@ The RGDS decision log JSON remains the authoritative source of truth.
 - Program leadership
 
 **Primary Questions**
-- Which programs are blocked or conditionally approved?
-- Where is evidence incomplete?
+- Which programs are blocked, deferred, or conditionally approved?
+- Where is evidence incomplete or explicitly acknowledged as partial?
 - Which decisions require re-entry and when?
-- What residual risk exists at each gate?
+- What residual risk has been knowingly accepted at each gate?
 
 ---
 
 ## Sample Power BI Data Model (Logical)
 
 ### Core Table: `DecisionGateExtract`
+
+This table is a **read-only, flattened view** derived from RGDS decision logs.
 
 | Column Name | Data Type | Description |
 |------------|-----------|-------------|
@@ -35,17 +37,16 @@ The RGDS decision log JSON remains the authoritative source of truth.
 | gate | Text | Phase gate (e.g., IND-enabling) |
 | decision_category | Text | internal / regulatory_interaction |
 | decision_outcome | Text | go / conditional_go / no_go / defer / defer_with_required_evidence |
-| decision_status | Text | draft / in_review / approved / superseded |
-| evidence_coverage_score | Decimal | 0–100 executive signal |
-| missing_evidence_count | Whole Number | Count of evidence gaps |
-| residual_risk_level | Text | low / medium / high |
-| decision_date | DateTime | Approval or decision date |
+| decision_lifecycle_state | Text | draft / in_review / decided / superseded |
+| evidence_items_incomplete | Whole Number | Count of evidence items marked `partial` or `placeholder` |
+| residual_risk_summary | Text | Human-authored residual risk statement |
+| decision_date | DateTime | Decision approval timestamp |
 | reentry_due_date | Date | Expected re-entry date (if applicable) |
 | gap_ids | Text | Comma-separated IND-GAP identifiers |
 | backlog_ids | Text | Comma-separated backlog identifiers |
 | decision_record_link | Text (URL) | Drill-through to decision JSON |
 
-This table is read-only in BI.
+No column in this table confers authority or approval.
 
 ---
 
@@ -64,21 +65,22 @@ This table is read-only in BI.
 
 - `program_context.program_id` → `program_id`
 - `decision_context.gate` → `gate`
-- `decision_context.category` → `decision_category`
+- `decision_category` → `decision_category`
 - `decision_outcome.outcome` → `decision_outcome`
-- `governance.status` → `decision_status`
-- `len(evidence_gaps)` → `missing_evidence_count`
-- `risk_summary.residual_risk_level` → `residual_risk_level`
-- `governance.approvals[].role` → `approver_roles`
+- `governance.lifecycle_state` → `decision_lifecycle_state`
+- count of `evidence.evidence_items[].completeness_state != complete`
+  → `evidence_items_incomplete`
+- `risk_assessment.residual_risk_statement` → `residual_risk_summary`
+- `governance.decision_timestamp` → `decision_date`
 - earliest re-entry action due date → `reentry_due_date`
-- referenced `IND-GAP-XXX` → `gap_ids`
-- referenced `P*-BL-XXX` → `backlog_ids`
+- referenced `IND-GAP-XXX` identifiers → `gap_ids`
+- referenced backlog identifiers → `backlog_ids`
 - decision JSON URL → `decision_record_link`
 
 **Explicit exclusions**
-- Do NOT compute confidence scores in BI
-- Do NOT infer evidence quality
-- Do NOT override decision outcomes
+- Do NOT compute scores, confidence bands, or sufficiency judgments in BI
+- Do NOT infer evidence quality beyond declared completeness states
+- Do NOT override or reinterpret decision outcomes
 
 ---
 
@@ -110,17 +112,17 @@ Relationships:
 ### 1. Phase-Gate Overview
 - Count of decisions by gate
 - Decision outcome distribution
-- Conditional / deferred decision spotlight
+- Conditional and deferred decisions spotlight
 
 ### 2. Evidence Posture
-- Average evidence coverage score by gate
-- Programs with missing evidence > 0
-- High residual risk decisions
+- Decisions with incomplete evidence items
+- Distribution of completeness states
+- Explicitly accepted residual risk summaries
 
 ### 3. Re-entry Tracking
 - Upcoming re-entry due dates
 - Overdue deferred decisions
-- Decision outcome by re-entry status
+- Decision outcomes by re-entry status
 
 ### 4. Drill-Through
 - Click decision → open `decision_record_link`
@@ -130,16 +132,16 @@ Relationships:
 
 ## Governance Guardrails
 
-- BI dashboards are decision-support only
+- BI dashboards are **decision-support only**
 - Decision authority remains with humans
-- RGDS decision log is the audit record
-- BI must never mutate decision data
+- RGDS decision logs are the audit record
+- BI must never mutate, approve, or reinterpret decision data
 
 ---
 
-## Relationship to RGDS Artifacts (Clickable)
+## Relationship to RGDS Artifacts
 
-This sample Power BI schema and dataflow is grounded in the following RGDS artifacts:
+This sample Power BI schema and dataflow is grounded in:
 
 - **Decision Gate Extract (definition)**  
   [evaluation/decision-gate-extract.md](./decision-gate-extract.md)
@@ -159,17 +161,12 @@ This sample Power BI schema and dataflow is grounded in the following RGDS artif
 - **Canonical Decision Examples**  
   [examples/](../examples/)
 
-Reviewers are encouraged to:
-1. Start with the Decision Gate Extract definition
-2. Inspect a canonical decision example
-3. Trace gaps → backlog → requirements using the RTM
-4. Return to this sample to understand how decisions surface in BI
-
 ---
 
 ## Notes
 
-This sample demonstrates feasibility and intent.
+This sample demonstrates feasibility and intent.  
 It does not mandate Power BI, specific tooling, or implementation details.
 
-The goal is decision clarity at scale, without compromising governance.
+The goal is **decision clarity at scale**, without compromising governance.
+
