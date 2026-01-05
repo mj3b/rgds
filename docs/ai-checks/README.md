@@ -9,6 +9,8 @@ AI checks in RGDS:
 - do **not** override human judgment
 - do **not** operate autonomously
 
+The term “checks” refers to a *review aid*, not a control, approval, or validation mechanism.
+
 They exist to surface **potential inconsistencies, gaps, and dependencies**
 so humans can decide deliberately.
 
@@ -32,6 +34,8 @@ Unreviewed AI-generated outputs are **not valid governance inputs**.
 AI checks **do not carry decision authority**.
 
 If an AI check identifies a material issue, the outcome must be reflected in the **Decision Log**, not resolved here.
+
+These artifacts are never part of the controlled decision record and do not satisfy any schema-required fields.
 
 → See: [`docs/decision-log.md`](../decision-log.md)
 
@@ -78,3 +82,17 @@ If a check matters, it must be:
 - and recorded in the Decision Log.
 
 RGDS favors **explicit judgment over implicit automation**.
+
+---
+
+## Alignment with RGDS v2.0.0
+
+In RGDS v2.0.0, AI checks remain **optional, removable, and non-authoritative**.
+
+They:
+- may inform human judgment,
+- must never substitute for decision records,
+- and have no standing without explicit reflection in a schema-valid Decision Log.
+
+Their absence does not invalidate a decision.
+
