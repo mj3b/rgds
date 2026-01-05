@@ -12,6 +12,24 @@ It is a governance record.
 
 ---
 
+
+## v2.0.0 — Whitepaper-aligned decision discipline
+
+**Summary**  
+Aligned RGDS documentation, schema, validators, and canonical examples to the whitepaper’s minimum decision record requirements:
+options enumeration, evidence completeness classification per evidence item, explicit residual risk capture, named human accountability,
+and structured AI assistance disclosure when AI is used.
+
+**Key controlled changes**
+- **Schema**: evidence items now require `completeness_state`; decisions require `options_considered` and `risk_posture`; AI assistance requires structured disclosure fields when `used=true`.
+- **Validation**: semantic checks enforce minimum options count and strengthen AI disclosure integrity.
+- **Examples**: all canonical decision logs updated to include evidence completeness per item, residual risk items, and (when applicable) whitepaper-aligned AI disclosure fields.
+- **Templates**: decision log template updated to reflect the new minimum fields and AI disclosure structure.
+
+**Effective date**  
+2026-01-04
+
+
 ## v1.4.0 — Decision authority & trust transparency
 
 **Summary**  

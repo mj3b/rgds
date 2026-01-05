@@ -54,6 +54,56 @@ AI outputs are **never treated as evidence by default**.
 
 ---
 
+## Decision Log as a Governance Artifact
+
+In RGDS, the Decision Log is not “documentation after the fact.”
+It is the **mechanism** that prevents ambiguity from becoming unowned risk.
+
+If a required field is missing, that is a **governance failure**, not a formatting issue.
+
+## Options are mandatory
+
+Every decision log must enumerate **at least two options** in `options_considered` — even when the choice feels obvious.
+
+- “Proceed” vs “Defer” counts as two options.
+- The selected outcome **must** map to a `selected_option_id`.
+
+Example (conceptual):
+
+| option_id | option_text | when it’s valid |
+|---|---|---|
+| A | Proceed now | Evidence is sufficient within declared risk posture |
+| B | Defer | Missing evidence, unresolved dependencies, or unacceptable residual risk |
+
+## Evidence completeness classification
+
+Each evidence item must declare a completeness state:
+
+- `complete` — verified, source-linked, and decision-ready
+- `partial` — materially informative but missing some expected components
+- `placeholder` — a known gap (e.g., “TBD”) recorded for planning but **not** treated as supporting evidence
+
+This classification is captured per evidence item (for example: `evidence.evidence_items[].completeness_state`) and should align with any summary field such as `evidence_completeness`.
+
+## Residual risk is required
+
+Residual risk is what remains true **after** you proceed — even when conditions are applied.
+
+A “GO” decision is not “risk-free.”
+RGDS requires residual risk to be stated explicitly so decision owners can defend *what they accepted*.
+
+Record residual risk as:
+- a summary statement (e.g., `risk_assessment.residual_risk_statement`)
+- and (when helpful) structured items (e.g., `risk_assessment.residual_risk_items[]` with triggers and mitigations)
+
+## Decision deadlines
+
+Regulated decisions expire.
+
+RGDS requires a `decision_deadline` so stakeholders can distinguish:
+- a decision that is still valid, from
+- a decision that has become stale due to new evidence, scope changes, or timeline shifts.
+
 ## When the Decision Log is created
 
 A Decision Log is created when **a real decision must be defended later**, including:

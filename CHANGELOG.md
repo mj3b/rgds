@@ -13,6 +13,9 @@ That log records:
 - rationale for decisions
 - effective dates for each version
 
+- ## v2.0.0
+- Whitepaper-aligned decision discipline (see change-control log)
+
 - ## v1.4.0
 - Added canonical example demonstrating bounded AI-assisted conditional_go
   with explicit disclosure and preserved human authority

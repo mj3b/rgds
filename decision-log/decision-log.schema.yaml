@@ -1,5 +1,1197 @@
-# This YAML file is intentionally minimal.
-# The authoritative schema is JSON Schema (2020-12):
-# - decision-log/decision-log.schema.json
-version: 1.4.0
-authoritative_schema: decision-log.schema.json
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: https://github.com/mj3b/rgds/blob/main/decision-log/decision-log.schema.json
+title: RGDS Decision Log
+description: Human-governed decision record for phase-gated workflows. Captures evidence,
+  risk posture, accountability, and audit trail. AI assistance may be disclosed but
+  is not treated as evidence by default.
+type: object
+additionalProperties: false
+required:
+- decision_id
+- decision_title
+- program_context
+- decision_category
+- status
+- created_at
+- created_by
+- gate
+- decision_question
+- options_considered
+- decision_outcome
+- evidence
+- evidence_completeness
+- risk_posture
+- risk_assessment
+- governance
+- ai_assistance
+- audit
+properties:
+  decision_id:
+    type: string
+    pattern: ^RGDS-DEC-[0-9]{4,}$
+    description: Stable unique identifier (e.g., RGDS-DEC-0007).
+  decision_title:
+    type: string
+    minLength: 5
+  program_context:
+    type: object
+    additionalProperties: false
+    required:
+    - program_id
+    - asset_or_initiative
+    - domain
+    properties:
+      program_id:
+        type: string
+        minLength: 1
+      asset_or_initiative:
+        type: string
+        minLength: 1
+      domain:
+        type: string
+        enum:
+        - non_clinical_informatics
+        - ind_submission
+        - cmc
+        - regulatory_ops
+        - other
+      target_product_profile:
+        type: object
+        additionalProperties: false
+        properties:
+          intended_indication:
+            type: string
+          patient_population:
+            type: string
+          route_of_administration:
+            type: string
+          dosing_regimen:
+            type: string
+          key_safety_considerations:
+            type: array
+            items:
+              type: string
+            default: []
+          development_stage_relevance:
+            type: string
+            description: How this decision relates to the current stage (e.g., IND-enabling
+              package, pre-IND strategy, first-in-human readiness).
+  status:
+    type: string
+    enum:
+    - proposed
+    - in_review
+    - decided
+    - superseded
+    - withdrawn
+  created_at:
+    type: string
+    format: date-time
+  created_by:
+    $ref: '#/$defs/person_ref'
+  gate:
+    type: object
+    additionalProperties: false
+    required:
+    - gate_name
+    - gate_type
+    - gate_date
+    - decision_deadline
+    properties:
+      gate_name:
+        type: string
+        minLength: 2
+      gate_type:
+        type: string
+        enum:
+        - phase_gate
+        - exec_committee
+        - quality_review
+      gate_date:
+        type: string
+        format: date
+      decision_deadline:
+        type: string
+        format: date-time
+      meeting_refs:
+        type: array
+        items:
+          type: string
+          minLength: 1
+        default: []
+  decision_question:
+    type: string
+    minLength: 10
+  options_considered:
+    type: array
+    items:
+      $ref: '#/$defs/option'
+    default: []
+  decision_outcome:
+    type: object
+    additionalProperties: false
+    required:
+    - outcome
+    - selected_option_id
+    - conditions
+    - rationale_summary
+    properties:
+      outcome:
+        type: string
+        enum:
+        - go
+        - no_go
+        - conditional_go
+        - defer
+        - defer_with_required_evidence
+      selected_option_id:
+        type:
+        - string
+        - 'null'
+      conditions:
+        type: array
+        items:
+          $ref: '#/$defs/condition'
+        default: []
+      rationale_summary:
+        type: string
+        minLength: 50
+        maxLength: 2500
+        description: Short narrative explaining why the decision is defensible given
+          evidence and risks at the time.
+  evidence:
+    type: object
+    additionalProperties: false
+    required:
+    - evidence_items
+    properties:
+      evidence_items:
+        type: array
+        minItems: 1
+        items:
+          $ref: '#/$defs/evidence_item'
+  known_gaps_and_assumptions:
+    type: object
+    additionalProperties: false
+    required:
+    - gaps
+    - assumptions
+    properties:
+      gaps:
+        type: array
+        items:
+          $ref: '#/$defs/gap'
+        default: []
+      assumptions:
+        type: array
+        items:
+          $ref: '#/$defs/assumption'
+        default: []
+    default:
+      gaps: []
+      assumptions: []
+  risk_assessment:
+    type: object
+    additionalProperties: false
+    required:
+    - key_risks
+    - residual_risk_statement
+    - risk_acceptance_required
+    properties:
+      key_risks:
+        type: array
+        items:
+          $ref: '#/$defs/risk'
+        default: []
+      residual_risk_statement:
+        type: string
+        minLength: 0
+        maxLength: 2000
+      risk_acceptance_required:
+        type: boolean
+      residual_risk_items:
+        type: array
+        description: Structured residual risk items that remain true after the decision,
+          even with conditions.
+        items:
+          type: object
+          additionalProperties: false
+          required:
+          - risk
+          - mitigation
+          - trigger
+          properties:
+            risk:
+              type: string
+            mitigation:
+              type: string
+            trigger:
+              type: string
+            owner:
+              $ref: '#/$defs/person_ref'
+        default: []
+    default:
+      key_risks: []
+      residual_risk_statement: ''
+      risk_acceptance_required: false
+  governance:
+    type: object
+    additionalProperties: false
+    required:
+    - decision_owner
+    - approvers
+    - reviewers
+    - approval_method
+    - approvals
+    - final_signoff
+    properties:
+      decision_owner:
+        $ref: '#/$defs/person_ref'
+      approvers:
+        type: array
+        minItems: 1
+        items:
+          $ref: '#/$defs/person_ref'
+      reviewers:
+        type: array
+        items:
+          $ref: '#/$defs/person_ref'
+        default: []
+      approval_method:
+        type: string
+        enum:
+        - meeting_vote
+        - asynchronous_signoff
+        - delegated_authority
+      approvals:
+        type: array
+        items:
+          $ref: '#/$defs/approval'
+        default: []
+      final_signoff:
+        $ref: '#/$defs/final_signoff'
+      authority_scope:
+        type: string
+        enum:
+        - recommend
+        - decide
+        - veto
+        default: decide
+      escalation_path:
+        type: array
+        items:
+          $ref: '#/$defs/person_ref'
+        default: []
+  ai_assistance:
+    type: object
+    additionalProperties: false
+    required:
+    - used
+    - use_cases
+    - artifacts
+    - controls
+    properties:
+      used:
+        type: boolean
+      use_cases:
+        type: array
+        items:
+          type: string
+          enum:
+          - summarize
+          - extract
+          - compare
+          - classify
+          - draft
+          - other
+        default: []
+      artifacts:
+        type: array
+        items:
+          $ref: '#/$defs/ai_artifact'
+        default: []
+      controls:
+        type: object
+        additionalProperties: false
+        required:
+        - prompt_or_instruction_ref
+        - schema_or_format_constraints
+        - versioning
+        - safety_notes
+        properties:
+          prompt_or_instruction_ref:
+            type: string
+          schema_or_format_constraints:
+            type: string
+          versioning:
+            type: string
+          safety_notes:
+            type: string
+        default:
+          prompt_or_instruction_ref: ''
+          schema_or_format_constraints: ''
+          versioning: ''
+          safety_notes: ''
+      confidence_band:
+        type:
+        - string
+        - 'null'
+        enum:
+        - low
+        - medium
+        - high
+        - null
+        default: null
+      human_override:
+        type:
+        - boolean
+        - 'null'
+        default: null
+      tool_name:
+        type: string
+      tool_purpose:
+        type: string
+      disclosure_notes:
+        type: string
+      tool_characteristics:
+        type: object
+        additionalProperties: false
+        properties:
+          model_type:
+            type: string
+          training_data_notes:
+            type: string
+          benchmarks_or_validation:
+            type: string
+          limitations:
+            type: string
+        default: {}
+      human_review:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required:
+          - tier
+          - reviewer
+          - finding_summary
+          properties:
+            tier:
+              type: string
+              enum:
+              - tier1
+              - tier2
+              - tier3
+            reviewer:
+              $ref: '#/$defs/person_ref'
+            finding_summary:
+              type: string
+            actions_taken:
+              type: string
+        default: []
+      human_override_log:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required:
+          - override
+          - rationale
+          - category
+          properties:
+            override:
+              type: string
+            rationale:
+              type: string
+            category:
+              type: string
+              enum:
+              - factual_error
+              - interpretive_error
+              - omission
+              - regulatory_style_mismatch
+              - contextual_judgment
+        default: []
+      ai_risk_assessment:
+        type: object
+        additionalProperties: false
+        properties:
+          confidence_band:
+            type: string
+            enum:
+            - low
+            - medium
+            - high
+          cautions:
+            type: string
+        default: {}
+    default:
+      used: false
+      use_cases: []
+      artifacts: []
+      controls:
+        prompt_or_instruction_ref: ''
+        schema_or_format_constraints: ''
+        versioning: ''
+        safety_notes: ''
+  actions:
+    type: array
+    items:
+      $ref: '#/$defs/action'
+    default: []
+  dependencies:
+    type: array
+    items:
+      type: string
+    default: []
+  change_control:
+    type: object
+    additionalProperties: false
+    required:
+    - change_requests
+    - release_or_validation_refs
+    properties:
+      change_requests:
+        type: array
+        items:
+          type: string
+        default: []
+      release_or_validation_refs:
+        type: array
+        items:
+          type: string
+        default: []
+    default:
+      change_requests: []
+      release_or_validation_refs: []
+  audit:
+    type: object
+    additionalProperties: false
+    required:
+    - record_version
+    - change_log
+    - supersedes
+    - superseded_by
+    - retention_class
+    properties:
+      record_version:
+        type: integer
+        minimum: 1
+      change_log:
+        type: array
+        items:
+          $ref: '#/$defs/change_log_item'
+        default: []
+      supersedes:
+        type:
+        - string
+        - 'null'
+      superseded_by:
+        type:
+        - string
+        - 'null'
+      retention_class:
+        type: string
+        enum:
+        - draft
+        - controlled_record
+  decision_category:
+    type: string
+    enum:
+    - internal
+    - regulatory_interaction
+    description: Categorizes whether this decision is internal delivery/governance
+      or primarily about a regulatory interaction (e.g., pre-IND meeting strategy,
+      interpretation of feedback).
+  regulatory_context:
+    type: object
+    additionalProperties: false
+    properties:
+      interaction_type:
+        type: string
+        enum:
+        - pre-IND
+        - Type B
+        - Type C
+        - Written Response
+        - other
+      questions_submitted:
+        type: array
+        items:
+          type: string
+        default: []
+      assumptions_made:
+        type: array
+        items:
+          type: string
+        default: []
+      feedback_received:
+        type: array
+        items:
+          type: string
+        default: []
+      interpretation_risks:
+        type: array
+        items:
+          type: string
+        default: []
+      follow_up_actions:
+        type: array
+        items:
+          type: string
+        default: []
+    required:
+    - interaction_type
+    description: Optional context used only when decision_category is regulatory_interaction.
+  risk_posture:
+    type: string
+    description: Declared risk posture for this decision (how conservative the decision
+      should be).
+    enum:
+    - risk_minimizing
+    - risk_neutral
+    - risk_accepting
+  author_at_risk_items:
+    type: array
+    items:
+      $ref: '#/$defs/author_at_risk_item'
+    default: []
+  review_plan:
+    $ref: '#/$defs/review_plan'
+  scope_change_events:
+    type: array
+    items:
+      $ref: '#/$defs/scope_change_event'
+    default: []
+  dependency_map:
+    type: array
+    items:
+      $ref: '#/$defs/dependency_item'
+    default: []
+  data_readiness_status:
+    type: array
+    items:
+      $ref: '#/$defs/data_readiness_item'
+    default: []
+  publishing_plan:
+    $ref: '#/$defs/publishing_plan'
+  tpp_links:
+    type: array
+    items:
+      $ref: '#/$defs/tpp_link'
+    default: []
+  evidence_completeness:
+    type: object
+    additionalProperties: false
+    required:
+    - state
+    properties:
+      state:
+        type: string
+        enum:
+        - complete
+        - partial
+        - placeholder
+      expected_resolution_date:
+        type:
+        - string
+        - 'null'
+        format: date
+      author_at_risk:
+        type: boolean
+        default: false
+      notes:
+        type:
+        - string
+        - 'null'
+        maxLength: 2000
+  propagation_required:
+    type: array
+    items:
+      type: string
+      enum:
+      - IB
+      - M2.4
+      - M2.5
+      - M2.6
+      - M2.7
+      - Protocol
+      - CMC
+      - TPP
+      - Other
+    default: []
+$defs:
+  person_ref:
+    type: object
+    additionalProperties: false
+    required:
+    - name
+    - role
+    properties:
+      name:
+        type: string
+        minLength: 2
+      role:
+        type: string
+        minLength: 2
+  option:
+    type: object
+    additionalProperties: false
+    required:
+    - option_id
+    - description
+    - pros
+    - cons
+    - estimated_impact
+    properties:
+      option_id:
+        type: string
+        minLength: 1
+      description:
+        type: string
+        minLength: 5
+      pros:
+        type: array
+        items:
+          type: string
+        default: []
+      cons:
+        type: array
+        items:
+          type: string
+        default: []
+      estimated_impact:
+        type: string
+        minLength: 0
+        maxLength: 2000
+  condition:
+    type: object
+    additionalProperties: false
+    required:
+    - condition
+    - owner
+    - due_date
+    - evidence_to_close
+    properties:
+      condition:
+        type: string
+        minLength: 5
+      owner:
+        $ref: '#/$defs/person_ref'
+      due_date:
+        type: string
+        format: date
+      evidence_to_close:
+        type: string
+        minLength: 1
+  evidence_item:
+    type: object
+    additionalProperties: false
+    required:
+    - evidence_id
+    - type
+    - title
+    - source_system
+    - location_ref
+    - owner
+    - as_of
+    - relevance
+    - quality_notes
+    - confidence
+    - completeness_state
+    properties:
+      evidence_id:
+        type: string
+        minLength: 1
+      type:
+        type: string
+        enum:
+        - dataset
+        - analysis
+        - report
+        - protocol
+        - memo
+        - dashboard
+        - validation_artifact
+        - other
+      title:
+        type: string
+        minLength: 3
+      source_system:
+        type: string
+        minLength: 1
+      location_ref:
+        type: string
+        minLength: 1
+      owner:
+        $ref: '#/$defs/person_ref'
+      as_of:
+        type: string
+        format: date-time
+        description: Evidence freshness timestamp.
+      relevance:
+        type: string
+        enum:
+        - primary
+        - supporting
+        - contextual
+      quality_notes:
+        type: string
+        minLength: 0
+        maxLength: 2000
+      confidence:
+        type: string
+        enum:
+        - low
+        - medium
+        - high
+        description: Human-assigned confidence rating for this evidence.
+      completeness_state:
+        type: string
+        description: Evidence completeness classification for this specific evidence
+          item.
+        enum:
+        - complete
+        - partial
+        - placeholder
+  gap:
+    type: object
+    additionalProperties: false
+    required:
+    - gap
+    - impact
+    - mitigation_plan
+    properties:
+      gap:
+        type: string
+        minLength: 3
+      impact:
+        type: string
+        minLength: 0
+        maxLength: 2000
+      mitigation_plan:
+        type: string
+        minLength: 0
+        maxLength: 2000
+  assumption:
+    type: object
+    additionalProperties: false
+    required:
+    - assumption
+    - risk_if_wrong
+    - how_to_verify
+    properties:
+      assumption:
+        type: string
+        minLength: 3
+      risk_if_wrong:
+        type: string
+        minLength: 0
+        maxLength: 2000
+      how_to_verify:
+        type: string
+        minLength: 0
+        maxLength: 2000
+  risk:
+    type: object
+    additionalProperties: false
+    required:
+    - risk
+    - severity
+    - likelihood
+    - detectability
+    - mitigation
+    - owner
+    properties:
+      risk:
+        type: string
+        minLength: 3
+      severity:
+        type: string
+        enum:
+        - low
+        - medium
+        - high
+        - critical
+      likelihood:
+        type: string
+        enum:
+        - rare
+        - unlikely
+        - possible
+        - likely
+        - almost_certain
+      detectability:
+        type: string
+        enum:
+        - easy
+        - moderate
+        - hard
+      mitigation:
+        type: string
+        minLength: 0
+        maxLength: 2000
+      owner:
+        $ref: '#/$defs/person_ref'
+  approval:
+    type: object
+    additionalProperties: false
+    required:
+    - person
+    - decision
+    - timestamp
+    - comments
+    properties:
+      person:
+        $ref: '#/$defs/person_ref'
+      decision:
+        type: string
+        enum:
+        - approve
+        - reject
+        - request_changes
+      timestamp:
+        type: string
+        format: date-time
+      comments:
+        type: string
+        minLength: 0
+        maxLength: 2000
+  final_signoff:
+    type: object
+    additionalProperties: false
+    required:
+    - person
+    - timestamp
+    - notes
+    properties:
+      person:
+        $ref: '#/$defs/person_ref'
+      timestamp:
+        type: string
+        format: date-time
+      notes:
+        type: string
+        minLength: 0
+        maxLength: 2000
+  ai_artifact:
+    type: object
+    additionalProperties: false
+    required:
+    - artifact_id
+    - description
+    - input_refs
+    - output_ref
+    - human_reviewer
+    - disposition
+    properties:
+      artifact_id:
+        type: string
+        minLength: 1
+      description:
+        type: string
+        minLength: 3
+      input_refs:
+        type: array
+        items:
+          type: string
+        default: []
+      output_ref:
+        type: string
+        minLength: 1
+      human_reviewer:
+        $ref: '#/$defs/person_ref'
+      disposition:
+        type: string
+        enum:
+        - accepted
+        - edited
+        - rejected
+  action:
+    type: object
+    additionalProperties: false
+    required:
+    - action_id
+    - description
+    - owner
+    - due_date
+    - success_criteria
+    - status
+    properties:
+      action_id:
+        type: string
+        minLength: 1
+      description:
+        type: string
+        minLength: 3
+      owner:
+        $ref: '#/$defs/person_ref'
+      due_date:
+        type: string
+        format: date
+      success_criteria:
+        type: string
+        minLength: 0
+        maxLength: 2000
+      status:
+        type: string
+        enum:
+        - open
+        - in_progress
+        - blocked
+        - done
+        - cancelled
+  change_log_item:
+    type: object
+    additionalProperties: false
+    required:
+    - version
+    - changed_by
+    - changed_at
+    - summary
+    properties:
+      version:
+        type: integer
+        minimum: 1
+      changed_by:
+        $ref: '#/$defs/person_ref'
+      changed_at:
+        type: string
+        format: date-time
+      summary:
+        type: string
+        minLength: 3
+        maxLength: 2000
+  risk_posture:
+    type: object
+    additionalProperties: false
+    required:
+    - stance
+    - rationale
+    properties:
+      stance:
+        type: string
+        enum:
+        - aggressive
+        - balanced
+        - conservative
+      rationale:
+        type: string
+        minLength: 10
+        maxLength: 2000
+      trade_offs:
+        type: array
+        items:
+          type: string
+        default: []
+      benchmark_basis:
+        type: array
+        items:
+          type: string
+          enum:
+          - precedent_programs
+          - pre_IND_feedback
+          - internal_portfolio_norm
+          - therapeutic_area_norm
+          - other
+        default: []
+  author_at_risk_item:
+    type: object
+    additionalProperties: false
+    required:
+    - item_id
+    - description
+    - verification
+    - owner
+    properties:
+      item_id:
+        type: string
+        minLength: 1
+      description:
+        type: string
+        minLength: 5
+        maxLength: 2000
+      verification:
+        type: string
+        minLength: 5
+        maxLength: 2000
+      owner:
+        $ref: '#/$defs/person_ref'
+      due_date:
+        type:
+        - string
+        - 'null'
+        format: date
+      fallback:
+        type:
+        - string
+        - 'null'
+        maxLength: 2000
+      status:
+        type: string
+        enum:
+        - open
+        - in_progress
+        - done
+        - blocked
+        default: open
+  review_plan:
+    type: object
+    additionalProperties: false
+    properties:
+      required_reviewers:
+        type: array
+        items:
+          $ref: '#/$defs/person_ref'
+        default: []
+      optional_reviewers:
+        type: array
+        items:
+          $ref: '#/$defs/person_ref'
+        default: []
+      triage_rules:
+        type: array
+        items:
+          type: string
+        default: []
+      review_window:
+        type:
+        - string
+        - 'null'
+        maxLength: 200
+  scope_change_event:
+    type: object
+    additionalProperties: false
+    required:
+    - event_date
+    - summary
+    - approved_by
+    properties:
+      event_date:
+        type: string
+        format: date
+      summary:
+        type: string
+        minLength: 5
+        maxLength: 2000
+      impact:
+        type:
+        - string
+        - 'null'
+        maxLength: 2000
+      approved_by:
+        $ref: '#/$defs/person_ref'
+  dependency_item:
+    type: object
+    additionalProperties: false
+    required:
+    - dependency
+    - why_it_matters
+    properties:
+      dependency:
+        type: string
+        minLength: 3
+        maxLength: 400
+      why_it_matters:
+        type: string
+        minLength: 3
+        maxLength: 2000
+      owner:
+        anyOf:
+        - $ref: '#/$defs/person_ref'
+        - type: 'null'
+  data_readiness_item:
+    type: object
+    additionalProperties: false
+    required:
+    - data_item
+    - status
+    properties:
+      data_item:
+        type: string
+        minLength: 3
+        maxLength: 400
+      status:
+        type: string
+        enum:
+        - not_started
+        - in_progress
+        - draft
+        - audited_draft
+        - final
+        - placeholder
+      expected_by:
+        type:
+        - string
+        - 'null'
+        format: date
+      notes:
+        type:
+        - string
+        - 'null'
+        maxLength: 2000
+  publishing_plan:
+    type: object
+    additionalProperties: false
+    properties:
+      rolling_publish:
+        type: boolean
+        default: false
+      lock_points:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required:
+          - lock_date
+          - what_locks
+          properties:
+            lock_date:
+              type: string
+              format: date
+            what_locks:
+              type: string
+              minLength: 3
+              maxLength: 1000
+            approved_by:
+              anyOf:
+              - $ref: '#/$defs/person_ref'
+              - type: 'null'
+        default: []
+  tpp_link:
+    type: object
+    additionalProperties: false
+    required:
+    - tpp_element
+    - relevance
+    properties:
+      tpp_element:
+        type: string
+        minLength: 3
+        maxLength: 200
+      relevance:
+        type: string
+        minLength: 3
+        maxLength: 1000
+allOf:
+- if:
+    properties:
+      decision_category:
+        const: regulatory_interaction
+  then:
+    required:
+    - regulatory_context
+- if:
+    properties:
+      ai_assistance:
+        properties:
+          used:
+            const: true
+  then:
+    properties:
+      ai_assistance:
+        required:
+        - tool_name
+        - tool_purpose
+        - human_review
+        - ai_risk_assessment

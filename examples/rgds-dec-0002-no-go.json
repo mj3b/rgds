@@ -72,7 +72,8 @@
         "as_of": "2026-01-05T09:10:00-05:00",
         "relevance": "primary",
         "quality_notes": "Dashboard indicates lineage breaks for Study-02 and Study-03 subsets; definitions aligned but lineage evidence incomplete.",
-        "confidence": "medium"
+        "confidence": "medium",
+        "completeness_state": "complete"
       },
       {
         "evidence_id": "E-011",
@@ -87,7 +88,8 @@
         "as_of": "2026-01-05T08:35:00-05:00",
         "relevance": "primary",
         "quality_notes": "Export contains missing required fields and inconsistent identifiers between source extracts; not stable as a gate-of-record dataset.",
-        "confidence": "low"
+        "confidence": "low",
+        "completeness_state": "complete"
       },
       {
         "evidence_id": "E-012",
@@ -102,7 +104,8 @@
         "as_of": "2026-01-05T16:40:00-05:00",
         "relevance": "primary",
         "quality_notes": "Reconciliation failed: record counts and key identifiers do not reconcile across extracts; root cause not yet isolated.",
-        "confidence": "high"
+        "confidence": "high",
+        "completeness_state": "complete"
       }
     ]
   },
@@ -153,7 +156,27 @@
       }
     ],
     "residual_risk_statement": "Residual risk is not acceptable at this gate because the dataset cannot be defended as stable, traceable, and integrity-checked. Risk is reduced by pausing and requiring controlled closure evidence before re-review.",
-    "risk_acceptance_required": true
+    "risk_acceptance_required": true,
+    "residual_risk_items": [
+      {
+        "risk": "Proceeding with unresolved integrity reconciliation could invalidate downstream reports and require rework under governance scrutiny.",
+        "mitigation": "No-Go until reconciliation passes and lineage is demonstrably complete; require controlled evidence of closure before re-review.",
+        "trigger": "If the risk condition materializes or a governed condition is not met by due date.",
+        "owner": {
+          "name": "QA Representative",
+          "role": "Quality"
+        }
+      },
+      {
+        "risk": "Incomplete lineage could undermine audit defensibility of any derived submissions or internal decisions.",
+        "mitigation": "Produce lineage validation memo linking source → transforms → export; require sign-off prior to gate re-attempt.",
+        "trigger": "If the risk condition materializes or a governed condition is not met by due date.",
+        "owner": {
+          "name": "Data Steward",
+          "role": "Non-clinical Data Operations"
+        }
+      }
+    ]
   },
   "governance": {
     "decision_owner": {
@@ -211,8 +234,14 @@
     },
     "authority_scope": "decide",
     "escalation_path": [
-       { "name": "QA Representative", "role": "Quality (Deadlock resolver)" },
-       { "name": "Executive Sponsor", "role": "VP, Development (Final escalation)" }
+      {
+        "name": "QA Representative",
+        "role": "Quality (Deadlock resolver)"
+      },
+      {
+        "name": "Executive Sponsor",
+        "role": "VP, Development (Final escalation)"
+      }
     ]
   },
   "ai_assistance": {
@@ -299,5 +328,6 @@
     "author_at_risk": false,
     "notes": null
   },
-  "propagation_required": []
+  "propagation_required": [],
+  "risk_posture": "risk_accepting"
 }

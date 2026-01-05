@@ -51,6 +51,83 @@ designed to preserve decision accountability, auditability, and regulatory trust
 
 ---
 
+> **Whitepaper‑Aligned Reference Implementation (v2.0)**
+>
+> This repository implements the RGDS decision‑governance model described in the RGDS whitepaper, including mandatory options analysis, explicit evidence completeness classification, residual risk documentation, named human accountability, and structured AI disclosure when applicable.
+
+<!-- RGDS governance + repository signals -->
+[![Status: Independent Case Study](https://img.shields.io/badge/status-independent%20case%20study-5b6cff)](#status)
+[![Human Governed](https://img.shields.io/badge/governance-human--governed-3bb273)](#governance)
+[![Non-Agentic](https://img.shields.io/badge/AI-explicitly%20non--agentic-2d7ff9)](#prohibited-uses-non-agentic-boundary)
+[![Decision Defensibility](https://img.shields.io/badge/outcome-decision%20defensibility-6f42c1)](#what-problem-this-solves)
+[![Audit Ready](https://img.shields.io/badge/property-audit--ready%20artifacts-0aa2c0)](#evaluation)
+[![No Autonomy](https://img.shields.io/badge/constraint-no%20autonomous%20execution-ff7a00)](#what-this-repository-is-and-is-not)
+
+[![License](https://img.shields.io/github/license/mj3b/rgds)](LICENSE)
+[![Stars](https://img.shields.io/github/stars/mj3b/rgds)](https://github.com/mj3b/rgds/stargazers)
+[![CI Validation](https://img.shields.io/github/actions/workflow/status/mj3b/rgds/validate.yml)](https://github.com/mj3b/rgds/actions/workflows/validate.yml)
+
+[![Schema Enforced](https://img.shields.io/badge/schema-decision%20log%20enforced-1f6feb)](#decision-log)
+
+A human-governed system for producing defensible, phase-gate decisions in regulated environments.
+
+This repository demonstrates the RGDS operating model:
+**human-governed, evidence-linked, schema-validated, and explicitly non-agentic**—
+designed to preserve decision accountability, auditability, and regulatory trust.
+
+---
+
+## What Changed in v2.0
+
+- Decision logs now require **options enumeration** (at least two).
+- Evidence items must declare **completeness**: `complete`, `partial`, or `placeholder`.
+- **Residual risk** is captured explicitly (what remains true after you proceed).
+- **Named human accountability** is required (decision owner + approvers).
+- **AI assistance disclosure** is structured and mandatory when AI is used.
+
+## Decision Log Minimum Requirements
+
+A decision log is considered governance‑complete only when it records:
+
+- Decision question + decision deadline
+- Options considered (at least two)
+- Evidence base with completeness classification
+- Risk posture + residual risk
+- Outcome + (if conditional) owned conditions with verification evidence
+- Named human accountability (owner + approvers)
+- AI assistance disclosure (if AI was used)
+
+
+## Table of Contents
+
+- [Canonical Reference Decisions](#canonical-reference-decisions)
+- [What’s New in v1.4.0](#whats-new-in-v140)
+- [What Problem This Solves](#what-problem-this-solves)
+- [What This Repository Is (and Is Not)](#what-this-repository-is-and-is-not)
+  - [This is](#this-is)
+  - [This is not](#this-is-not)
+  - [Important Notice](#important-notice)
+- [How to Read This Repository (Non-Technical Overview)](#how-to-read-this-repository-non-technical-overview)
+- [Core Concepts](#core-concepts)
+  - [Decision Log](#decision-log)
+  - [IND Delivery Alignment (v1.3 → v1.4)](#ind-delivery-alignment-v13--v14)
+  - [Evaluation](#evaluation)
+  - [Governance](#governance)
+  - [AI Governance Reference](#ai-governance-reference)
+- [Where AI Fits in the System](#where-ai-fits-in-the-system)
+  - [Permitted AI-Assisted Tasks (Bounded)](#permitted-ai-assisted-tasks-bounded)
+  - [Prohibited Uses (Non-Agentic Boundary)](#prohibited-uses-non-agentic-boundary)
+  - [What Gets Logged When AI Is Used (v1.4.0)](#what-gets-logged-when-ai-is-used-v140)
+  - [Evidence Rule](#evidence-rule)
+  - [Why RGDS v1.x Contains No Built-In AI Components](#why-rgds-v1x-contains-no-built-in-ai-components)
+- [Repository Structure](#repository-structure)
+- [Key Docs](#key-docs)
+- [Why This Matters in Production](#why-this-matters-in-production)
+- [Who This Is For](#who-this-is-for)
+- [Status](#status)
+
+---
+
 ## Canonical Reference Decisions
 
 If you read only **one place** in this repository, start here.

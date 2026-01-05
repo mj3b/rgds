@@ -70,6 +70,21 @@ governance:
 # AI assistance disclosure (non-agentic)
 ai_assistance:
   used: false
+  # Required when used: true
+  tool_name: ""
+  tool_purpose: ""
+  disclosure_notes: ""
+  tool_characteristics:
+    model_type: ""
+    training_data_notes: ""
+    benchmarks_or_validation: ""
+    limitations: ""
+  human_review: []   # tiered review records (tier1/tier2/tier3)
+  human_override_log: []  # standardized override categories
+  ai_risk_assessment:
+    confidence_band: null  # low | medium | high | null
+    cautions: ""
+
   use_cases: []     # summarize | extract | compare | classify | draft | other
   artifacts: []
   controls:
@@ -85,12 +100,7 @@ actions: []
 dependencies: []
 
 # IND-aligned optional fields
-risk_posture:
-  stance: balanced  # aggressive | balanced | conservative
-  rationale: ""
-  trade_offs: []
-  # v1.4.0 — benchmarking context
-  benchmark_basis: []  # precedent_programs | pre_IND_feedback | internal_portfolio_norm | therapeutic_area_norm | other
+risk_posture: risk_neutral  # risk_minimizing | risk_neutral | risk_accepting
 
 author_at_risk_items: []
 
