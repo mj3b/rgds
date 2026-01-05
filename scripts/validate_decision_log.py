@@ -167,6 +167,16 @@ def semantic_checks(instance: dict) -> Tuple[List[str], List[str]]:
         if len(gaps) == 0 and len(actions) == 0:
             warns.append(_msg(W_DEFER_001, "defer has no gaps or actions; consider recording re-entry criteria or follow-up actions"))
 
+    
+    # ---------------------------------------------------------------------
+    # Options completeness
+    # ---------------------------------------------------------------------
+
+    options = instance.get("options_considered") or []
+    if len(options) < 2:
+        errs.append(_msg("E_OPT_001", "options_considered must include at least two options"))
+
+
     # ---------------------------------------------------------------------
     # Evidence completeness coherence
     # ---------------------------------------------------------------------
@@ -219,6 +229,23 @@ def semantic_checks(instance: dict) -> Tuple[List[str], List[str]]:
 
         if len(use_cases) == 0:
             errs.append(_msg(E_AI_001, "ai_assistance.used=true requires ai_assistance.use_cases (at least 1)"))
+
+        # v2.0+ (whitepaper-aligned): require tool_name/tool_purpose and human_review when used=true
+        tool_name = ai.get("tool_name") or ""
+        tool_purpose = ai.get("tool_purpose") or ""
+        human_review = ai.get("human_review") or []
+        ai_risk = ai.get("ai_risk_assessment") or {}
+
+        if tool_name.strip() == "":
+            errs.append(_msg("E_AI_004", "ai_assistance.used=true requires ai_assistance.tool_name"))
+        if tool_purpose.strip() == "":
+            errs.append(_msg("E_AI_005", "ai_assistance.used=true requires ai_assistance.tool_purpose"))
+        if len(human_review) == 0:
+            errs.append(_msg("E_AI_006", "ai_assistance.used=true requires at least one human_review record"))
+        if not isinstance(ai_risk, dict) or (ai_risk.get("confidence_band") in (None, "")):
+            warns.append(_msg("W_AI_002", "ai_assistance.used=true should include ai_risk_assessment.confidence_band"))
+
+
         if len(artifacts) == 0:
             errs.append(_msg(E_AI_002, "ai_assistance.used=true requires ai_assistance.artifacts (at least 1)"))
 

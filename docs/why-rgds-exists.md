@@ -14,6 +14,18 @@ RGDS translates these recurring patterns into **explicit, auditable decision str
 
 ---
 
+## Why narrative decision memos fail audits
+
+In regulated delivery, narrative decision memos often fail not because the authors are careless, but because the format encourages:
+
+- implicit assumptions (not explicitly owned)
+- undocumented trade‑offs (options are implied, not enumerated)
+- “good enough” evidence language without completeness classification
+- risk acceptance without a recorded residual risk statement
+- AI‑assisted drafting without disclosure (contaminating provenance)
+
+RGDS replaces narrative ambiguity with a structured decision record that forces options, evidence completeness, residual risk, ownership, and (when used) AI disclosure to be explicit.
+
 ## Source attribution note
 
 The signal patterns described in this document are derived from:

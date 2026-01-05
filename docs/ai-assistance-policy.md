@@ -30,6 +30,41 @@ This policy applies regardless of tool, vendor, or deployment model.
 
 ---
 
+## When AI disclosure is mandatory
+
+AI disclosure is required when AI **meaningfully influences** any of the following:
+
+- analysis or classification that informs the decision outcome
+- drafting of decision rationale, conditions, or risk statements
+- prioritization or triage of evidence and gaps
+- cross‑document consistency checks that affect wording or claims
+
+If AI was used for trivial formatting only, disclosure is still recommended — but “meaningful influence” triggers mandatory disclosure.
+
+## Minimum AI disclosure fields
+
+When AI is used (`ai_assistance.used = true`), the decision record must capture at minimum:
+
+- tool name and (if applicable) versioning or configuration
+- purpose / use cases
+- known limitations relevant to the decision context
+- human review tier(s) and reviewer identity
+- overrides (what AI suggested vs what human accepted) when applicable
+- a simple risk assessment of AI reliance (confidence band + cautions)
+
+## Human override taxonomy
+
+When a human overrides AI output, record a category so overrides can be analyzed across decisions:
+
+- factual error
+- interpretive error
+- omission
+- regulatory / style mismatch
+- contextual judgment
+
+This taxonomy is intentionally simple — the goal is governance visibility, not perfect classification.
+
+
 ## Permitted AI use cases
 
 AI assistance **may** be used for:

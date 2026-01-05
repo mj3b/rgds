@@ -91,7 +91,8 @@
         "as_of": "2026-01-05T09:00:00-05:00",
         "relevance": "primary",
         "quality_notes": "Refresh completed within SLA; lineage links verified to source extracts; definitions aligned to gate requirements.",
-        "confidence": "high"
+        "confidence": "high",
+        "completeness_state": "complete"
       },
       {
         "evidence_id": "E-002",
@@ -106,7 +107,8 @@
         "as_of": "2026-01-05T08:35:00-05:00",
         "relevance": "primary",
         "quality_notes": "4 records missing exposure metadata for Study-03; otherwise conforms to required fields.",
-        "confidence": "medium"
+        "confidence": "medium",
+        "completeness_state": "complete"
       },
       {
         "evidence_id": "E-003",
@@ -121,7 +123,8 @@
         "as_of": "2026-01-05T15:10:00-05:00",
         "relevance": "supporting",
         "quality_notes": "QC performed on required fields and value ranges; open issue documented for Study-03 exposure metadata.",
-        "confidence": "high"
+        "confidence": "high",
+        "completeness_state": "complete"
       }
     ]
   },
@@ -167,7 +170,27 @@
       }
     ],
     "residual_risk_statement": "Residual risk is acceptable given bounded scope and explicit closure conditions. If conditions fail to close by the due dates, the decision must be escalated for governance re-review.",
-    "risk_acceptance_required": true
+    "risk_acceptance_required": true,
+    "residual_risk_items": [
+      {
+        "risk": "Incomplete exposure metadata could reduce traceability for a subset of Study-03 records.",
+        "mitigation": "Conditioned action: backfill and QC memo closure with controlled evidence link.",
+        "trigger": "If the risk condition materializes or a governed condition is not met by due date.",
+        "owner": {
+          "name": "Data Steward",
+          "role": "Non-clinical Data Operations"
+        }
+      },
+      {
+        "risk": "Late-arriving lab results could invalidate parts of the evidence packet post-gate.",
+        "mitigation": "Conditioned action: confirm lab release expectations and attach controlled confirmation note.",
+        "trigger": "If the risk condition materializes or a governed condition is not met by due date.",
+        "owner": {
+          "name": "Study Lead",
+          "role": "Non-clinical Study Lead"
+        }
+      }
+    ]
   },
   "governance": {
     "decision_owner": {
@@ -225,8 +248,14 @@
     },
     "authority_scope": "decide",
     "escalation_path": [
-       { "name": "QA Representative", "role": "Quality (Deadlock resolver)" },
-       { "name": "Executive Sponsor", "role": "VP, Development (Final escalation)" }
+      {
+        "name": "QA Representative",
+        "role": "Quality (Deadlock resolver)"
+      },
+      {
+        "name": "Executive Sponsor",
+        "role": "VP, Development (Final escalation)"
+      }
     ]
   },
   "ai_assistance": {
@@ -258,7 +287,32 @@
       "safety_notes": "AI output used for drafting only; source documents remain the evidence of record."
     },
     "confidence_band": null,
-    "human_override": null
+    "human_override": null,
+    "tool_name": "ChatGPT-style assistant",
+    "tool_purpose": "Bounded decision-support drafting and structured consistency checks; no autonomy; human review required.",
+    "disclosure_notes": "AI outputs treated as drafts; reviewers confirm source fidelity, remove unsupported claims, and record overrides.",
+    "tool_characteristics": {
+      "model_type": "LLM",
+      "training_data_notes": "Not pinned; treat as opaque tool; do not assume domain grounding.",
+      "benchmarks_or_validation": "Not used as evidence; tool outputs validated via human review and source cross-check.",
+      "limitations": "May hallucinate, omit constraints, or misinterpret regulatory context; cannot approve decisions or accept risk."
+    },
+    "human_review": [
+      {
+        "tier": "tier2",
+        "reviewer": {
+          "name": "QA Representative",
+          "role": "Quality"
+        },
+        "finding_summary": "Reviewed AI output for fidelity and removed unsupported claims.",
+        "actions_taken": "edited"
+      }
+    ],
+    "human_override_log": [],
+    "ai_risk_assessment": {
+      "confidence_band": "medium",
+      "cautions": "Use for synthesis only; verify all factual claims against controlled sources."
+    }
   },
   "actions": [
     {
@@ -320,5 +374,6 @@
     "author_at_risk": false,
     "notes": null
   },
-  "propagation_required": []
+  "propagation_required": [],
+  "risk_posture": "risk_accepting"
 }

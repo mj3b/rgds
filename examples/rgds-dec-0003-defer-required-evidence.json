@@ -101,7 +101,8 @@
         "as_of": "2025-12-26T00:00:00Z",
         "relevance": "primary",
         "quality_notes": "Audited draft available; final signed report pending. Synopsis vs appendix reconciliation pending.",
-        "confidence": "medium"
+        "confidence": "medium",
+        "completeness_state": "partial"
       },
       {
         "evidence_id": "EV-002",
@@ -116,7 +117,8 @@
         "as_of": "2025-12-26T00:00:00Z",
         "relevance": "supporting",
         "quality_notes": "Working notes; must be reconciled into adjudication memo.",
-        "confidence": "low"
+        "confidence": "low",
+        "completeness_state": "complete"
       }
     ]
   },
@@ -156,7 +158,18 @@
       }
     ],
     "residual_risk_statement": "Residual risk remains until adjudication and FDA feedback are incorporated; proceeding now is not justified.",
-    "risk_acceptance_required": true
+    "risk_acceptance_required": true,
+    "residual_risk_items": [
+      {
+        "risk": "Clinical hold or major information request due to incomplete safety narrative",
+        "mitigation": "Defer; adjudicate tox signal; align with FDA before submission.",
+        "trigger": "If the risk condition materializes or a governed condition is not met by due date.",
+        "owner": {
+          "name": "Regulatory Lead",
+          "role": "Regulatory Strategy"
+        }
+      }
+    ]
   },
   "governance": {
     "decision_owner": {
@@ -222,8 +235,14 @@
     },
     "authority_scope": "decide",
     "escalation_path": [
-       { "name": "QA Representative", "role": "Quality (Deadlock resolver)" },
-       { "name": "Executive Sponsor", "role": "VP, Development (Final escalation)" }
+      {
+        "name": "QA Representative",
+        "role": "Quality (Deadlock resolver)"
+      },
+      {
+        "name": "Executive Sponsor",
+        "role": "VP, Development (Final escalation)"
+      }
     ]
   },
   "ai_assistance": {
@@ -298,5 +317,6 @@
     "author_at_risk": false,
     "notes": null
   },
-  "propagation_required": []
+  "propagation_required": [],
+  "risk_posture": "risk_accepting"
 }

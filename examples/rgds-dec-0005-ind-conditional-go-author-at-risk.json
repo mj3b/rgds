@@ -17,7 +17,7 @@
     "gate_name": "IND Readiness Gate",
     "gate_type": "phase_gate",
     "gate_date": "2026-01-15",
-   "decision_deadline": "2026-01-15T23:59:59Z",
+    "decision_deadline": "2026-01-15T23:59:59Z",
     "meeting_refs": [
       "Gate Review #3 — IND readiness (Exec Committee)"
     ]
@@ -108,7 +108,8 @@
         "as_of": "2026-01-10T17:00:00-05:00",
         "relevance": "primary",
         "quality_notes": "Audited draft acceptable for drafting and submission only if reconciled to final signed report with documented deltas.",
-        "confidence": "medium"
+        "confidence": "medium",
+        "completeness_state": "partial"
       },
       {
         "evidence_id": "E-002",
@@ -123,7 +124,8 @@
         "as_of": "2026-01-12T12:00:00-05:00",
         "relevance": "primary",
         "quality_notes": "Aligned to audited-draft tox; requires propagation check upon final tox issuance.",
-        "confidence": "medium"
+        "confidence": "medium",
+        "completeness_state": "partial"
       },
       {
         "evidence_id": "E-003",
@@ -138,7 +140,8 @@
         "as_of": "2026-01-08T09:30:00-05:00",
         "relevance": "primary",
         "quality_notes": "Limited timepoints; shelf-life statements must remain qualified and updated with rolling stability data.",
-        "confidence": "medium"
+        "confidence": "medium",
+        "completeness_state": "complete"
       },
       {
         "evidence_id": "E-004",
@@ -153,7 +156,8 @@
         "as_of": "2026-01-11T15:00:00-05:00",
         "relevance": "supporting",
         "quality_notes": "Protocol is dependent on tox and CMC reconciliations; ensure cross-document consistency for dosing and handling.",
-        "confidence": "high"
+        "confidence": "high",
+        "completeness_state": "partial"
       },
       {
         "evidence_id": "E-005",
@@ -168,7 +172,8 @@
         "as_of": "2026-01-12T18:00:00-05:00",
         "relevance": "contextual",
         "quality_notes": "Checklist output reviewed by required reviewers; not a decision recommendation.",
-        "confidence": "medium"
+        "confidence": "medium",
+        "completeness_state": "complete"
       }
     ]
   },
@@ -235,17 +240,38 @@
       }
     ],
     "residual_risk_statement": "Residual risk is medium: uncertainties remain at submission time (audited-draft tox and limited stability) but are bounded and managed through explicit conditions, lock points, and triage rules.",
-    "risk_acceptance_required": true
+    "risk_acceptance_required": true,
+    "residual_risk_items": [
+      {
+        "risk": "Final tox report deltas vs audited draft affect dose justification and safety margin narrative.",
+        "mitigation": "Condition 1 requires reconciliation and propagation log; triage rule triggers immediate re-review if deltas affect NOAEL or dosing margin.",
+        "trigger": "If the risk condition materializes or a governed condition is not met by due date.",
+        "owner": {
+          "name": "Nonclinical Lead",
+          "role": "Toxicology / Safety"
+        }
+      },
+      {
+        "risk": "Limited stability dataset prompts FDA questions or requires more conservative shelf-life qualifiers.",
+        "mitigation": "Condition 2 mandates rolling stability update and consistent qualifiers across Module 3, IB, and protocol; CMC + QA sign-off required for qualifier changes.",
+        "trigger": "If the risk condition materializes or a governed condition is not met by due date.",
+        "owner": {
+          "name": "CMC Lead",
+          "role": "CMC / Quality"
+        }
+      },
+      {
+        "risk": "Late-breaking edits after publishing lock create inter-document inconsistencies in the eCTD package.",
+        "mitigation": "Publishing lock points constrain late changes; Submission Manager approval required post-lock; final consistency QC checklist must be completed before package assembly.",
+        "trigger": "If the risk condition materializes or a governed condition is not met by due date.",
+        "owner": {
+          "name": "Submission Manager",
+          "role": "Reg Ops / Publishing"
+        }
+      }
+    ]
   },
-  "risk_posture": {
-    "stance": "balanced",
-    "rationale": "Balanced posture: proceed on target date with explicit, owned conditions and change control rather than treating incomplete data as complete or delaying by default.",
-    "trade_offs": [
-      "Maintains schedule while accepting managed uncertainty at submission",
-      "Increases governance overhead slightly to reduce downstream rework and regulatory surprises"
-    ],
-    "benchmark_basis": []
-  },
+  "risk_posture": "risk_neutral",
   "dependency_map": [
     {
       "dependency": "Final signed GLP tox report issuance",
@@ -473,8 +499,14 @@
     },
     "authority_scope": "decide",
     "escalation_path": [
-       { "name": "QA Representative", "role": "Quality (Deadlock resolver)" },
-       { "name": "Executive Sponsor", "role": "VP, Development (Final escalation)" }
+      {
+        "name": "QA Representative",
+        "role": "Quality (Deadlock resolver)"
+      },
+      {
+        "name": "Executive Sponsor",
+        "role": "VP, Development (Final escalation)"
+      }
     ]
   },
   "ai_assistance": {
@@ -524,7 +556,41 @@
       "safety_notes": "AI outputs reviewed by required reviewers; AI cannot approve changes or alter submission materials directly."
     },
     "confidence_band": null,
-    "human_override": null
+    "human_override": null,
+    "tool_name": "ChatGPT-style assistant",
+    "tool_purpose": "Bounded decision-support drafting and structured consistency checks; no autonomy; human review required.",
+    "disclosure_notes": "AI outputs treated as drafts; reviewers confirm source fidelity, remove unsupported claims, and record overrides.",
+    "tool_characteristics": {
+      "model_type": "LLM",
+      "training_data_notes": "Not pinned; treat as opaque tool; do not assume domain grounding.",
+      "benchmarks_or_validation": "Not used as evidence; tool outputs validated via human review and source cross-check.",
+      "limitations": "May hallucinate, omit constraints, or misinterpret regulatory context; cannot approve decisions or accept risk."
+    },
+    "human_review": [
+      {
+        "tier": "tier2",
+        "reviewer": {
+          "name": "Medical Writing PM",
+          "role": "Medical Writing Project Manager"
+        },
+        "finding_summary": "Reviewed AI output for fidelity and removed unsupported claims.",
+        "actions_taken": "edited"
+      },
+      {
+        "tier": "tier2",
+        "reviewer": {
+          "name": "Program Manager",
+          "role": "Program / Delivery"
+        },
+        "finding_summary": "Reviewed AI output for fidelity and removed unsupported claims.",
+        "actions_taken": "accepted"
+      }
+    ],
+    "human_override_log": [],
+    "ai_risk_assessment": {
+      "confidence_band": "medium",
+      "cautions": "Use for synthesis only; verify all factual claims against controlled sources."
+    }
   },
   "actions": [
     {

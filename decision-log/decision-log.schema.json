@@ -15,9 +15,14 @@
     "created_by",
     "gate",
     "decision_question",
+    "options_considered",
     "decision_outcome",
     "evidence",
+    "evidence_completeness",
+    "risk_posture",
+    "risk_assessment",
     "governance",
+    "ai_assistance",
     "audit"
   ],
   "properties": {
@@ -264,6 +269,34 @@
         },
         "risk_acceptance_required": {
           "type": "boolean"
+        },
+        "residual_risk_items": {
+          "type": "array",
+          "description": "Structured residual risk items that remain true after the decision, even with conditions.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "risk",
+              "mitigation",
+              "trigger"
+            ],
+            "properties": {
+              "risk": {
+                "type": "string"
+              },
+              "mitigation": {
+                "type": "string"
+              },
+              "trigger": {
+                "type": "string"
+              },
+              "owner": {
+                "$ref": "#/$defs/person_ref"
+              }
+            }
+          },
+          "default": []
         }
       },
       "default": {
@@ -421,6 +454,115 @@
             "null"
           ],
           "default": null
+        },
+        "tool_name": {
+          "type": "string"
+        },
+        "tool_purpose": {
+          "type": "string"
+        },
+        "disclosure_notes": {
+          "type": "string"
+        },
+        "tool_characteristics": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "model_type": {
+              "type": "string"
+            },
+            "training_data_notes": {
+              "type": "string"
+            },
+            "benchmarks_or_validation": {
+              "type": "string"
+            },
+            "limitations": {
+              "type": "string"
+            }
+          },
+          "default": {}
+        },
+        "human_review": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "tier",
+              "reviewer",
+              "finding_summary"
+            ],
+            "properties": {
+              "tier": {
+                "type": "string",
+                "enum": [
+                  "tier1",
+                  "tier2",
+                  "tier3"
+                ]
+              },
+              "reviewer": {
+                "$ref": "#/$defs/person_ref"
+              },
+              "finding_summary": {
+                "type": "string"
+              },
+              "actions_taken": {
+                "type": "string"
+              }
+            }
+          },
+          "default": []
+        },
+        "human_override_log": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "override",
+              "rationale",
+              "category"
+            ],
+            "properties": {
+              "override": {
+                "type": "string"
+              },
+              "rationale": {
+                "type": "string"
+              },
+              "category": {
+                "type": "string",
+                "enum": [
+                  "factual_error",
+                  "interpretive_error",
+                  "omission",
+                  "regulatory_style_mismatch",
+                  "contextual_judgment"
+                ]
+              }
+            }
+          },
+          "default": []
+        },
+        "ai_risk_assessment": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "confidence_band": {
+              "type": "string",
+              "enum": [
+                "low",
+                "medium",
+                "high"
+              ]
+            },
+            "cautions": {
+              "type": "string"
+            }
+          },
+          "default": {}
         }
       },
       "default": {
@@ -584,7 +726,13 @@
       "description": "Optional context used only when decision_category is regulatory_interaction."
     },
     "risk_posture": {
-      "$ref": "#/$defs/risk_posture"
+      "type": "string",
+      "description": "Declared risk posture for this decision (how conservative the decision should be).",
+      "enum": [
+        "risk_minimizing",
+        "risk_neutral",
+        "risk_accepting"
+      ]
     },
     "author_at_risk_items": {
       "type": "array",
@@ -780,7 +928,8 @@
         "as_of",
         "relevance",
         "quality_notes",
-        "confidence"
+        "confidence",
+        "completeness_state"
       ],
       "properties": {
         "evidence_id": {
@@ -841,6 +990,15 @@
             "high"
           ],
           "description": "Human-assigned confidence rating for this evidence."
+        },
+        "completeness_state": {
+          "type": "string",
+          "description": "Evidence completeness classification for this specific evidence item.",
+          "enum": [
+            "complete",
+            "partial",
+            "placeholder"
+          ]
         }
       }
     },
@@ -1426,6 +1584,31 @@
         "required": [
           "regulatory_context"
         ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "ai_assistance": {
+            "properties": {
+              "used": {
+                "const": true
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "ai_assistance": {
+            "required": [
+              "tool_name",
+              "tool_purpose",
+              "human_review",
+              "ai_risk_assessment"
+            ]
+          }
+        }
       }
     }
   ]

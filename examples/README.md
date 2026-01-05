@@ -1,11 +1,20 @@
 # Examples
 
-These are illustrative RGDS decision records intended to show how the
+These are illustrative RGDS decision records (v2.0.0 whitepaper-aligned) intended to show how the
 Decision Log schema is used in practice across common phase-gate scenarios
 in regulated delivery.
 
 Each example represents a **single, concrete decision** with explicit
 ownership, evidence linkage, risk posture, and governance controls.
+
+**v2.0.0 alignment note**
+
+Examples include:
+- mandatory `options_considered`
+- evidence completeness per evidence item (`evidence.evidence_items[].completeness_state`)
+- explicit `risk_posture` and structured residual risk (`risk_assessment.residual_risk_items`)
+- structured AI assistance disclosure when `ai_assistance.used=true`
+
 
 ---
 

@@ -10,6 +10,26 @@ The RGDS governance model ensures that **decisions remain human-owned, auditable
 Governance in RGDS is not an overlay.  
 It is embedded directly into the decision record.
 
+## Named human accountability
+
+RGDS rejects anonymous accountability.
+
+Every decision log must record:
+
+- a named `governance.decision_owner`
+- named `governance.approvers[]` with role and timestamp
+
+This replaces “somebody will sign off” with an auditable record of who owned and approved the decision.
+
+## Why RACI is insufficient
+
+Traditional RACI tables often stop at “Accountable” without capturing a specific human sign‑off trail.
+In regulated delivery, that ambiguity becomes an audit failure.
+
+RGDS keeps RACI useful for delivery planning, but the decision record itself must contain explicit ownership and approvals.
+
+
+
 ---
 
 ## IND delivery alignment (v1.3)
