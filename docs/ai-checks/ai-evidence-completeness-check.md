@@ -1,12 +1,15 @@
 # AI Evidence Completeness Check — RGDS-DEC-0005
 
 **Artifact type:** Informational evidence completeness review  
-**Decision linkage:** RGDS-DEC-0005  
+**Decision linkage:** RGDS-DEC-0005 (informational only; not part of the decision record)
 **Authority:** None (non-decision-support)
 
 ---
 
 ## Purpose
+
+Terminology note: Evidence states identified here must map to the schema-enforced
+`completeness_state` values (`complete`, `partial`, `placeholder`) when reflected in the Decision Log.
 
 This artifact provides a **human-reviewable check** of evidence completeness at decision time.
 
@@ -92,3 +95,8 @@ It requires **explicit acknowledgment of what is known, unknown, and assumed**.
 
 Any material gaps must be reflected in the Decision Log
 (e.g., `evidence_completeness`, `author_at_risk_items[]`, or decision rationale).
+
+In RGDS v2.0.0, any findings from this check must be reflected explicitly
+at the evidence-item level in the Decision Log
+(e.g., `evidence.evidence_items[].completeness_state`).
+This artifact itself never satisfies schema requirements.
