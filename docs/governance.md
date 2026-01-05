@@ -75,6 +75,37 @@ For a cross-role view of ownership and artifacts, see
 
 ---
 
+## Governance enforcement in v2.0.0
+
+RGDS v2.0.0 elevates several governance concepts from *recommended practice* to
+**mandatory decision discipline**, aligned to the RGDS whitepaper.
+
+The following are now **governance requirements**, not optional extensions:
+
+- **Options enumeration**  
+  Every decision must document at least two options in `options_considered`,
+  with an explicit `selected_option_id`.
+
+- **Residual risk disclosure**  
+  Every decided outcome must state what risk remains after proceeding.
+  Decisions without residual risk are governance-incomplete.
+
+- **Named human accountability**  
+  Every decision must record a single decision owner and named approvers.
+  Anonymous or implied approval is not permitted.
+
+- **AI assistance disclosure (when used)**  
+  If AI meaningfully influences a decision artifact, disclosure is mandatory.
+  Silent or undocumented AI usage is treated as a governance failure.
+
+These requirements are enforced through schema validation, semantic checks,
+and review expectations.
+
+They exist to ensure decisions are **defensible at the time they are made**,
+not reconstructed after the fact.
+
+---
+
 ## Core governance principles
 
 1. **Humans decide; systems assist**  
