@@ -2,7 +2,12 @@
 
 This folder contains the evaluation artifacts for **RGDS (Regulated Gate Decision Support)**.
 
-Together, these files define **how decision quality, governance effectiveness, and AI assistance are assessed** in a regulated, human-governed decision-support system.
+Together, these files define **how decision quality and governance effectiveness are assessed**
+in a regulated, human-governed decision-support system.
+
+These artifacts are aligned to the **v2.0.0 whitepaper-defined governance baseline**,
+including mandatory options analysis, evidence completeness classification,
+residual risk capture, named human accountability, and bounded AI disclosure.
 
 The artifacts are intentionally layered.  
 They should be read **in sequence**, not as isolated documents.
@@ -86,6 +91,9 @@ It preserves traceability to:
 
 The decision log remains the **source of truth**.
 
+The Decision Gate Extract is a **read-only derivative**
+and must never be used to approve, override, or reinterpret a decision.
+
 ---
 
 ### 5. Decision Gate Extract — Power BI Sample — Operational Example
@@ -94,7 +102,8 @@ The decision log remains the **source of truth**.
 [decision-gate-extract-powerbi-sample.md](./decision-gate-extract-powerbi-sample.md)
 
 **Purpose:**  
-Provides a **concrete example** of how the Decision Gate Extract can be operationalized in a BI tool (e.g., Power BI).
+Provides a **concrete example** of how the Decision Gate Extract can be operationalized
+in a BI tool (e.g., Power BI).
 
 This sample illustrates:
 - a BI-ready schema
@@ -108,7 +117,8 @@ It is illustrative only and does not mandate tooling or implementation.
 
 ## Supporting Traceability & Scoring Artifacts
 
-The following artifacts support **traceability, defensibility, and repeatability** across all evaluations.
+The following artifacts support **traceability, defensibility, and repeatability**
+across all evaluations.
 
 ---
 
@@ -118,7 +128,8 @@ The following artifacts support **traceability, defensibility, and repeatability
 [ind-requirements-gap-log.md](./ind-requirements-gap-log.md)
 
 **Purpose:**  
-Documents observed gaps between **external IND expectations** and common delivery practices.
+Documents observed gaps between **external IND expectations**
+and common delivery practices.
 
 Each gap:
 - is assigned a stable `IND-GAP-XXX` identifier  
@@ -157,7 +168,8 @@ This is the **primary traceability artifact** for reviewers.
 [scorecard-template.csv](./scorecard-template.csv)
 
 **Purpose:**  
-Defines a lightweight, repeatable format for capturing **per-decision evaluation signals**, including:
+Defines a lightweight, repeatable format for capturing
+**per-decision evaluation signals**, including:
 
 - reviewer confidence
 - evidence completeness
@@ -169,7 +181,8 @@ The scorecard supports:
 - phase-level aggregation
 - retrospective trend analysis
 
-It is used in conjunction with the Evaluation Plan and Evidence Quality Rubric.
+Scorecards support **evaluation only**;
+they do not constitute approval, rejection, or risk acceptance.
 
 ---
 
@@ -195,10 +208,10 @@ Supported by:
 - The **Scorecard** captures execution evidence  
 
 Together, they ensure RGDS evaluation is:
-- defensible
-- interpretable
-- auditable
-- explicitly human-governed
+- defensible  
+- interpretable  
+- auditable  
+- explicitly human-governed  
 
 ---
 
@@ -209,3 +222,4 @@ Together, they ensure RGDS evaluation is:
 - BI tooling and AI assistance must never become decision authorities.
 
 RGDS evaluation exists to support **better human decisions**, not to replace them.
+
