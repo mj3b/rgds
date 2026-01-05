@@ -1,12 +1,15 @@
 # AI Regulatory Interaction Consistency Check — RGDS-DEC-0005
 
 **Artifact type:** Informational regulatory interpretation check  
-**Decision linkage:** RGDS-DEC-0005  
+**Decision linkage:** RGDS-DEC-0005 (informational only; not part of the decision record)
 **Authority:** None (non-decision-support)
 
 ---
 
 ## Purpose
+
+Terminology and findings from this check must be translated into
+schema-defined Decision Log fields; this artifact itself is not schema-validating.
 
 This artifact provides a **human-reviewable check** that regulatory interactions
 (pre-IND meetings, written feedback, advice letters) are being interpreted and applied consistently.
@@ -89,5 +92,11 @@ Humans own interpretation.
 
 Regulatory feedback is an **input**, not a decision.
 
-Interpretation risk must be captured in the Decision Log
-(e.g., `decision_category`, `regulatory_context`, or decision rationale).
+Any interpretation risk identified here must be explicitly reflected
+in the Decision Log when regulatory interactions inform the outcome,
+including:
+- `decision_category = regulatory_interaction` (when applicable),
+- a populated `regulatory_context` block, and
+- explicit interpretation risk in the decision rationale or risk assessment.
+
+This artifact never substitutes for required Decision Log fields.
