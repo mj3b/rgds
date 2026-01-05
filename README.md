@@ -209,6 +209,7 @@ Start with the `examples/` directory.
 | 1 | one canonical decision example ([`0001`](examples/rgds-dec-0001.json), [`0003`](examples/rgds-dec-0003-defer-required-evidence.json), or [`0005`](examples/rgds-dec-0005-ind-conditional-go-author-at-risk.json)) | see the operating model in a real decision |
 | 2 | the decision-log schema ([`decision-log.schema.json`](decision-log/decision-log.schema.json)) | understand what is enforced vs. optional |
 | 3 | the evaluation plan ([`evaluation/evaluation-plan.md`](evaluation/evaluation-plan.md)) | see how decision quality is assessed |
+- **AI governance reviewers**: `docs/ai-assistance-policy.md` → `0006` → AI Governance repository
 
 Each decision record represents a single, concrete phase-gate outcome
 (e.g., conditional-go, defer, no-go, or escalation).
@@ -506,6 +507,7 @@ and evaluation criteria without navigating the full directory tree.
 | [`examples/rgds-dec-0003-defer-required-evidence.json`](examples/rgds-dec-0003-defer-required-evidence.json) | Canonical **defer / abstain** due to missing required evidence |
 | [`examples/rgds-dec-0004-regulatory-interaction.json`](examples/rgds-dec-0004-regulatory-interaction.json) | Regulatory interaction or escalation decision logic |
 | [`examples/rgds-dec-0005-ind-conditional-go-author-at-risk.json`](examples/rgds-dec-0005-ind-conditional-go-author-at-risk.json) | IND-style **conditional_go** (author-at-risk drafting, reviewer triage, publishing lock points) |
+| [`examples/rgds-dec-0006-ai-assisted-conditional-go.json`](examples/rgds-dec-0006-ai-assisted-conditional-go.json) | **AI-assisted conditional_go** (bounded AI disclosure, human authority preserved) |
 
 > All example decisions are **schema-validated** and demonstrate the intended RGDS operating model.
 
