@@ -78,7 +78,7 @@ Across IND execution discussions, the following patterns recur:
 - increased regulatory questioning  
 - erosion of submission credibility  
 
-### RGDS design response (v1.4.0)
+### RGDS design response (v1.4.0 → v2.0.0)
 
 These signals directly informed:
 
@@ -204,26 +204,21 @@ Operational and AI adoption discussions reveal:
 - executive misalignment  
 - loss of delivery confidence  
 
-### RGDS design response (v1.4.0)
+## Relationship to v1.4.0 and v2.0.0
 
-These signals informed:
+Version 1.4.0 formalized what these signals demanded:
 
-- **decision ownership fields**  
-  Someone is always accountable.
+- explicit evidence completeness  
+- downstream propagation awareness  
+- authority and escalation clarity  
+- risk benchmarking  
+- AI assistance disclosure  
 
-- **authority mapping**  
-  Who decides vs who advises is explicit.
+Version 2.0.0 completes that arc by enforcing these elements as
+minimum requirements for a governance-complete decision record.
 
-- **capacity-aware decisions**  
-  Trade-offs are visible, not implied.
-
-- **AI assistance disclosure**  
-  Trust is built through transparency, not capability claims.
-
-- **decision summaries**  
-  Executives see *why*, not just status.
-
-RGDS treats culture as a **governance input**, not an afterthought.
+RGDS v2.0.0 is not more complex.  
+It is more **explicit**, more **defensible**, and more **audit-resilient**.
 
 ---
 
@@ -260,6 +255,31 @@ RGDS combines:
 
 to ensure decisions remain **defensible under scrutiny**, not merely reasonable at the
 moment they were made.
+
+---
+
+## From signal response to enforced discipline (v2.0.0)
+
+RGDS v1.4.0 made critical governance concepts *explicit*.  
+RGDS v2.0.0 makes them **non-optional**.
+
+The same signal patterns described above directly motivated
+the elevation of several decision elements from recommended practice
+to mandatory governance requirements in v2.0.0, including:
+
+- explicit enumeration of decision options
+- per-item evidence completeness classification
+- residual risk documentation
+- named human accountability
+- structured AI assistance disclosure when AI is used
+
+This shift reflects a core insight from regulated delivery:
+
+> If a decision element is optional under time pressure, it will be omitted —
+> and omission is where audit and trust failures originate.
+
+v2.0.0 does not introduce new theory.  
+It **locks in the discipline** required to make these signal-driven lessons durable.
 
 ---
 
