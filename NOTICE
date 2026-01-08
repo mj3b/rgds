@@ -1,5 +1,5 @@
 RGDS — Regulated Gate Decision Support
-Copyright © 2025 Mark Julius Banasihan
+Copyright © 2026 Mark Julius Banasihan
 
 This repository contains an independent, non-commercial reference implementation
 demonstrating decision-governance patterns for regulated, phase-gated environments.
@@ -11,5 +11,23 @@ delivery framework.
 All decisions, interpretations, and uses of this material remain the sole
 responsibility of the adopting organization and its authorized decision-makers.
 
+DISCLAIMER OF WARRANTIES AND REGULATORY STATUS:
+
+This framework is not endorsed, approved, or validated by the U.S. Food and Drug
+Administration (FDA), European Medicines Agency (EMA), or any other regulatory
+authority. It represents independent research and industry best practices compiled
+from publicly available guidance documents and professional experience.
+
+Organizations implementing RGDS are solely responsible for ensuring compliance
+with all applicable regulatory requirements in their jurisdictions.
+
+THIRD-PARTY CONTENT:
+
+This work references and cites various regulatory guidance documents, industry
+standards, and published research. All such references remain the property of
+their respective copyright holders and are used for educational and analytical
+purposes under fair use principles.
+
 Licensed under the Apache License, Version 2.0.
-See the LICENSE file for details.
+See the LICENSE file for details: http://www.apache.org/licenses/LICENSE-2.0
+
