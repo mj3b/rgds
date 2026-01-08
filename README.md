@@ -24,12 +24,6 @@ designed to preserve decision accountability, auditability, and regulatory trust
 
 ---
 
-> **Whitepaper-Aligned Reference Implementation (v2.0.0)**
->
-> This repository implements the RGDS decision-governance model described in the RGDS whitepaper, including mandatory options analysis, explicit evidence completeness classification, residual risk documentation, named human accountability, and structured AI disclosure when applicable.
-
----
-
 ## What Changed in v2.0.0
 
 - Decision logs now require **options enumeration** (at least two).
