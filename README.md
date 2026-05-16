@@ -1,587 +1,411 @@
 # RGDS — Regulated Gate Decision Support
-<!-- RGDS governance + repository signals -->
+
 [![Status: Independent Case Study](https://img.shields.io/badge/status-independent%20case%20study-5b6cff)](#status)
 [![Human Governed](https://img.shields.io/badge/governance-human--governed-3bb273)](#governance)
-[![Non-Agentic](https://img.shields.io/badge/AI-explicitly%20non--agentic-2d7ff9)](#prohibited-uses-non-agentic-boundary)
-[![Decision Defensibility](https://img.shields.io/badge/outcome-decision%20defensibility-6f42c1)](#what-problem-this-solves)
-[![RTM Coverage](https://img.shields.io/badge/RTM-100%25%20coverage-2ea44f)](#requirements-traceability-matrix-rtm)
-[![Governance Traceability](https://img.shields.io/badge/governance-end--to--end%20traceable-4c82ff)](#requirements-traceability-matrix-rtm)
-[![Audit Ready](https://img.shields.io/badge/audit-reviewer--ready-6f42c1)](#reviewer-navigation-guide)
-[![Audit Ready](https://img.shields.io/badge/property-audit--ready%20artifacts-0aa2c0)](#evaluation)
-[![No Autonomy](https://img.shields.io/badge/constraint-no%20autonomous%20execution-ff7a00)](#what-this-repository-is-and-is-not)
-
-[![License](https://img.shields.io/github/license/mj3b/rgds)](LICENSE)
-[![Stars](https://img.shields.io/github/stars/mj3b/rgds)](https://github.com/mj3b/rgds/stargazers)
+[![Non-Agentic](https://img.shields.io/badge/AI-explicitly%20non--agentic-2d7ff9)](#ai-governance)
+[![Schema Enforced](https://img.shields.io/badge/schema-decision%20log%20enforced-1f6feb)](#decision-log-schema)
+[![RTM Coverage](https://img.shields.io/badge/RTM-100%25%20coverage-2ea44f)](#evaluation)
 [![CI Validation](https://img.shields.io/github/actions/workflow/status/mj3b/rgds/validate.yml)](https://github.com/mj3b/rgds/actions/workflows/validate.yml)
+[![License](https://img.shields.io/github/license/mj3b/rgds)](LICENSE)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.20242004-blue)](https://doi.org/10.5281/zenodo.20242004)
+[![ORCID](https://img.shields.io/badge/ORCID-0009--0001--8121--2878-brightgreen)](https://orcid.org/0009-0001-8121-2878)
 
-[![Schema Enforced](https://img.shields.io/badge/schema-decision%20log%20enforced-1f6feb)](#decision-log)
+> *In regulated programs, decisions fail after they are made — not because teams lacked expertise, but because decision logic could not be reconstructed under scrutiny.*
 
-A human-governed system for producing defensible, phase-gate decisions in regulated environments.
-
-This repository demonstrates the RGDS operating model:
-**human-governed, evidence-linked, schema-validated, and explicitly non-agentic**—
-designed to preserve decision accountability, auditability, and regulatory trust.
-
----
-
-## What Changed in v2.0.0
-
-- Decision logs now require **options enumeration** (at least two).
-- Evidence items must declare **completeness**: `complete`, `partial`, or `placeholder`.
-- **Residual risk** is captured explicitly (what remains true after you proceed).
-- **Named human accountability** is required (decision owner + approvers).
-- **AI assistance disclosure** is structured and mandatory when AI is used.
-
-## Decision Log Minimum Requirements
-
-A decision log is considered governance-complete only when it records:
-
-- Decision question + decision deadline
-- Options considered (at least two)
-- Evidence base with completeness classification
-- Risk posture + residual risk
-- Outcome + (if conditional) owned conditions with verification evidence
-- Named human accountability (owner + approvers)
-- AI assistance disclosure (if AI was used)
+RGDS is the reference implementation for decision-layer governance in phase-gated regulated environments. It treats **the decision itself as the primary artifact** — structured, schema-validated, and written before memory decay and handoff loss make reconstruction impossible.
 
 ---
 
-## Table of Contents
+## The Problem RGDS Solves
 
-- [Canonical Reference Decisions](#canonical-reference-decisions)
-- [What Changed in v2.0.0](#what-changed-in-v200)
-- [Decision Log Minimum Requirements](#decision-log-minimum-requirements)
-- [What Problem This Solves](#what-problem-this-solves)
-- [What This Repository Is (and Is Not)](#what-this-repository-is-and-is-not)
-  - [This is](#this-is)
-  - [This is not](#this-is-not)
-  - [Important Notice](#important-notice)
-- [How to Read This Repository (Non-Technical Overview)](#how-to-read-this-repository-non-technical-overview)
-- [Core Concepts](#core-concepts)
-  - [Decision Log](#decision-log)
-  - [IND Delivery Alignment](#ind-delivery-alignment-v13--v14)
-  - [Evaluation](#evaluation)
-  - [Governance](#governance)
-  - [AI Governance Reference](#ai-governance-reference)
-- [Where AI Fits in the System](#where-ai-fits-in-the-system)
-  - [Permitted AI-Assisted Tasks (Bounded)](#permitted-ai-assisted-tasks-bounded)
-  - [Prohibited Uses (Non-Agentic Boundary)](#prohibited-uses-non-agentic-boundary)
-  - [What Gets Logged When AI Is Used (v2.0.0)](#what-gets-logged-when-ai-is-used-v200)
-  - [Evidence Rule](#evidence-rule)
-  - [Why RGDS Contains No Built-In AI Components](#why-rgds-v1x-contains-no-built-in-ai-components)
-- [Repository Structure](#repository-structure)
-- [Key Docs](#key-docs)
-- [Why This Matters in Production](#why-this-matters-in-production)
-- [Who This Is For](#who-this-is-for)
-- [Status](#status)
+FDA Complete Response Letters cite "insufficient information" in 50% of first-cycle submissions. In most of those cases, the underlying science is defensible. What organizations cannot produce is a coherent account of *why* specific decisions were made 6–18 months earlier.
+
+```
+Traditional documentation model:          RGDS model:
+
+   Documents → Analysis → Meeting         Decision Question
+        ↓                                       ↓
+   Implicit decision                      Options Considered (≥2)
+        ↓                                       ↓
+   Memory + email threads              Evidence Base + Completeness
+        ↓                                       ↓
+   Reconstruction attempt              Risk Posture + Residual Risk
+   (2–3 weeks, FDA pressure)                   ↓
+                                        Named Human Accountability
+                                               ↓
+                                        Schema Validation → Git
+                                               ↓
+                                        2-minute retrieval
+```
+
+The decision log is the record. Everything else — analyses, documents, source reports — serves the decision.
 
 ---
 
-## Canonical Reference Decisions
+## Architecture
 
-If you read only **one place** in this repository, start here.
-
-The following canonical decision records demonstrate the RGDS operating model
-in concrete, reviewable form.
-
-| File | Canonical scenario demonstrated |
-|---|---|
-| [`examples/README.md`](examples/README.md) | How to read and compare example decisions |
-| [`examples/rgds-dec-0001.json`](examples/rgds-dec-0001.json) | Canonical **conditional_go** (explicit conditions, owned follow-ups) |
-| [`examples/rgds-dec-0002-no-go.json`](examples/rgds-dec-0002-no-go.json) | Canonical **no_go** with defensible rationale and re-entry logic |
-| [`examples/rgds-dec-0003-defer-required-evidence.json`](examples/rgds-dec-0003-defer-required-evidence.json) | Canonical **defer / abstain** due to missing required evidence |
-| [`examples/rgds-dec-0004-regulatory-interaction.json`](examples/rgds-dec-0004-regulatory-interaction.json) | Regulatory interaction or escalation decision logic |
-| [`examples/rgds-dec-0005-ind-conditional-go-author-at-risk.json`](examples/rgds-dec-0005-ind-conditional-go-author-at-risk.json) | IND-style **conditional_go** (author-at-risk drafting, reviewer triage, publishing lock points) |
-| [`examples/rgds-dec-0006-ai-assisted-conditional-go.json`](examples/rgds-dec-0006-ai-assisted-conditional-go.json) | **AI-assisted conditional_go** (bounded AI disclosure, human authority preserved) |
-
-These examples demonstrate the intended RGDS operating model: **human-governed, evidence-linked, schema-validated, and explicitly non-agentic.**
-
----
-
-## Governance Baseline Introduced in v1.4.0
-
-The following governance concepts were first made explicit in v1.4.0 and are now enforced and extended in v2.0.0.
-
-Version 1.4.0 makes previously implicit governance decisions explicit, based on
-observed failure modes in real IND delivery and cross-functional review.
-
-### Concepts first formalized in v1.4.0
-
-| Concept | What is now explicit | Why it matters |
-|---|---|---|
-| Evidence completeness | complete / partial / placeholder | prevents “false confidence” from undocumented placeholders |
-| Downstream propagation | declarations when evidence or decisions change | prevents silent ripple effects across artifacts |
-| Risk posture benchmarking | not just declaration | forces defensible rationale for tolerance/assumptions |
-| Decision authority scope | scope + escalation paths | prevents unclear accountability and “who approved this?” gaps |
-| Bounded AI disclosure | confidence band + human override | makes AI use reviewable without changing accountability |
-
-These changes do not introduce automation or autonomy.  
-They tighten decision defensibility.
-
----
-
-## What Problem This Solves
-
-In regulated programs, decisions often fail **after** they are made.
-
-Not because teams lacked expertise, but because:
-
-- scope changed late without being logged
-- assumptions and risk posture were implicit
-- reviewer routing decisions were undocumented
-- contingency plans existed only informally
-- decision context could not be reconstructed later
-
-Traditional documentation emphasizes inputs (documents, analyses, reports).  
-**RGDS treats the decision itself as the primary artifact.**
-
-RGDS is informed by synthesis of real delivery experience, including public IND
-submission discussions, regulatory strategy perspectives, and operational interviews.
-These sources are treated as signal inputs, not prescriptions, and are translated
-into explicit, auditable decision structure.
-
-For the evidence-to-design rationale behind RGDS, see:  
-→ [`docs/why-rgds-exists.md`](docs/why-rgds-exists.md)
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    RGDS OPERATING MODEL                         │
+├─────────────────────────────────────────────────────────────────┤
+│                                                                 │
+│  Phase Gate Event                                               │
+│       │                                                         │
+│       ▼                                                         │
+│  ┌─────────────────────────────────────┐                        │
+│  │         Decision Log Record         │  ← Primary Artifact   │
+│  │                                     │                        │
+│  │  decision_question                  │                        │
+│  │  options_considered  (≥2 required)  │                        │
+│  │  evidence_base       (completeness) │                        │
+│  │  risk_posture        (explicit)     │                        │
+│  │  residual_risk       (structured)   │                        │
+│  │  outcome             (5 types)      │                        │
+│  │  accountability      (named humans) │                        │
+│  │  ai_assistance       (if used)      │                        │
+│  └─────────────────┬───────────────────┘                        │
+│                    │                                            │
+│                    ▼                                            │
+│  ┌─────────────────────────────────────┐                        │
+│  │      Schema Validation (CI/CD)      │  ← Enforcement        │
+│  │  decision-log.schema.json           │                        │
+│  │  Semantic invariant checks          │                        │
+│  │  Required fields enforced           │                        │
+│  └─────────────────┬───────────────────┘                        │
+│                    │                                            │
+│                    ▼                                            │
+│  ┌─────────────────────────────────────┐                        │
+│  │      Git (Version-Controlled Log)   │  ← Audit Trail        │
+│  │  Immutable timestamps               │                        │
+│  │  2-minute retrieval under FDA query │                        │
+│  │  Reconstruction without interviews  │                        │
+│  └─────────────────────────────────────┘                        │
+│                                                                 │
+└─────────────────────────────────────────────────────────────────┘
+```
 
 ---
 
-## What This Repository Is (and Is Not)
+## The Five Decision Outcomes
 
-### This is
+Every RGDS decision resolves to one of five governed outcomes. Each carries equal structural rigor — stopping is governed the same way proceeding is.
 
-| Statement | Practical meaning |
-|---|---|
-| a decision-support operating model for phase-gated workflows | decisions become governed artifacts, not informal meeting outcomes |
-| a structured method for making decisions defensible at the time they are made | captures rationale before memory decay and handoff loss |
-| a human-governed system with explicit ownership and approval | named owner + reviewer(s) + approver(s), with escalation |
-| compatible with regulated delivery, quality review, and audit expectations | decision records designed for audit reconstruction |
-| a schema-backed decision log system that makes decision context, risk, and ownership auditable | required fields and validation discipline enforce completeness |
+```
+                    ┌──────────────────┐
+                    │  Phase Gate      │
+                    │  Decision Point  │
+                    └────────┬─────────┘
+                             │
+          ┌──────────────────┼──────────────────┐
+          │                  │                  │
+          ▼                  ▼                  ▼
+   ┌─────────────┐   ┌─────────────┐   ┌─────────────┐
+   │     GO      │   │  CONDITIONAL│   │    DEFER    │
+   │             │   │     GO      │   │             │
+   │ Full conf.  │   │             │   │ Insufficient│
+   │ Complete    │   │ Explicit    │   │ evidence.   │
+   │ evidence.   │   │ conditions. │   │ Re-entry    │
+   │ Proceed.    │   │ Named owner.│   │ criteria    │
+   │             │   │ Deadline.   │   │ defined.    │
+   └─────────────┘   └─────────────┘   └─────────────┘
 
-### This is not
+          ┌──────────────────────────────────┐
+          │                                  │
+          ▼                                  ▼
+   ┌─────────────┐                  ┌─────────────┐
+   │   NO-GO     │                  │  ESCALATE   │
+   │             │                  │             │
+   │ Rejected.   │                  │ Exceeds     │
+   │ Rationale   │                  │ authority   │
+   │ documented. │                  │ scope.      │
+   │ Re-entry    │                  │ Senior human│
+   │ logic set.  │                  │ required.   │
+   └─────────────┘                  └─────────────┘
+```
 
-| Statement | What is explicitly excluded |
-|---|---|
-| an autonomous decision system | no autonomous gate outcomes |
-| an AI agent platform | no agents, orchestration, or self-directed execution |
-| a recommendation engine | no “system decides” or “system recommends” authority |
-| a compliance checkbox or document dump | evidence must be linked and interpreted as decision inputs |
-
-No component in this repository is allowed to silently decide, approve, or accept risk.
-
----
-
-## Important Notice
-
-RGDS is an **independent reference implementation** intended to demonstrate
-decision-governance patterns in regulated, phase-gated environments.
-
-It is:
-
-- not a production system
-- not regulatory advice
-- not a compliance framework
-- not an autonomous or agentic system
-
-RGDS does not make decisions.  
-It records how decisions are made, governed, and defended.
-
-All regulatory, quality, and approval responsibilities remain with the
-human decision-makers and organizations using this material.
+**Defer and No-Go are first-class outcomes.** A governed No-Go is indistinguishable from a governed Go in audit quality. An ungoverned stop is indistinguishable from a failure.
 
 ---
 
-## How to Read This Repository (Non-Technical Overview)
+## Decision Log Schema
 
-This repository is organized around **decisions**, not tools, models, or automation.
+The schema enforces governance-completeness at the artifact level. A decision that cannot satisfy the schema cannot be finalized.
 
-RGDS is intentionally learned **by example first**, with documentation and schemas
-serving to explain what those examples enforce.
+```
+decision_log/
+├── decision-log.schema.json    ← Machine-enforced
+├── decision-log.schema.yaml    ← Human-readable companion
+└── decision-log.template.yaml  ← Starting point for new decisions
+```
 
-Start with the `examples/` directory.
+### Required Fields (v2.0.0)
 
-### A typical review path
+| Field | Type | Governance Purpose |
+|-------|------|--------------------|
+| `decision_question` | string | Defines what choice was required |
+| `decision_deadline` | date | Forces temporal accountability |
+| `options_considered` | array (≥2) | Eliminates single-option rationalization |
+| `evidence_base` | object | Links claims to sources |
+| `evidence.completeness_state` | enum | `complete` / `partial` / `placeholder` |
+| `risk_posture` | string | Forces explicit risk acceptance |
+| `risk_assessment.residual_risk_items` | array | Captures what remains true after proceeding |
+| `outcome` | enum | One of five governed decision types |
+| `accountability.decision_owner` | string | Named human, not a role or team |
+| `accountability.approvers` | array | Named humans with authority scope |
+| `ai_assistance.used` | boolean | Disclosure trigger |
 
-| Step | What to read | Why |
-|---|---|---|
-| 1 | one canonical decision example ([`0001`](examples/rgds-dec-0001.json), [`0003`](examples/rgds-dec-0003-defer-required-evidence.json), or [`0005`](examples/rgds-dec-0005-ind-conditional-go-author-at-risk.json)) | see the operating model in a real decision |
-| 2 | the decision-log schema ([`decision-log.schema.json`](decision-log/decision-log.schema.json)) | understand what is enforced vs. optional |
-| 3 | the evaluation plan ([`evaluation/evaluation-plan.md`](evaluation/evaluation-plan.md)) | see how decision quality is assessed |
-- **AI governance reviewers**: `docs/ai-assistance-policy.md` → `0006` → AI Governance repository
+### Evidence Completeness Model
 
-Each decision record represents a single, concrete phase-gate outcome
-(e.g., conditional-go, defer, no-go, or escalation).
-
-Documentation explains **why** the system is designed this way.
-Examples show **how it actually works**.
-
-### Each decision record shows
-
-| Dimension | What is captured |
-|---|---|
-| Decision | what was decided |
-| Rationale | why it was decided |
-| Evidence | what evidence was used (and its quality) |
-| Risk | what risks and gaps were accepted |
-| Accountability | who owned, reviewed, and approved the decision |
-| Controls | what conditions, follow-ups, or fallback actions exist |
-| Evidence completeness | complete / partial / placeholder |
-| Propagation | whether downstream artifacts must be updated if the decision changes |
-
-Executives, quality reviewers, and auditors should be able to understand **why a decision was reasonable** without reading code.
-
-This repository reflects the role of a principal-level analyst translating complex delivery realities into durable decision infrastructure.
-
-It is intended to demonstrate how delivery experience, governance constraints and applied AI considerations can be translated into defensible decision systems.
-
----
-
-## Core Concepts
-
-### Decision Log
-
-The primary artifact of RGDS.
-
-A Decision Log records:
-
-- the decision question and outcome
-- options considered
-- evidence used with confidence ratings
-- known gaps, assumptions, and scope changes
-- explicit risk posture and residual risk
-- named decision owner, reviewers, and approvers
-- conditions, actions, and fallback plans
-- a durable audit trail
-
-The Decision Log is the **system of record for governance**.
+```
+Evidence Item
+     │
+     ├── complete     → Final validated data. Decision proceeds on confirmed evidence.
+     │
+     ├── partial      → Preliminary data. Final report pending. Explicit condition
+     │                  required if proceeding. Owner and deadline named.
+     │
+     └── placeholder  → Estimated or assumed. Must be flagged as governance gap.
+                        False confidence from undocumented placeholders is the
+                        failure mode this field prevents.
+```
 
 ---
 
-### IND Delivery Alignment (v1.3 → v1.4)
+## Canonical Decision Records
 
-RGDS formalizes execution realities observed during IND preparation:
+Start here. Six examples demonstrate the full operating model across every decision outcome.
 
-| Execution reality observed in IND delivery | RGDS mechanism / field |
-|---|---|
-| phase-appropriate tolerance and trade-offs must be stated | **risk_posture** |
-| placeholders must be governed and verified | **author-at-risk drafting** + evidence completeness |
-| reviewer triage decisions must be explicit | **review_plan** |
-| late discoveries and scope volatility must be auditable | **scope_change_events[]** |
-| cross-module surprises must be prevented | **dependency_map[]** |
-| evidence readiness is rate limiting | **data_readiness_status[]** → formalized under evidence completeness in v1.4.0 |
-| publishing is constrained by lock points | **publishing_plan** |
-| decisions must tie back to program intent | **tpp_links[]** |
+| Record | Outcome | Scenario | What It Demonstrates |
+|--------|---------|----------|----------------------|
+| [`rgds-dec-0001`](examples/rgds-dec-0001.json) | **conditional_go** | Data readiness gate | Explicit conditions, owned follow-ups, named approvers |
+| [`rgds-dec-0002`](examples/rgds-dec-0002-no-go.json) | **no_go** | Risk threshold exceeded | Defensible refusal with re-entry logic |
+| [`rgds-dec-0003`](examples/rgds-dec-0003-defer-required-evidence.json) | **defer** | Missing required evidence | Structured pause with re-review criteria |
+| [`rgds-dec-0004`](examples/rgds-dec-0004-regulatory-interaction.json) | **escalate** | Pre-IND FDA interaction | Agency-facing decision framing and strategy |
+| [`rgds-dec-0005`](examples/rgds-dec-0005-ind-conditional-go-author-at-risk.json) | **conditional_go** | IND authoring gate | Author-at-risk drafting, reviewer triage, lock points |
+| [`rgds-dec-0006`](examples/rgds-dec-0006-ai-assisted-conditional-go.json) | **conditional_go** | AI-assisted decision | Bounded AI disclosure, preserved human authority |
 
-The existing `decision_category` + `regulatory_context` fields model pre-IND / FDA interaction strategy as a first-class decision.
-
-These additions reflect real execution realities without introducing automation risk.
-
-For a cross-role view of who owns what, see:  
-→ [`docs/role-decision-artifact-matrix.md`](docs/role-decision-artifact-matrix.md)
-
+> All six records are schema-validated in CI/CD on every commit. Reading one takes 5 minutes. Reading all six takes 30.
 
 ---
 
-### Evaluation
+## AI Governance
 
-RGDS evaluates:
+RGDS is valid with no AI at all. When AI is used, it operates as bounded assistance only.
 
-| Evaluation focus | How it is assessed |
-|---|---|
-| authority scope, escalation paths, and downstream propagation requirements | structured review criteria |
-| AI assistance disclosure (when applicable) | explicit decision-log disclosure fields |
-| evidence completeness, risk posture, propagation awareness | scorecards and rubrics |
+```
+┌──────────────────────────────────────────────────────────────┐
+│                    AI GOVERNANCE BOUNDARY                    │
+├─────────────────────────┬────────────────────────────────────┤
+│    PERMITTED (bounded)  │         PROHIBITED                 │
+├─────────────────────────┼────────────────────────────────────┤
+│ Summarization           │ Gate outcome decisions             │
+│ Field extraction        │ Evidence of record by default      │
+│ Cross-document diffing  │ Silent scope or risk acceptance    │
+│ Structured drafting     │ Publishing or submission actions   │
+│ Schema completeness     │ Fabricated citations or rationale  │
+│   checks                │ Autonomous execution of any kind   │
+└─────────────────────────┴────────────────────────────────────┘
+         │
+         ▼ When AI is used, these fields are required:
+┌──────────────────────────────────────────────────────────────┐
+│  ai_assistance.used           → true                         │
+│  ai_assistance.tool_name      → which system                 │
+│  ai_assistance.tool_purpose   → what task                    │
+│  ai_assistance.human_review[] → review tier + findings       │
+│  ai_assistance.human_override_log[] → corrections made       │
+│  ai_assistance.ai_risk_assessment  → confidence band + cautions│
+└──────────────────────────────────────────────────────────────┘
+         │
+         ▼ Human decision owner remains fully responsible.
+           AI disclosure transfers no authority, approval
+           rights, or risk ownership.
+```
 
-Evaluation focuses on **decision quality**, not model performance in isolation.
+**Evidence rule:** AI output is never treated as primary evidence. If an AI output influences a decision, the human owner must link to the underlying source and record the AI output as a drafting aid. Every decision must remain defensible without the AI output present.
 
-Evaluation is performed through structured review criteria and scorecards, not automated model metrics.
-
----
-
-### Governance
-
-Governance is encoded directly into the decision artifact:
-
-- explicit ownership and accountability
-- separation of reviewers and approvers
-- support for conditional-go, defer, and no-go outcomes
-- escalation and re-review rules
-- bounded, disclosed AI assistance
-
-Stopping early is treated as **risk reduction**, not failure.
-
----
-
-#### AI Governance Reference
-
-RGDS supports optional, bounded AI assistance under explicit governance constraints.
-
-The formal governance covenants that define:
-
-- permitted AI assistance,
-- explicit prohibitions (including non-agentic requirements), and
-- human ownership and approval obligations
-
-are maintained externally to preserve separation of concerns.
-
-RGDS remains fully valid in the absence of AI.
-
-For the authoritative governance definition, see:  
-**RGDS AI Governance (Covenants)**  
-→ https://github.com/mj3b/rgds-ai-governance
+Authoritative AI governance covenants: **[rgds-ai-governance](https://github.com/mj3b/rgds-ai-governance)**
 
 ---
 
-## Where AI Fits in the System
+## IND Alignment — Execution Realities → RGDS Mechanisms
 
-RGDS is valid with **no AI at all**.
+RGDS formalizes failure modes observed during IND preparation. Each mechanism addresses a specific, named execution pattern.
 
-When AI is used, it is used only as **bounded assistance** to help humans produce or review
-decision artifacts faster—without changing who owns the decision or what counts as evidence.
-
-### Permitted AI-Assisted Tasks (Bounded)
-
-AI may be used for reviewable support tasks such as:
-
-| Task | Example use | Constraint |
-|---|---|---|
-| **Summarization** | draft summary of a source report or meeting notes | human edits and signs off |
-| **Extraction** | pull structured fields (dates, study IDs, endpoints, risks) | output treated as draft |
-| **Comparison / diffing** | highlight inconsistencies (e.g., IB vs M2.6 vs Protocol) | human resolves conflicts |
-| **Structured drafting** | draft decision-log sections (context, options, risks) | owner finalizes content |
-| **Checklist support** | flag missing fields or schema mismatches | does not “approve” compliance |
-
-### Prohibited Uses (Non-Agentic Boundary)
-
-AI must not:
-
-- decide, approve, or reject a gate outcome
-- act as an “evidence of record” source by default
-- silently accept scope changes, risk posture, or reviewer routing
-- execute actions (publishing, submissions, notifications) without explicit human authorization
-- fabricate citations, source data, or regulatory rationale
-
-### What Gets Logged When AI Is Used (v2.0.0)
-
-If AI assistance is used for a decision artifact, the usage must be disclosed
-in the decision log using explicit, schema-defined fields.
-
-These fields are **enforced by schema**, **governed by policy**, and
-**demonstrated in canonical examples**.
-
-| Disclosure | Field | Meaning |
-|---|---|---|
-| AI used? | `ai_assistance.used` | transparency |
-| Tool identity | `ai_assistance.tool_name` | which AI system was used |
-| Purpose | `ai_assistance.tool_purpose` | what task the AI assisted with |
-| Human review | `ai_assistance.human_review[]` | review tier(s) and findings |
-| Human overrides | `ai_assistance.human_override_log[]` | corrective interventions and rationale |
-| AI risk assessment | `ai_assistance.ai_risk_assessment` | confidence band and documented cautions |
-
-- **Schema enforcement:**  
-  → [`decision-log/decision-log.schema.json`](decision-log/decision-log.schema.json)
-
-- **Governance policy:**  
-  → [`docs/ai-assistance-policy.md`](docs/ai-assistance-policy.md)
-
-- **Worked example:**  
-  → [`examples/rgds-dec-0006-ai-assisted-conditional-go.json`](examples/rgds-dec-0006-ai-assisted-conditional-go.json)
-
-This disclosure is **informational only**.
-It does not transfer authority, approval rights, or risk ownership.
-
-The **human decision owner remains fully responsible**
-for final content, evidence interpretation, and decision outcome.
-
-### Evidence Rule
-
-AI output is never treated as evidence by default.
-
-If an AI output influences a decision, the human owner must:
-
-- link to the underlying source artifacts used, and
-- record the AI output as a *drafting aid* or *analysis note*, not as primary evidence.
-
-Every decision must remain defensible **without the AI output present**.
-
-### Why RGDS Contains No Built-In AI Components (Design Principle)
-
-This principle originated in v1.x and remains unchanged in v2.0.0.
-
-RGDS v1.x intentionally contains no bundled AI models, agents, or orchestration logic.
-
-This is deliberate:
-
-- the core problem in regulated programs is usually **governance failure**, not lack of analysis
-- adding automation before decision discipline increases risk (silent changes, unclear ownership, weak audit trails)
-- RGDS must remain usable in environments where AI is restricted or not trusted
-
-AI can be layered later as optional tooling around RGDS (e.g., diffing, extraction, drafting),
-but the governed decision record and validation discipline remain the foundation.
+| Execution Reality | Failure Mode Prevented | RGDS Mechanism |
+|-------------------|----------------------|----------------|
+| Placeholders proceed without governance | False confidence, FDA gap finding | `evidence.completeness_state` + author-at-risk constraints |
+| Scope changes emerge late without a trail | Silent ripple effects across modules | `scope_change_events[]` + downstream propagation |
+| Reviewer routing is informal | Unclear accountability under audit | `review_plan` + named triage owner |
+| Risk posture is implied, not stated | Cannot defend tolerance decisions to FDA | `risk_posture` + `residual_risk_items` |
+| Cross-module dependencies are mentally tracked | Late-discovered misalignment after gate closes | `dependency_map[]` |
+| Phase-gate tolerance is assumed shared | Silent misalignment between functions | Explicit risk posture field, cross-functional sign-off |
+| Regulatory interaction strategy is informal | Weak pre-IND positioning | `decision_category: regulatory_interaction` |
+| AI assistance is undisclosed | Provenance contamination, audit exposure | `ai_assistance` disclosure schema (mandatory when used) |
 
 ---
 
 ## Repository Structure
 
-```text
+```
 rgds/
-├── decision-log/
-│   ├── decision-log.schema.json
-│   ├── decision-log.schema.yaml
-│   └── decision-log.template.yaml
-├── examples/
-│   ├── rgds-dec-0001.json
-│   ├── rgds-dec-0002-no-go.json
-│   ├── rgds-dec-0003-defer-required-evidence.json
-│   ├── rgds-dec-0004-regulatory-interaction.json
-│   ├── rgds-dec-0005-ind-conditional-go-author-at-risk.json
-│   ├── rgds-dec-0006-ai-assisted-conditional-go.json
-│   └── README.md
-├── evaluation/
-│   ├── evaluation-plan.md
-│   ├── evidence-quality-rubric.md
-│   └── scorecard-template.csv
-├── docs/
-│   ├── why-rgds-exists.md
-│   ├── decision-log.md
-│   ├── governance.md
-│   ├── change-control-log.md
-│   ├── ai-assistance-policy.md
-│   └── role-decision-artifact-matrix.md
-├── scripts/
-│   ├── validate_decision_log.py
-│   └── validate_all_examples.py
+│
+├── decision-log/                    ← Schema and templates
+│   ├── decision-log.schema.json     ← Machine-enforced schema
+│   ├── decision-log.schema.yaml     ← Human-readable version
+│   └── decision-log.template.yaml   ← Starting template
+│
+├── examples/                        ← Start here
+│   ├── README.md                    ← How to read examples
+│   ├── rgds-dec-0001.json           ← Conditional go (canonical)
+│   ├── rgds-dec-0002-no-go.json     ← No-go (canonical)
+│   ├── rgds-dec-0003-defer-*.json   ← Defer (canonical)
+│   ├── rgds-dec-0004-regulatory-*.json ← Escalation (canonical)
+│   ├── rgds-dec-0005-ind-*.json     ← IND conditional go
+│   └── rgds-dec-0006-ai-*.json      ← AI-assisted (only AI example)
+│
+├── evaluation/                      ← Decision quality assessment
+│   ├── evaluation-plan.md           ← Assessment methodology
+│   ├── evidence-quality-rubric.md   ← Evidence scoring criteria
+│   ├── requirements-traceability-matrix.md ← 100% RTM coverage
+│   └── scorecard-template.csv       ← Structured review scorecard
+│
+├── docs/                            ← Governance documentation
+│   ├── why-rgds-exists.md           ← Evidence-to-design rationale
+│   ├── decision-log.md              ← How to read decision logs
+│   ├── governance.md                ← Rules and enforcement intent
+│   ├── ai-assistance-policy.md      ← AI governance policy
+│   ├── role-decision-artifact-matrix.md ← Cross-role ownership
+│   └── change-control-log.md        ← Schema change history
+│
+├── scripts/                         ← Validation tooling
+│   ├── validate_decision_log.py     ← Single-record validator
+│   └── validate_all_examples.py     ← Batch validator (CI)
+│
 ├── .github/workflows/
-│   └── validate.yml
-├── Makefile
+│   └── validate.yml                 ← CI/CD schema + semantic validation
+│
+├── Makefile                         ← Local validation commands
 └── requirements.txt
 ```
----
-
-## Key Docs
-
-| File | What it is |
-|---|---|
-| [`docs/why-rgds-exists.md`](docs/why-rgds-exists.md) | Evidence-to-design rationale (signals → RGDS mechanisms) |
-| [`docs/decision-log.md`](docs/decision-log.md) | How to interpret decision logs |
-| [`docs/governance.md`](docs/governance.md) | Governance rules and enforcement intent |
-
-## Complete Documentation Index
-
-This index provides direct links to **all human-readable documentation** in the RGDS repository.
-It is intended to help reviewers quickly locate authoritative explanations, governance rules,
-and evaluation criteria without navigating the full directory tree.
 
 ---
 
-### Root Orientation
+## Reader Navigation Guide
 
-| File | Purpose |
-|---|---|
-| [`README.md`](README.md) | Primary orientation document explaining RGDS purpose, scope, governance stance, and how to read the repository |
+Different readers have different entry points.
 
----
-
-### `docs/` — Governance, Rationale, and Interpretation
-
-| File | What it explains |
-|---|---|
-| [`docs/why-rgds-exists.md`](docs/why-rgds-exists.md) | Evidence-to-design rationale (delivery signals → RGDS mechanisms) |
-| [`docs/decision-log.md`](docs/decision-log.md) | How to read, interpret, and review RGDS decision logs |
-| [`docs/governance.md`](docs/governance.md) | Governance rules, authority separation, and enforcement intent |
-| [`docs/ai-assistance-policy.md`](docs/ai-assistance-policy.md) | Bounded AI usage policy: permitted use, prohibitions, disclosure, and controls |
-| [`docs/change-control-log.md`](docs/change-control-log.md) | Versioned record of governance and schema changes |
-| [`docs/role-decision-artifact-matrix.md`](docs/role-decision-artifact-matrix.md) | Cross-role ownership matrix for decisions and supporting artifacts |
-
----
-
-### `examples/` — Canonical Decision Records
-
-| File | Canonical scenario demonstrated |
-|---|---|
-| [`examples/README.md`](examples/README.md) | How to read and compare example decisions |
-| [`examples/rgds-dec-0001.json`](examples/rgds-dec-0001.json) | Canonical **conditional_go** (explicit conditions, owned follow-ups) |
-| [`examples/rgds-dec-0002-no-go.json`](examples/rgds-dec-0002-no-go.json) | Canonical **no_go** with defensible rationale and re-entry logic |
-| [`examples/rgds-dec-0003-defer-required-evidence.json`](examples/rgds-dec-0003-defer-required-evidence.json) | Canonical **defer / abstain** due to missing required evidence |
-| [`examples/rgds-dec-0004-regulatory-interaction.json`](examples/rgds-dec-0004-regulatory-interaction.json) | Regulatory interaction or escalation decision logic |
-| [`examples/rgds-dec-0005-ind-conditional-go-author-at-risk.json`](examples/rgds-dec-0005-ind-conditional-go-author-at-risk.json) | IND-style **conditional_go** (author-at-risk drafting, reviewer triage, publishing lock points) |
-| [`examples/rgds-dec-0006-ai-assisted-conditional-go.json`](examples/rgds-dec-0006-ai-assisted-conditional-go.json) | **AI-assisted conditional_go** (bounded AI disclosure, human authority preserved) |
-
-> All example decisions are **schema-validated** and demonstrate the intended RGDS operating model.
+```
+Are you a...
+│
+├── Executive / Approver
+│   └── README.md → rgds-dec-0001 or rgds-dec-0005
+│       Goal: understand what a governed decision looks like
+│
+├── Quality / Governance Reviewer
+│   └── docs/governance.md → docs/decision-log.md → evaluation/
+│       Goal: understand review criteria and audit artifacts
+│
+├── AI Governance Reviewer
+│   └── docs/ai-assistance-policy.md → rgds-dec-0006
+│       → github.com/mj3b/rgds-ai-governance
+│       Goal: understand AI boundaries and disclosure requirements
+│
+├── Regulatory / FDA Auditor
+│   └── examples/ + evaluation/requirements-traceability-matrix.md
+│       Goal: reconstruct decision context from governed records
+│
+└── Technical Implementer
+    └── decision-log/decision-log.schema.json → scripts/
+        → .github/workflows/validate.yml
+        Goal: understand schema enforcement and CI integration
+```
 
 ---
 
-### `evaluation/` — Decision Quality and Governance Assessment
+## v2.0.0 — What Changed
 
-| File | Evaluation role |
-|---|---|
-| [`evaluation/evaluation-plan.md`](evaluation/evaluation-plan.md) | How RGDS decisions are evaluated for quality and defensibility |
-| [`evaluation/evidence-quality-rubric.md`](evaluation/evidence-quality-rubric.md) | Criteria for assessing evidence completeness and confidence |
-| [`evaluation/scorecard-template.csv`](evaluation/scorecard-template.csv) | Structured scorecard for decision review (CSV; used for scoring and audit evidence) |
- 
----
+v2.0.0 tightens decision defensibility. It does not add automation or autonomy.
 
-### External Governance Reference (Authoritative)
-
-RGDS defers AI authority boundaries and non-agentic constraints to a separate governance
-repository to preserve separation of concerns.
-
-| Resource | Purpose |
-|---|---|
-| **RGDS AI Governance (Covenants)** | Non-agentic AI contract, authority boundaries, and removability guarantees |
-| [`rgds-ai-governance`](https://github.com/mj3b/rgds-ai-governance) | Canonical source of AI governance definitions |
+| Change | What it enforces | Failure mode prevented |
+|--------|-----------------|----------------------|
+| Options enumeration (≥2 required) | At least two options must be considered | Single-option rationalization passing as governance |
+| Evidence completeness per item | `complete` / `partial` / `placeholder` on every evidence item | False confidence from undocumented placeholders |
+| Structured residual risk | `residual_risk_items[]` array | Risk acceptance without recording what remains true |
+| Named human accountability | Decision owner + approvers as individuals, not roles | "Who approved this?" questions with no traceable answer |
+| AI assistance disclosure | Required schema fields when `ai_assistance.used=true` | AI-assisted drafting without disclosure contaminating provenance |
 
 ---
 
-### Reviewer Navigation Guide
+## Evaluation
 
-- **Executives / Approvers**: `README.md` → one canonical example (`0001` or `0005`)
-- **Quality / Governance reviewers**: `docs/governance.md` → `docs/decision-log.md` → evaluation docs
-- **AI governance reviewers**: `docs/ai-assistance-policy.md` → AI Governance repository
-- **Auditors**: example decisions + evaluation artifacts (traceability and completeness)
+Decision quality is assessed across four dimensions.
 
-This index is intended to make RGDS review **finite, navigable, and auditable**.
+| Dimension | What is evaluated | Instrument |
+|-----------|------------------|------------|
+| Decision readiness | Evidence completeness, option coverage, risk explicitness | Evidence quality rubric |
+| Governance execution | Accountability chain, approval separation, escalation logic | Reviewer audit checklist |
+| AI assistance safety | Disclosure completeness, human override documentation | AI governance policy + dec-0006 |
+| Requirements coverage | End-to-end traceability from program objectives to decisions | Requirements traceability matrix (100% coverage) |
 
----
-
-## Why This Matters in Production
-
-RGDS prevents failure modes that routinely appear in regulated delivery:
-
-- silent risk acceptance  
-- undocumented scope changes and downstream ripple effects  
-- unclear reviewer accountability  
-- decisions without fallback planning  
-- late discovery of misalignment after a gate closes  
-- false confidence created by undocumented placeholders  
-
-By forcing decisions, evidence, risk, ownership, and contingency into a single governed record, RGDS enables faster decisions without sacrificing auditability.
+Evaluation focuses on decision quality and governance execution. It does not benchmark model performance in isolation.
 
 ---
 
-## Who This Is For
+## Relationship to GDI
 
-RGDS is written for:
+RGDS is the biopharma reference implementation. GDI (Governed Decision Intelligence) generalizes the decision-layer architecture to domain-agnostic deployment.
 
-- Principal AI Business Analysts  
-- Program and delivery leaders in regulated environments  
-- Quality, governance, and risk stakeholders  
-- Executives responsible for phase-gate approvals  
+```
+RGDS (this repository)                 GDI
+Biopharma / IND / BLA context  →  Domain-agnostic open specification
+Phase-gate decision logs        →  Governed Decision Records (GDR)
+IND-specific field vocabulary   →  Universal schema
+FDA reconstructability focus    →  NIST AI RMF / ISO 42001 / EU AI Act
+170+ commits, 6 canonical       →  Reference implementation +
+  examples, CI enforcement           IETF conformance driver
+```
 
-It assumes familiarity with regulated delivery — not machine learning research.
+| Repository | Purpose | DOI |
+|------------|---------|-----|
+| **[mj3b/rgds](https://github.com/mj3b/rgds)** | Biopharma reference implementation (this repo) | [10.5281/zenodo.20242004](https://doi.org/10.5281/zenodo.20242004) |
+| **[mj3b/rgds-independent-study](https://github.com/mj3b/rgds-independent-study)** | Ten-question independent study | [10.5281/zenodo.20242004](https://doi.org/10.5281/zenodo.20242004) |
+| **[mj3b/governed-decision-intelligence](https://github.com/mj3b/governed-decision-intelligence)** | GDI v3.0 open specification | [10.5281/zenodo.20244601](https://doi.org/10.5281/zenodo.20244601) |
+| **[mj3b/rgds-ai-governance](https://github.com/mj3b/rgds-ai-governance)** | AI governance covenants | — |
 
 ---
 
 ## Status
 
-**v2.0.0 — Whitepaper-aligned reference implementation (breaking update).**
+**v2.0.0 — Whitepaper-aligned reference implementation.**
 
-Includes:
+- Schema-enforced decision logs with mandatory options analysis, evidence completeness, and residual risk
+- Six canonical decision records spanning all five outcomes
+- Bounded, disclosed AI assistance (non-agentic by design)
+- CI/CD validation of schema and semantic invariants on every commit
+- 100% requirements traceability matrix coverage
+- Independent case study — not a production system, not regulatory advice
 
-- decision log schema with enforced governance requirements  
-- mandatory options analysis, evidence completeness, and residual risk capture  
-- structured, bounded AI assistance disclosure (non-agentic by design)  
-- canonical examples grounded in real IND execution  
-- evaluation and governance artifacts  
-- CI validation of schema and semantic invariants  
+---
 
-This repository is an **independent case study**, not a production system.
+## Citation
+
+```bibtex
+@software{banasihan2026rgds,
+  author    = {Banasihan, Mark Julius},
+  title     = {{RGDS}: Regulated Gate Decision Support},
+  year      = {2026},
+  version   = {2.0.0},
+  doi       = {10.5281/zenodo.20242004},
+  url       = {https://doi.org/10.5281/zenodo.20242004},
+  license   = {Apache-2.0}
+}
+```
+
+---
+
+## Author
+
+**Mark Julius Banasihan**
+Decision governance systems for regulated, high-stakes environments.
+
+[GitHub](https://github.com/mj3b) · [LinkedIn](https://linkedin.com/in/markjuliusbanasihan) · [ORCID](https://orcid.org/0009-0001-8121-2878) · Atlanta, Georgia, United States
