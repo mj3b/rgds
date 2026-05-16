@@ -376,7 +376,9 @@ FDA reconstructability focus    →  NIST AI RMF / ISO 42001 / EU AI Act
 
 ## Status
 
-**v2.0.0 — Whitepaper-aligned reference implementation.**
+**v2.0.0 — Biopharma reference implementation of the GDI v3.0 open specification.**
+
+RGDS implements the decision-layer governance architecture defined in [GDI v3: The Decision Architecture for Governed AI](https://github.com/mj3b/governed-decision-intelligence/blob/main/spec/GDI_v3_The_Decision_Architecture_for_Governed_AI.pdf) (DOI: [10.5281/zenodo.20244601](https://doi.org/10.5281/zenodo.20244601)) for the biopharma/IND context specifically.
 
 - Schema-enforced decision logs with mandatory options analysis, evidence completeness, and residual risk
 - Six canonical decision records spanning all five outcomes
