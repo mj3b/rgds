@@ -23,19 +23,19 @@ FDA Complete Response Letters cite "insufficient information" in 50% of first-cy
 ```
 Traditional documentation model:          RGDS model:
 
-   Documents → Analysis → Meeting         Decision Question
+Documents → Analysis → Meeting            Decision Question
         ↓                                       ↓
-   Implicit decision                      Options Considered (≥2)
+Implicit decision                         Options Considered (≥2)
         ↓                                       ↓
-   Memory + email threads              Evidence Base + Completeness
+Memory + email threads                    Evidence Base + Completeness
         ↓                                       ↓
-   Reconstruction attempt              Risk Posture + Residual Risk
-   (2–3 weeks, FDA pressure)                   ↓
-                                        Named Human Accountability
-                                               ↓
-                                        Schema Validation → Git
-                                               ↓
-                                        2-minute retrieval
+Reconstruction attempt                    Risk Posture + Residual Risk
+(2–3 weeks, FDA pressure)                       ↓
+                                          Named Human Accountability
+                                                ↓
+                                          Schema Validation → Git
+                                                ↓
+                                          2-minute retrieval
 ```
 
 The decision log is the record. Everything else — analyses, documents, source reports — serves the decision.
@@ -53,7 +53,7 @@ The decision log is the record. Everything else — analyses, documents, source 
 │       │                                                         │
 │       ▼                                                         │
 │  ┌─────────────────────────────────────┐                        │
-│  │         Decision Log Record         │  ← Primary Artifact   │
+│  │         Decision Log Record         │  ← Primary Artifact    │
 │  │                                     │                        │
 │  │  decision_question                  │                        │
 │  │  options_considered  (≥2 required)  │                        │
@@ -67,7 +67,7 @@ The decision log is the record. Everything else — analyses, documents, source 
 │                    │                                            │
 │                    ▼                                            │
 │  ┌─────────────────────────────────────┐                        │
-│  │      Schema Validation (CI/CD)      │  ← Enforcement        │
+│  │      Schema Validation (CI/CD)      │  ← Enforcement         │
 │  │  decision-log.schema.json           │                        │
 │  │  Semantic invariant checks          │                        │
 │  │  Required fields enforced           │                        │
@@ -75,7 +75,7 @@ The decision log is the record. Everything else — analyses, documents, source 
 │                    │                                            │
 │                    ▼                                            │
 │  ┌─────────────────────────────────────┐                        │
-│  │      Git (Version-Controlled Log)   │  ← Audit Trail        │
+│  │      Git (Version-Controlled Log)   │  ← Audit Trail         │
 │  │  Immutable timestamps               │                        │
 │  │  2-minute retrieval under FDA query │                        │
 │  │  Reconstruction without interviews  │                        │
@@ -213,7 +213,7 @@ RGDS is valid with no AI at all. When AI is used, it operates as bounded assista
 │  ai_assistance.tool_purpose   → what task                    │
 │  ai_assistance.human_review[] → review tier + findings       │
 │  ai_assistance.human_override_log[] → corrections made       │
-│  ai_assistance.ai_risk_assessment  → confidence band + cautions│
+│  ai_assistance.ai_risk_assessment → confidence band+cautions │
 └──────────────────────────────────────────────────────────────┘
          │
          ▼ Human decision owner remains fully responsible.
