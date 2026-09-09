@@ -1,6 +1,6 @@
 # RGDS Canonical Decision Records
 
-Six decision records demonstrate the complete RGDS operating model across every decision outcome and governance scenario. Each record is schema-validated in CI/CD on every commit.
+Six decision records cover three schema outcomes: `conditional_go`, `no_go`, and `defer_with_required_evidence`. The current set has no `go` or plain `defer` example. CI runs the batch validator on pushes to `main`, pull requests targeting `main`, and manual workflow runs.
 
 ---
 
@@ -15,13 +15,13 @@ Six decision records demonstrate the complete RGDS operating model across every 
    ┌───────────┐        ┌───────────┐         ┌───────────┐
    │  DEC-0001 │        │  DEC-0002 │         │  DEC-0003 │
    │           │        │           │         │           │
-   │Conditional│        │  No-Go    │         │  Defer    │
-   │    Go     │        │           │         │           │
-   │           │        │Risk thresh│         │ Missing   │
-   │Conditions │        │exceeded.  │         │ required  │
-   │owned.     │        │Re-entry   │         │ evidence. │
-   │Deadlines  │        │logic set. │         │ Re-review │
-   │named.     │        │           │         │ criteria. │
+   │Conditional│        │  No-Go    │         │Defer with │
+   │    Go     │        │           │         │required   │
+   │           │        │Risk thresh│         │evidence   │
+   │Conditions │        │exceeded.  │         │           │
+   │owned.     │        │Re-entry   │         │Gaps and   │
+   │Deadlines  │        │logic set. │         │actions    │
+   │named.     │        │           │         │recorded.  │
    └───────────┘        └───────────┘         └───────────┘
 
          ┌─────────────────────┬─────────────────────┐
@@ -30,8 +30,8 @@ Six decision records demonstrate the complete RGDS operating model across every 
    ┌───────────┐        ┌───────────┐         ┌───────────┐
    │  DEC-0004 │        │  DEC-0005 │         │  DEC-0006 │
    │           │        │           │         │           │
-   │ Escalate  │        │Conditional│         │Conditional│
-   │           │        │    Go     │         │    Go     │
+   │Conditional│        │Conditional│         │Conditional│
+   │    Go     │        │    Go     │         │    Go     │
    │Pre-IND    │        │           │         │           │
    │regulatory │        │IND-style. │         │AI-assisted│
    │strategy.  │        │Author-at- │         │Bounded    │
@@ -49,12 +49,14 @@ Six decision records demonstrate the complete RGDS operating model across every 
 |--------|---------|----------------------|-------------------|
 | [`rgds-dec-0001`](rgds-dec-0001.json) | conditional_go | Explicit conditions with owned verification deadlines | The canonical starting point |
 | [`rgds-dec-0002`](rgds-dec-0002-no-go.json) | no_go | Defensible refusal with documented re-entry path | To understand governed stopping |
-| [`rgds-dec-0003`](rgds-dec-0003-defer-required-evidence.json) | defer | Structured pause with evidence gap documentation | When evidence is incomplete |
-| [`rgds-dec-0004`](rgds-dec-0004-regulatory-interaction.json) | escalate | Agency-facing decision framing and question strategy | Pre-IND or FDA interaction |
+| [`rgds-dec-0003`](rgds-dec-0003-defer-required-evidence.json) | defer_with_required_evidence | Structured pause with evidence gap documentation | When evidence is incomplete |
+| [`rgds-dec-0004`](rgds-dec-0004-regulatory-interaction.json) | conditional_go | Agency-facing decision framing and question strategy | Pre-IND or FDA interaction |
 | [`rgds-dec-0005`](rgds-dec-0005-ind-conditional-go-author-at-risk.json) | conditional_go | Author-at-risk drafting, reviewer triage, lock points | IND authoring and review |
 | [`rgds-dec-0006`](rgds-dec-0006-ai-assisted-conditional-go.json) | conditional_go | AI disclosure fields, human override log, authority chain | AI-assisted decisions |
 
 ---
+
+`rgds-dec-0004` records a conditional decision about a regulatory interaction. Its escalation path describes governance routing; it does not change the recorded outcome.
 
 ## What Each Record Contains
 
@@ -69,7 +71,7 @@ Every RGDS decision record carries eight governance dimensions:
   5. Residual Risk       → What remains true after proceeding
   6. Outcome             → One of five governed types
   7. Accountability      → Named decision owner + named approvers
-  8. AI Assistance       → Disclosure fields (when AI was used)
+  8. AI Assistance       → Required disclosure object (used=true or false)
 ```
 
 ---
@@ -86,45 +88,20 @@ The AI governance policy governing all records: [`docs/ai-assistance-policy.md`]
 
 ## How to Read a Decision Record
 
-```
-{
-  "decisionid": "RGDS-DEC-0001",        ← Unique identifier
-  "decisiontitle": "...",               ← Human-readable summary
-  "decisionquestion": "...",            ← The specific choice required
-  "decisiondeadline": "...",            ← When decision was required
+The following paths identify the main sections in each JSON record:
 
-  "options_considered": [               ← At least 2 required
-    { "optionid": "OPT-A",
-      "optiontext": "...",
-      "rejected": true,
-      "rejectionreason": "..." },       ← Why this option was not chosen
-    { "optionid": "OPT-B",
-      "optiontext": "...",
-      "rejected": false }               ← The chosen option
-  ],
+| Path | What to inspect |
+|------|-----------------|
+| `decision_id`, `decision_title`, `decision_question` | Identity and question |
+| `gate.decision_deadline` | Deadline |
+| `options_considered[]` | `option_id`, `description`, `pros`, `cons`, `estimated_impact` |
+| `evidence.evidence_items[]` | Sources and `completeness_state` |
+| `risk_posture`, `risk_assessment` | Accepted posture and residual risk |
+| `decision_outcome` | `outcome`, `selected_option_id`, `conditions`, `rationale_summary` |
+| `governance` | Owner, approvers, reviewers, approvals, and final signoff |
+| `ai_assistance` | Required disclosure object and any recorded AI use |
 
-  "evidence": {
-    "evidence_items": [
-      { "source": "...",
-        "completeness_state": "partial", ← complete / partial / placeholder
-        "summary": "..." }
-    ]
-  },
-
-  "risk_posture": "...",                ← What risk was explicitly accepted
-  "risk_assessment": {
-    "residual_risk_items": [...]        ← What remains true after proceeding
-  },
-
-  "outcome": "conditional_go",          ← One of five governed types
-  "conditions": [...],                  ← If conditional: owned + deadline
-
-  "accountability": {
-    "decision_owner": "...",            ← Named individual
-    "approvers": [...]                  ← Named individuals with scope
-  }
-}
-```
+`risk_assessment.residual_risk_items` is optional. A condition records `condition`, `owner`, `due_date`, and `evidence_to_close`. Validation checks structure and selected internal consistency rules; it does not verify the quality of the underlying decision.
 
 Executives and auditors should be able to answer "why was this decision reasonable?" from the record alone, without interviews or supplemental documents.
 
