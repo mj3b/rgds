@@ -1,13 +1,11 @@
 # RGDS — Regulated Gate Decision Support
 
 [![Status: Independent Case Study](https://img.shields.io/badge/status-independent%20case%20study-5b6cff)](#status)
-[![Human Governed](https://img.shields.io/badge/governance-human--governed-3bb273)](#governance)
+[![Human Governed](https://img.shields.io/badge/governance-human--governed-3bb273)](docs/governance.md)
 [![Non-Agentic](https://img.shields.io/badge/AI-explicitly%20non--agentic-2d7ff9)](#ai-governance)
 [![Schema Enforced](https://img.shields.io/badge/schema-decision%20log%20enforced-1f6feb)](#decision-log-schema)
-[![RTM Coverage](https://img.shields.io/badge/RTM-100%25%20coverage-2ea44f)](#evaluation)
 [![CI Validation](https://img.shields.io/github/actions/workflow/status/mj3b/rgds/validate.yml)](https://github.com/mj3b/rgds/actions/workflows/validate.yml)
 [![License](https://img.shields.io/github/license/mj3b/rgds)](LICENSE)
-[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.20242004-blue)](https://doi.org/10.5281/zenodo.20242004)
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0001--8121--2878-brightgreen)](https://orcid.org/0009-0001-8121-2878)
 
 RGDS addresses the loss of decision context when alternatives, evidence gaps, and approval conditions remain scattered across documents and meeting records. This reference implementation records those elements in a structured decision log for phase-gated regulated programs.
@@ -120,7 +118,7 @@ The [JSON Schema](decision-log/decision-log.schema.json) defines the complete co
 | Field | Type and requirement | Recorded information |
 |-------|----------------------|----------------------|
 | `decision_question` | Required string | The choice under review |
-| `gate.decision_deadline` | Required date string | Decision deadline |
+| `gate.decision_deadline` | Required date-time string | Decision deadline |
 | `options_considered` | Required array, at least two items | Alternatives, pros, cons, and estimated impact |
 | `evidence.evidence_items` | Required array | Evidence references and source information |
 | `evidence.evidence_items[].completeness_state` | Required enum on each item | `complete` / `partial` / `placeholder` |
@@ -192,19 +190,19 @@ RGDS is valid with no AI at all. When AI is used, it operates as bounded assista
            rights, or risk ownership.
 ```
 
-The single-record validator requires nonempty tool name, tool purpose, and human review when AI is used. It recommends an AI risk confidence band. Both validators require nonempty use cases and artifacts; the batch validator used by CI does not repeat the single-record validator's additional AI checks. `human_override_log` is optional. The `ai_assistance` object remains required when `used=false`.
+Both validators use the same semantic checks. When AI is used, they require nonempty tool name, tool purpose, human review, use cases, and artifacts. They recommend an AI risk confidence band. Both validate the schema's date and date-time formats. `human_override_log` is optional. The `ai_assistance` object remains required when `used=false`.
 
 **Evidence rule:** AI output is never treated as primary evidence. If an AI output influences a decision, the human owner must link to the underlying source and record the AI output as a drafting aid. Every decision must remain defensible without the AI output present.
 
-Authoritative AI governance covenants: **[rgds-ai-governance](https://github.com/mj3b/rgds-ai-governance)**
+The local [AI assistance policy](docs/ai-assistance-policy.md) states the requirements for this implementation. The related [AI Assistance Governance material](https://github.com/mj3b/rgds-ai-governance) remains a working method under separate review. Its claims do not establish properties of this implementation.
 
 ---
 
-## IND Alignment — Execution Realities → RGDS Mechanisms
+## IND Context and Record Mechanisms
 
-RGDS formalizes failure modes observed during IND preparation. Each mechanism addresses a specific, named execution pattern.
+These design scenarios connect IND preparation concerns to record fields. They are intended uses, not measured reductions in regulatory or operational failures.
 
-| Execution Reality | Failure Mode Prevented | RGDS Mechanism |
+| Design scenario | Concern to examine | RGDS mechanism |
 |-------------------|----------------------|----------------|
 | Placeholders proceed without governance | False confidence, FDA gap finding | `evidence.evidence_items[].completeness_state` + author-at-risk constraints |
 | Scope changes emerge late without a trail | Silent ripple effects across modules | `scope_change_events[]` + downstream propagation |
@@ -239,7 +237,7 @@ rgds/
 ├── evaluation/                      ← Decision quality assessment
 │   ├── evaluation-plan.md           ← Assessment methodology
 │   ├── evidence-quality-rubric.md   ← Evidence scoring criteria
-│   ├── requirements-traceability-matrix.md ← 100% RTM coverage
+│   ├── requirements-traceability-matrix.md ← Internal requirement mapping
 │   └── scorecard-template.csv       ← Structured review scorecard
 │
 ├── docs/                            ← Governance documentation
@@ -295,32 +293,24 @@ Are you a...
 
 ---
 
-## v2.0.0 — What Changed
+## Release History
 
-The historical release uses the exact tag [`v.2.0.0`](https://github.com/mj3b/rgds/releases/tag/v.2.0.0). The documentation corrections recorded in the [change control log](docs/change-control-log.md) are unreleased. The historical tag, release, and citation identifiers are preserved.
+The historical release uses the exact tag [`v.2.0.0`](https://github.com/mj3b/rgds/releases/tag/v.2.0.0). It remains unchanged. The [change control log](docs/change-control-log.md) records the subsequent P0 and P1 corrections as unreleased changes. No normalized alias or replacement tag has been created.
 
-v2.0.0 tightens decision defensibility. It does not add automation or autonomy.
-
-| Change | What it enforces | Failure mode prevented |
-|--------|-----------------|----------------------|
-| Options enumeration (≥2 required) | At least two options must be considered | Single-option rationalization passing as governance |
-| Evidence completeness per item | `complete` / `partial` / `placeholder` on every evidence item | False confidence from undocumented placeholders |
-| Residual risk capture | Required `risk_assessment.residual_risk_statement`; optional `residual_risk_items[]` | Provides fields for recording residual risk; content adequacy requires review |
-| Named human accountability | Decision owner + approvers as individuals, not roles | "Who approved this?" questions with no traceable answer |
-| AI assistance disclosure | Required schema fields when `ai_assistance.used=true` | AI-assisted drafting without disclosure contaminating provenance |
+These corrections preserve the decision-record schema. Batch validation now applies the single-record validator's existing AI checks, and the single-record validator checks date formats. Records previously accepted because of those validation gaps may now fail. Cite a commit when referring to the corrected current implementation.
 
 ---
 
 ## Evaluation
 
-Decision quality is assessed across four dimensions.
+The evaluation plan proposes four review dimensions. It does not report a completed field evaluation.
 
 | Dimension | What is evaluated | Instrument |
 |-----------|------------------|------------|
 | Decision readiness | Evidence completeness, option coverage, risk explicitness | Evidence quality rubric |
 | Governance execution | Accountability chain, approval separation, escalation logic | Reviewer audit checklist |
 | AI assistance safety | Disclosure completeness, human override documentation | AI governance policy + dec-0006 |
-| Requirements coverage | End-to-end traceability from program objectives to decisions | Requirements traceability matrix (100% coverage) |
+| Requirements coverage | End-to-end traceability from program objectives to decisions | Internal requirements traceability matrix |
 
 Evaluation focuses on decision quality and governance execution. It does not benchmark model performance in isolation.
 
@@ -328,55 +318,35 @@ Evaluation focuses on decision quality and governance execution. It does not ben
 
 ## Relationship to GDI
 
-RGDS is the biopharma reference implementation. GDI (Governed Decision Intelligence) generalizes the decision-layer architecture to domain-agnostic deployment.
+RGDS is a biopharma reference implementation within the proposed NN-DE research program, Decision Evidence & Governed Action. GDI provides the general decision-record architecture; RGDS applies related concepts to regulated phase gates. This relationship does not establish formal GDI conformance.
 
-```
-RGDS (this repository)                 GDI
-Biopharma / IND / BLA context  →  Domain-agnostic open specification
-Phase-gate decision logs        →  Governed Decision Records (GDR)
-IND-specific field vocabulary   →  Universal schema
-FDA reconstructability focus    →  NIST AI RMF / ISO 42001 / EU AI Act
-170+ commits, 6 canonical       →  Reference implementation +
-  examples, CI enforcement           IETF conformance driver
-```
-
-| Repository | Purpose | DOI |
-|------------|---------|-----|
-| **[mj3b/rgds](https://github.com/mj3b/rgds)** | Biopharma reference implementation (this repo) | [10.5281/zenodo.20242004](https://doi.org/10.5281/zenodo.20242004) |
-| **[mj3b/rgds-independent-study](https://github.com/mj3b/rgds-independent-study)** | Ten-question independent study | [10.5281/zenodo.20242004](https://doi.org/10.5281/zenodo.20242004) |
-| **[mj3b/governed-decision-intelligence](https://github.com/mj3b/governed-decision-intelligence)** | GDI v3.0 open specification | [10.5281/zenodo.20244601](https://doi.org/10.5281/zenodo.20244601) |
-| **[mj3b/rgds-ai-governance](https://github.com/mj3b/rgds-ai-governance)** | AI governance covenants | — |
-
----
+| Artifact | Role and evidence boundary |
+|----------|----------------------------|
+| [RGDS](https://github.com/mj3b/rgds) | Schema, validators, and illustrative biopharma decision records. Internal checks establish limited structural and semantic properties. |
+| [GDI](https://github.com/mj3b/governed-decision-intelligence) | General decision-record specification and research architecture. |
+| [AI Assistance Governance](https://github.com/mj3b/rgds-ai-governance) | Working method for bounded AI participation, under separate remediation. |
+| [RGDS Independent Study](https://github.com/mj3b/rgds-independent-study) | Historical exploratory study and modeling work. Its projections do not establish deployment outcomes for this implementation. |
 
 ## Status
 
-**v2.0.0 — Biopharma reference implementation of the GDI v3.0 open specification.**
-
-RGDS implements the decision-layer governance architecture defined in [GDI v3: The Decision Architecture for Governed AI](https://github.com/mj3b/governed-decision-intelligence/blob/main/spec/GDI_v3_The_Decision_Architecture_for_Governed_AI.pdf) (DOI: [10.5281/zenodo.20244601](https://doi.org/10.5281/zenodo.20244601)) for the biopharma/IND context specifically.
-
-- Schema checks for options, evidence completeness labels, and a residual risk statement field
-- Six canonical decision records covering three of the five schema outcomes
-- Bounded, disclosed AI assistance (non-agentic by design)
-- CI validation through the batch validator on pushes and pull requests to `main`, with manual runs available
-- 100% requirements traceability matrix coverage
-- Independent case study — not a production system, not regulatory advice
-
----
+| Dimension | Current state |
+|-----------|---------------|
+| Project type | Reference implementation |
+| Development state | Working; P0 and P1 corrections follow the historical `v.2.0.0` release |
+| Evidence state | Internal schema, semantic, and regression checks; six illustrative canonical records |
+| Outcome coverage | Three canonical outcomes; derived regression cases also exercise `go` and `defer` |
+| Internal requirements | Fourteen declared RTM rows map to implementation artifacts; each row distinguishes machine checks from policy or review expectations |
+| External evaluation | Field effectiveness and independent evaluation remain unestablished |
+| Regulatory status | No claim of regulatory approval, legal compliance, or demonstrated benefit |
+| Node & Norm admission | Candidate for review as a working reference implementation; no transfer or organization change has occurred |
 
 ## Citation
 
-```bibtex
-@software{banasihan2026rgds,
-  author    = {Banasihan, Mark Julius},
-  title     = {{RGDS}: Regulated Gate Decision Support},
-  year      = {2026},
-  version   = {2.0.0},
-  doi       = {10.5281/zenodo.20242004},
-  url       = {https://doi.org/10.5281/zenodo.20242004},
-  license   = {Apache-2.0}
-}
-```
+Use [CITATION.cff](CITATION.cff) for this implementation and include the Git commit used in reproducible work. No implementation DOI has been verified for this repository.
+
+The [Zenodo record 20242004](https://zenodo.org/records/20242004) archives `rgds-independent-study` v1.4, published on May 16, 2026. Its version DOI is `10.5281/zenodo.20242004`; its all-versions DOI is `10.5281/zenodo.20242003`. Cite that record when using the historical study. It does not identify this repository's v2 implementation.
+
+The [citation and provenance note](docs/citation-provenance.md) records the correction and retains the previous citation verbatim. Authorship remains with [Mark Julius Banasihan](https://orcid.org/0009-0001-8121-2878).
 
 ---
 

@@ -1,0 +1,26 @@
+cff-version: 1.2.0
+message: "Cite this reference implementation and identify the Git commit used. The related study DOI identifies a different artifact."
+type: software
+title: "RGDS: Regulated Gate Decision Support"
+authors:
+  - family-names: Banasihan
+    given-names: Mark Julius
+    orcid: "https://orcid.org/0009-0001-8121-2878"
+repository-code: "https://github.com/mj3b/rgds"
+url: "https://github.com/mj3b/rgds"
+license: Apache-2.0
+abstract: >-
+  Reference implementation of structured decision records for regulated phase gates.
+  Includes a JSON Schema, semantic validators, and illustrative decision records.
+  Internal validation does not establish field effectiveness or regulatory compliance.
+references:
+  - type: software
+    title: "RGDS: Regulated Gate Decision Support — Decision-Centric AI Governance in Biopharma/Biotech Development"
+    authors:
+      - family-names: Banasihan
+        given-names: Mark Julius
+    version: "v1.4"
+    date-released: 2026-05-16
+    doi: "10.5281/zenodo.20242004"
+    url: "https://zenodo.org/records/20242004"
+    repository-code: "https://github.com/mj3b/rgds-independent-study"

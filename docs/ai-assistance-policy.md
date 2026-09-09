@@ -41,6 +41,8 @@ AI disclosure is required when AI **meaningfully influences** any of the followi
 
 If AI was used for trivial formatting only, disclosure is still recommended — but “meaningful influence” triggers mandatory disclosure.
 
+The schema requires the `ai_assistance` object even when `used=false`. The requirements below describe policy expectations; some exceed the schema and semantic checks.
+
 ## Minimum AI disclosure fields
 
 When AI is used (`ai_assistance.used = true`), the decision record must capture at minimum:
@@ -100,7 +102,7 @@ When AI assistance is used, the following must be recorded in the Decision Log:
 
 - the AI use case
 - references to inputs and outputs
-- human disposition recorded in ai_assistance.human_review[] (`accepted` / `edited` / `rejected`)
+- human disposition described in `ai_assistance.human_review[].finding_summary` or `actions_taken`; the schema does not define a disposition enum
 - applicable controls and constraints
 
 Silent or undisclosed AI usage is **not permitted**.
@@ -109,11 +111,9 @@ Silent or undisclosed AI usage is **not permitted**.
 
 ## Controls and constraints
 
-AI usage within RGDS is governed by the **Non-Agentic AI Contract** and the
-**AI Removability Proof** maintained in the AI Governance repository.
+This local policy states the requirements for RGDS. The related AI Governance repository contains a working method under separate review. Its removability and framework-mapping claims are not guarantees of this implementation.
 
-These documents define system-level prohibitions and guarantees that apply
-regardless of implementation, tooling, or workflow context.
+To assess AI dependency, exclude model-generated artifacts from the evidentiary basis and examine whether the remaining sources support the rationale. Keep the required `ai_assistance` object and an accurate history of actual use. Deleting the object violates the schema; changing `used` to false after removing an output would misstate the record's provenance. Structural validity alone cannot establish substantive independence from AI.
 
 Each AI-assisted artifact must document, at minimum:
 

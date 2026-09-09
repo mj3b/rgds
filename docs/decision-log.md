@@ -58,7 +58,7 @@ AI outputs are **never treated as evidence by default**.
 ## Decision Log as a Governance Artifact
 
 In RGDS, the Decision Log is not “documentation after the fact.”  
-It is the **mechanism** that prevents ambiguity from becoming unowned risk.
+It records questions and ownership so reviewers can examine ambiguity before a decision closes.
 
 If a required field is missing, that is a **governance failure**, not a formatting issue.
 
@@ -91,7 +91,7 @@ Each evidence item must declare a completeness state:
 This classification is captured **per evidence item**  
 (e.g., `evidence.evidence_items[].completeness_state`).
 
-Any summary or roll-up completeness field is **derived** and is not authoritative.
+The package-level `evidence_completeness.state` is also required. The validator does not derive it from individual items or verify consistency between the two levels; reviewers must examine that relationship.
 
 ---
 
@@ -114,7 +114,7 @@ A decision record missing residual risk is **governance-incomplete** under v2.0.
 
 Regulated decisions expire.
 
-RGDS requires a `decision_deadline` so stakeholders can distinguish:
+RGDS requires `gate.decision_deadline`, a date-time string, so stakeholders can distinguish:
 - a decision that is still valid, from
 - a decision that has become stale due to new evidence, scope changes, or timeline shifts
 
@@ -144,7 +144,7 @@ Each section exists to prevent a known failure mode.
 ---
 
 ### 1. Record identity & gate context  
-**Prevents:** ambiguity about *which* decision was made, when, and under what authority.
+**Review concern:** ambiguity about *which* decision was made, when, and under what authority.
 
 Captures:
 - stable decision ID
@@ -155,7 +155,7 @@ Captures:
 ---
 
 ### 2. Decision statement  
-**Prevents:** retrospective reframing of what was actually decided.
+**Review concern:** retrospective reframing of what was actually decided.
 
 Captures:
 - the exact decision question
@@ -168,7 +168,7 @@ The rationale should explain *why this decision made sense then* — not re-argu
 ---
 
 ### 3. Evidence packet  
-**Prevents:** evidence drift and selective memory.
+**Review concern:** evidence drift and selective memory.
 
 Captures:
 - what evidence was actually used
@@ -183,7 +183,7 @@ This makes it explicit when decisions are made with incomplete or uneven evidenc
 ---
 
 ### 4. Known gaps and assumptions  
-**Prevents:** hidden risk accumulation.
+**Review concern:** hidden risk accumulation.
 
 If something is missing, uncertain, or assumed:
 - it is named
@@ -198,10 +198,10 @@ The following fields reflect **real IND delivery constraints**—interdependenci
 
 They were introduced in v1.3 and extended in later versions.
 
-These fields are optional by default but may be required by program governance.
+`risk_posture` is required in the current schema. The other fields below are optional unless program policy requires them.
 
 ### risk_posture  
-**Prevents:** silent risk acceptance.
+**Review concern:** silent risk acceptance.
 
 Captures the phase-appropriate stance  
 (`risk_minimizing` / `risk_neutral` / `risk_accepting`)  
@@ -231,7 +231,7 @@ Ensures decisions trace back to Target Product Profile intent.
 ---
 
 ### 5. Risk assessment  
-**Prevents:** unowned or accidental risk acceptance.
+**Review concern:** unowned or accidental risk acceptance.
 
 Captures:
 - key risks
@@ -242,7 +242,7 @@ Captures:
 ---
 
 ### 6. Governance and accountability  
-**Prevents:** unclear ownership and post-hoc blame.
+**Review concern:** unclear ownership and post-hoc blame.
 
 Captures:
 - decision owner
@@ -253,9 +253,9 @@ Captures:
 ---
 
 ### 7. AI assistance disclosure  
-**Mandatory when AI is used**
+**Disclosure object always required; additional fields when AI is used**
 
-**Prevents:** silent automation risk.
+**Review concern:** silent automation risk.
 
 If AI assistance is used:
 - the use case is disclosed
@@ -270,7 +270,7 @@ Authority and risk ownership remain human.
 ---
 
 ### 8. Actions, dependencies, and follow-up  
-**Prevents:** decisions that stop at the meeting.
+**Review concern:** decisions that stop at the meeting.
 
 Captures:
 - follow-up actions
@@ -280,7 +280,7 @@ Captures:
 ---
 
 ### 9. Audit trail and lifecycle  
-**Prevents:** record tampering and ambiguity over time.
+**Review concern:** record tampering and ambiguity over time.
 
 Captures:
 - versioning
@@ -288,7 +288,7 @@ Captures:
 - superseded decisions
 - retention class (draft vs controlled)
 
-Controlled records are immutable except through documented change control.
+Controlled records use versioned history and documented change control. Git history can be rewritten; immutability requires additional controls and is not established by this implementation.
 
 ---
 
@@ -312,15 +312,6 @@ It grounds decisions in development intent but does not assert label claims or c
 
 ---
 
-## How this supports regulated delivery
+## Evaluation boundary
 
-The Decision Log enables:
-
-- faster decisions without reduced confidence
-- clearer executive approvals
-- cleaner audits
-- earlier surfacing of misalignment
-- reduced rework caused by late-discovered risk
-
-When asked *“Why did you decide this — and who agreed?”*  
-the Decision Log is the answer.
+The record exposes the question, evidence references, ownership, and follow-up obligations for review. Faster decisions, reduced rework, and better regulatory outcomes are hypotheses for prospective evaluation. The repository's illustrative records and internal tests do not establish those effects.
