@@ -13,6 +13,16 @@ It is a governance record.
 ---
 
 
+## v2.0.1 (2026-09-09)
+
+Publishes the P0 and P1 corrections recorded below, together with the intervening documentation, evaluation, checklist, and NOTICE changes since `v.2.0.0`. The earlier entries retain their wording as records of their status when prepared.
+
+Release preparation adds versioned citation metadata and release references, and restores the complete Apache 2.0 terms from the historical release while retaining the current copyright notice. See the [release notes](releases/v2.0.1.md) for cumulative scope and compatibility limits.
+
+The decision schemas, template, and six canonical JSON records remain unchanged from `v.2.0.0`. Historical tags and releases are preserved. Repository validation is recorded separately for the release commit; publication does not itself establish Node & Norm admission.
+
+---
+
 ## Unreleased: RGDS P1 citation, claim, and validation corrections (2026-09-09)
 
 The owner authorized this pass after the P0 merge in PR #8. The public ORCID and Zenodo records were inspected to resolve the citation mismatch.

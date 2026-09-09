@@ -13,6 +13,11 @@ That log records:
 - rationale for decisions
 - effective dates for each version
 
+## v2.0.1
+
+- Published citation, documentation, and validator corrections; restored complete Apache 2.0 terms.
+- See [release notes](docs/releases/v2.0.1.md) for the full change since `v.2.0.0`.
+
 - ## v2.0.0
 - Whitepaper-aligned decision discipline (see change-control log)
 
