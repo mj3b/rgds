@@ -10,15 +10,15 @@
 [![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.20242004-blue)](https://doi.org/10.5281/zenodo.20242004)
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0001--8121--2878-brightgreen)](https://orcid.org/0009-0001-8121-2878)
 
-> *In regulated programs, decisions fail after they are made — not because teams lacked expertise, but because decision logic could not be reconstructed under scrutiny.*
+RGDS addresses the loss of decision context when alternatives, evidence gaps, and approval conditions remain scattered across documents and meeting records. This reference implementation records those elements in a structured decision log for phase-gated regulated programs.
 
-RGDS is the reference implementation for decision-layer governance in phase-gated regulated environments. It treats **the decision itself as the primary artifact** — structured, schema-validated, and written before memory decay and handoff loss make reconstruction impossible.
+The research question is whether that record makes a decision easier to reconstruct later. Repository validation checks structure and selected internal consistency rules. Retrieval speed, field effectiveness, and regulatory outcomes remain unestablished.
 
 ---
 
-## The Problem RGDS Solves
+## The Problem RGDS Addresses
 
-FDA Complete Response Letters cite "insufficient information" in 50% of first-cycle submissions. In most of those cases, the underlying science is defensible. What organizations cannot produce is a coherent account of *why* specific decisions were made 6–18 months earlier.
+RGDS links the decision question to the options considered, evidence available, residual risk, named authority, and follow-up obligations. It provides a record format for examining implicit judgment and undocumented trade-offs. This design does not establish how often those gaps cause regulatory deficiencies.
 
 ```
 Traditional documentation model:          RGDS model:
@@ -30,12 +30,12 @@ Implicit decision                         Options Considered (≥2)
 Memory + email threads                    Evidence Base + Completeness
         ↓                                       ↓
 Reconstruction attempt                    Risk Posture + Residual Risk
-(2–3 weeks, FDA pressure)                       ↓
+                                                ↓
                                           Named Human Accountability
                                                 ↓
                                           Schema Validation → Git
                                                 ↓
-                                          2-minute retrieval
+                                          Record available for review
 ```
 
 The decision log is the record. Everything else — analyses, documents, source reports — serves the decision.
@@ -57,12 +57,12 @@ The decision log is the record. Everything else — analyses, documents, source 
 │  │                                     │                        │
 │  │  decision_question                  │                        │
 │  │  options_considered  (≥2 required)  │                        │
-│  │  evidence_base       (completeness) │                        │
+│  │  evidence            (completeness) │                        │
 │  │  risk_posture        (explicit)     │                        │
-│  │  residual_risk       (structured)   │                        │
-│  │  outcome             (5 types)      │                        │
-│  │  accountability      (named humans) │                        │
-│  │  ai_assistance       (if used)      │                        │
+│  │  risk_assessment                    │                        │
+│  │  decision_outcome    (5 types)      │                        │
+│  │  governance          (named people) │                        │
+│  │  ai_assistance       (required)     │                        │
 │  └─────────────────┬───────────────────┘                        │
 │                    │                                            │
 │                    ▼                                            │
@@ -76,9 +76,9 @@ The decision log is the record. Everything else — analyses, documents, source 
 │                    ▼                                            │
 │  ┌─────────────────────────────────────┐                        │
 │  │      Git (Version-Controlled Log)   │  ← Audit Trail         │
-│  │  Immutable timestamps               │                        │
-│  │  2-minute retrieval under FDA query │                        │
-│  │  Reconstruction without interviews  │                        │
+│  │  Version-controlled record history  │                        │
+│  │  Records linked to source evidence  │                        │
+│  │  Context available for review       │                        │
 │  └─────────────────────────────────────┘                        │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
@@ -88,103 +88,75 @@ The decision log is the record. Everything else — analyses, documents, source 
 
 ## The Five Decision Outcomes
 
-Every RGDS decision resolves to one of five governed outcomes. Each carries equal structural rigor — stopping is governed the same way proceeding is.
+The schema permits exactly five values for `decision_outcome.outcome`:
 
-```
-                    ┌──────────────────┐
-                    │  Phase Gate      │
-                    │  Decision Point  │
-                    └────────┬─────────┘
-                             │
-          ┌──────────────────┼──────────────────┐
-          │                  │                  │
-          ▼                  ▼                  ▼
-   ┌─────────────┐   ┌─────────────┐   ┌─────────────┐
-   │     GO      │   │  CONDITIONAL│   │    DEFER    │
-   │             │   │     GO      │   │             │
-   │ Full conf.  │   │             │   │ Insufficient│
-   │ Complete    │   │ Explicit    │   │ evidence.   │
-   │ evidence.   │   │ conditions. │   │ Re-entry    │
-   │ Proceed.    │   │ Named owner.│   │ criteria    │
-   │             │   │ Deadline.   │   │ defined.    │
-   └─────────────┘   └─────────────┘   └─────────────┘
+| Outcome | Meaning and validation behavior |
+|---------|---------------------------------|
+| `go` | Proceed. The schema and common checks apply. Validation does not establish full confidence or evidence sufficiency. |
+| `conditional_go` | Proceed subject to conditions. Semantic validation requires at least one condition and recommends actions to carry it out. Each condition records an owner, due date, and evidence needed for closure. |
+| `defer` | Pause the decision. Semantic validation warns when both gaps and actions are absent. |
+| `no_go` | Decline to proceed. The schema requires a rationale summary for this outcome, as it does for all outcomes. |
+| `defer_with_required_evidence` | Pause pending required evidence. Semantic validation requires gaps, conditions, and actions. |
 
-          ┌──────────────────────────────────┐
-          │                                  │
-          ▼                                  ▼
-   ┌─────────────┐                  ┌─────────────┐
-   │   NO-GO     │                  │  ESCALATE   │
-   │             │                  │             │
-   │ Rejected.   │                  │ Exceeds     │
-   │ Rationale   │                  │ authority   │
-   │ documented. │                  │ scope.      │
-   │ Re-entry    │                  │ Senior human│
-   │ logic set.  │                  │ required.   │
-   └─────────────┘                  └─────────────┘
-```
-
-**Defer and No-Go are first-class outcomes.** A governed No-Go is indistinguishable from a governed Go in audit quality. An ungoverned stop is indistinguishable from a failure.
+Escalation is a governance action for routing disagreement or insufficient authority. The optional `governance.escalation_path` records the people responsible for resolving it. `escalate` is not a schema outcome.
 
 ---
 
 ## Decision Log Schema
 
-The schema enforces governance-completeness at the artifact level. A decision that cannot satisfy the schema cannot be finalized.
+The JSON Schema checks the record structure. The validators add selected semantic checks. Passing validation does not establish decision correctness, approval, human judgment, or regulatory compliance.
 
 ```
-decision_log/
+decision-log/
 ├── decision-log.schema.json    ← Machine-enforced
 ├── decision-log.schema.yaml    ← Human-readable companion
 └── decision-log.template.yaml  ← Starting point for new decisions
 ```
 
-### Required Fields (v2.0.0)
+### Required Fields and Supported Extensions
 
-| Field | Type | Governance Purpose |
-|-------|------|--------------------|
-| `decision_question` | string | Defines what choice was required |
-| `decision_deadline` | date | Forces temporal accountability |
-| `options_considered` | array (≥2) | Eliminates single-option rationalization |
-| `evidence_base` | object | Links claims to sources |
-| `evidence.completeness_state` | enum | `complete` / `partial` / `placeholder` |
-| `risk_posture` | string | Forces explicit risk acceptance |
-| `risk_assessment.residual_risk_items` | array | Captures what remains true after proceeding |
-| `outcome` | enum | One of five governed decision types |
-| `accountability.decision_owner` | string | Named human, not a role or team |
-| `accountability.approvers` | array | Named humans with authority scope |
-| `ai_assistance.used` | boolean | Disclosure trigger |
+The [JSON Schema](decision-log/decision-log.schema.json) defines the complete contract. The table lists selected fields using their actual paths.
+
+| Field | Type and requirement | Recorded information |
+|-------|----------------------|----------------------|
+| `decision_question` | Required string | The choice under review |
+| `gate.decision_deadline` | Required date string | Decision deadline |
+| `options_considered` | Required array, at least two items | Alternatives, pros, cons, and estimated impact |
+| `evidence.evidence_items` | Required array | Evidence references and source information |
+| `evidence.evidence_items[].completeness_state` | Required enum on each item | `complete` / `partial` / `placeholder` |
+| `evidence_completeness.state` | Required enum | Completeness of the evidence package |
+| `risk_posture` | Required enum | `risk_minimizing` / `risk_neutral` / `risk_accepting` |
+| `risk_assessment.residual_risk_statement` | Required string; may be empty | Residual risk statement |
+| `risk_assessment.residual_risk_items` | Optional array | Structured risk, mitigation, and trigger entries |
+| `decision_outcome.outcome` | Required enum | One of the five contract outcomes |
+| `governance.decision_owner` | Required person object | Name and role of the owner |
+| `governance.approvers` | Required array, at least one person | Names and roles of approvers |
+| `ai_assistance` | Required object, including when AI is unused | `used`, `use_cases`, `artifacts`, and `controls` |
+
+The person fields record claims about ownership and approval. Validation checks their structure; it cannot verify identity or substantive participation.
 
 ### Evidence Completeness Model
 
-```
-Evidence Item
-     │
-     ├── complete     → Final validated data. Decision proceeds on confirmed evidence.
-     │
-     ├── partial      → Preliminary data. Final report pending. Explicit condition
-     │                  required if proceeding. Owner and deadline named.
-     │
-     └── placeholder  → Estimated or assumed. Must be flagged as governance gap.
-                        False confidence from undocumented placeholders is the
-                        failure mode this field prevents.
-```
+Each evidence item records `complete`, `partial`, or `placeholder` in `evidence.evidence_items[].completeness_state`. These are author-assigned classifications. The schema checks the labels without verifying source quality.
+
+At package level, semantic checks warn when `evidence_completeness.state` is `partial` or `placeholder` and the record contains neither gaps nor author-at-risk items. A placeholder package also receives a warning when it lacks an expected resolution date. These warnings become failures in strict mode.
 
 ---
 
 ## Canonical Decision Records
 
-Start here. Six examples demonstrate the full operating model across every decision outcome.
+Six examples cover `conditional_go`, `no_go`, and `defer_with_required_evidence`. There are no canonical `go` or plain `defer` examples in the current set.
 
 | Record | Outcome | Scenario | What It Demonstrates |
 |--------|---------|----------|----------------------|
 | [`rgds-dec-0001`](examples/rgds-dec-0001.json) | **conditional_go** | Data readiness gate | Explicit conditions, owned follow-ups, named approvers |
 | [`rgds-dec-0002`](examples/rgds-dec-0002-no-go.json) | **no_go** | Risk threshold exceeded | Defensible refusal with re-entry logic |
-| [`rgds-dec-0003`](examples/rgds-dec-0003-defer-required-evidence.json) | **defer** | Missing required evidence | Structured pause with re-review criteria |
-| [`rgds-dec-0004`](examples/rgds-dec-0004-regulatory-interaction.json) | **escalate** | Pre-IND FDA interaction | Agency-facing decision framing and strategy |
+| [`rgds-dec-0003`](examples/rgds-dec-0003-defer-required-evidence.json) | **defer_with_required_evidence** | Missing required evidence | Structured pause with re-review criteria |
+| [`rgds-dec-0004`](examples/rgds-dec-0004-regulatory-interaction.json) | **conditional_go** | Pre-IND FDA interaction | Agency-facing decision framing and strategy |
 | [`rgds-dec-0005`](examples/rgds-dec-0005-ind-conditional-go-author-at-risk.json) | **conditional_go** | IND authoring gate | Author-at-risk drafting, reviewer triage, lock points |
 | [`rgds-dec-0006`](examples/rgds-dec-0006-ai-assisted-conditional-go.json) | **conditional_go** | AI-assisted decision | Bounded AI disclosure, preserved human authority |
 
-> All six records are schema-validated in CI/CD on every commit. Reading one takes 5 minutes. Reading all six takes 30.
+All six records are checked by the batch validator on pushes to `main`, pull requests targeting `main`, and manual workflow runs.
 
 ---
 
@@ -206,20 +178,21 @@ RGDS is valid with no AI at all. When AI is used, it operates as bounded assista
 │   checks                │ Autonomous execution of any kind   │
 └─────────────────────────┴────────────────────────────────────┘
          │
-         ▼ When AI is used, these fields are required:
+         ▼ Additional schema fields when used=true:
 ┌──────────────────────────────────────────────────────────────┐
 │  ai_assistance.used           → true                         │
 │  ai_assistance.tool_name      → which system                 │
 │  ai_assistance.tool_purpose   → what task                    │
 │  ai_assistance.human_review[] → review tier + findings       │
-│  ai_assistance.human_override_log[] → corrections made       │
-│  ai_assistance.ai_risk_assessment → confidence band+cautions │
+│  ai_assistance.ai_risk_assessment → risk assessment object   │
 └──────────────────────────────────────────────────────────────┘
          │
          ▼ Human decision owner remains fully responsible.
            AI disclosure transfers no authority, approval
            rights, or risk ownership.
 ```
+
+The single-record validator requires nonempty tool name, tool purpose, and human review when AI is used. It recommends an AI risk confidence band. Both validators require nonempty use cases and artifacts; the batch validator used by CI does not repeat the single-record validator's additional AI checks. `human_override_log` is optional. The `ai_assistance` object remains required when `used=false`.
 
 **Evidence rule:** AI output is never treated as primary evidence. If an AI output influences a decision, the human owner must link to the underlying source and record the AI output as a drafting aid. Every decision must remain defensible without the AI output present.
 
@@ -233,14 +206,14 @@ RGDS formalizes failure modes observed during IND preparation. Each mechanism ad
 
 | Execution Reality | Failure Mode Prevented | RGDS Mechanism |
 |-------------------|----------------------|----------------|
-| Placeholders proceed without governance | False confidence, FDA gap finding | `evidence.completeness_state` + author-at-risk constraints |
+| Placeholders proceed without governance | False confidence, FDA gap finding | `evidence.evidence_items[].completeness_state` + author-at-risk constraints |
 | Scope changes emerge late without a trail | Silent ripple effects across modules | `scope_change_events[]` + downstream propagation |
 | Reviewer routing is informal | Unclear accountability under audit | `review_plan` + named triage owner |
 | Risk posture is implied, not stated | Cannot defend tolerance decisions to FDA | `risk_posture` + `residual_risk_items` |
 | Cross-module dependencies are mentally tracked | Late-discovered misalignment after gate closes | `dependency_map[]` |
 | Phase-gate tolerance is assumed shared | Silent misalignment between functions | Explicit risk posture field, cross-functional sign-off |
 | Regulatory interaction strategy is informal | Weak pre-IND positioning | `decision_category: regulatory_interaction` |
-| AI assistance is undisclosed | Provenance contamination, audit exposure | `ai_assistance` disclosure schema (mandatory when used) |
+| AI assistance is undisclosed | Provenance contamination, audit exposure | `ai_assistance` disclosure object (always required; additional fields when used) |
 
 ---
 
@@ -258,8 +231,8 @@ rgds/
 │   ├── README.md                    ← How to read examples
 │   ├── rgds-dec-0001.json           ← Conditional go (canonical)
 │   ├── rgds-dec-0002-no-go.json     ← No-go (canonical)
-│   ├── rgds-dec-0003-defer-*.json   ← Defer (canonical)
-│   ├── rgds-dec-0004-regulatory-*.json ← Escalation (canonical)
+│   ├── rgds-dec-0003-defer-*.json   ← Defer with required evidence
+│   ├── rgds-dec-0004-regulatory-*.json ← Regulatory conditional go
 │   ├── rgds-dec-0005-ind-*.json     ← IND conditional go
 │   └── rgds-dec-0006-ai-*.json      ← AI-assisted (only AI example)
 │
@@ -324,13 +297,15 @@ Are you a...
 
 ## v2.0.0 — What Changed
 
+The historical release uses the exact tag [`v.2.0.0`](https://github.com/mj3b/rgds/releases/tag/v.2.0.0). The documentation corrections recorded in the [change control log](docs/change-control-log.md) are unreleased. The historical tag, release, and citation identifiers are preserved.
+
 v2.0.0 tightens decision defensibility. It does not add automation or autonomy.
 
 | Change | What it enforces | Failure mode prevented |
 |--------|-----------------|----------------------|
 | Options enumeration (≥2 required) | At least two options must be considered | Single-option rationalization passing as governance |
 | Evidence completeness per item | `complete` / `partial` / `placeholder` on every evidence item | False confidence from undocumented placeholders |
-| Structured residual risk | `residual_risk_items[]` array | Risk acceptance without recording what remains true |
+| Residual risk capture | Required `risk_assessment.residual_risk_statement`; optional `residual_risk_items[]` | Provides fields for recording residual risk; content adequacy requires review |
 | Named human accountability | Decision owner + approvers as individuals, not roles | "Who approved this?" questions with no traceable answer |
 | AI assistance disclosure | Required schema fields when `ai_assistance.used=true` | AI-assisted drafting without disclosure contaminating provenance |
 
@@ -380,10 +355,10 @@ FDA reconstructability focus    →  NIST AI RMF / ISO 42001 / EU AI Act
 
 RGDS implements the decision-layer governance architecture defined in [GDI v3: The Decision Architecture for Governed AI](https://github.com/mj3b/governed-decision-intelligence/blob/main/spec/GDI_v3_The_Decision_Architecture_for_Governed_AI.pdf) (DOI: [10.5281/zenodo.20244601](https://doi.org/10.5281/zenodo.20244601)) for the biopharma/IND context specifically.
 
-- Schema-enforced decision logs with mandatory options analysis, evidence completeness, and residual risk
-- Six canonical decision records spanning all five outcomes
+- Schema checks for options, evidence completeness labels, and a residual risk statement field
+- Six canonical decision records covering three of the five schema outcomes
 - Bounded, disclosed AI assistance (non-agentic by design)
-- CI/CD validation of schema and semantic invariants on every commit
+- CI validation through the batch validator on pushes and pull requests to `main`, with manual runs available
 - 100% requirements traceability matrix coverage
 - Independent case study — not a production system, not regulatory advice
 

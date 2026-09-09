@@ -13,6 +13,23 @@ It is a governance record.
 ---
 
 
+## Unreleased: RGDS P0 documentation corrections (2026-09-09)
+
+Applied the RGDS P0 scope of the Node & Norm Repository Remediation Audit v0.1 to the current documentation.
+
+| Files | Correction | Basis |
+|-------|------------|-------|
+| `README.md`, `examples/README.md` | Preserve the five schema outcomes; distinguish escalation as a governance action; identify DEC-0003 as `defer_with_required_evidence` and DEC-0004 as `conditional_go`; report three-outcome example coverage | Existing JSON Schema, validators, and six JSON examples |
+| `README.md` | Remove the unsupported FDA failure-rate, causal, reconstruction-time, and retrieval-time claims; state the design question and evidence limits | P0 claim corrections identified by the audit |
+| `README.md`, `examples/README.md` | Use actual field paths and types; distinguish required fields, optional extensions, semantic checks, and CI scope | Existing contract and validation code |
+| `README.md` | Identify the exact historical tag and describe version-controlled record history | Existing Git tag `v.2.0.0` |
+
+The schema, validators, templates, and canonical JSON records are unchanged. Existing release entries below retain their historical wording. This correction creates no new release and changes no historical tags, release assets, authorship, or citation identifiers. Validation of the corrected working tree is reported separately for review.
+
+AI assistance: Codex prepared these documentation corrections and the accompanying validation report at the repository owner's request. Human review of this change remains pending.
+
+---
+
 ## v2.0.0 — Whitepaper-aligned decision discipline (breaking)
 
 **Summary**  
