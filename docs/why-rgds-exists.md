@@ -98,7 +98,7 @@ These signals directly informed:
   Cross-artifact impacts are recorded as decision inputs.
 
 RGDS does not prevent uncertainty.  
-It prevents **undocumented uncertainty**.
+It provides fields for recording uncertainty.
 
 ---
 
@@ -170,7 +170,7 @@ These signals informed:
   Decisions remain anchored to stated program intent.
 
 RGDS does not choose strategy.  
-It ensures strategy is **explainable**.
+It provides fields in which the owner can explain strategy for review.
 
 ---
 
@@ -283,9 +283,6 @@ It **locks in the discipline** required to make these signal-driven lessons dura
 
 ---
 
-## Closing
+## Evidence boundary
 
-RGDS exists because regulated programs do not fail for lack of intelligence.
-They fail when **decisions cannot be reconstructed, defended, or trusted**.
-
-This repository represents one principled response to that reality.
+These source-derived design motivations informed the record format. They do not establish how often decision reconstructability causes program failure or whether RGDS improves outcomes. Field evaluation remains open.

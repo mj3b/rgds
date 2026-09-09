@@ -78,7 +78,7 @@ Every RGDS decision record carries eight governance dimensions:
 
 ## AI Usage in Examples
 
-`rgds-dec-0006` is the **only** record demonstrating AI-assisted decision preparation. All other records are fully human-authored.
+`rgds-dec-0006` is the **only** record demonstrating AI-assisted decision preparation. The other records declare `ai_assistance.used=false`. Those declarations do not independently verify authorship.
 
 This is a design choice: RGDS is AI-optional. Every decision must remain defensible in the absence of AI assistance. AI involvement in one record does not imply AI involvement in governance as a default.
 
@@ -103,7 +103,7 @@ The following paths identify the main sections in each JSON record:
 
 `risk_assessment.residual_risk_items` is optional. A condition records `condition`, `owner`, `due_date`, and `evidence_to_close`. Validation checks structure and selected internal consistency rules; it does not verify the quality of the underlying decision.
 
-Executives and auditors should be able to answer "why was this decision reasonable?" from the record alone, without interviews or supplemental documents.
+Reviewers should use the record to locate the decision basis and examine the linked evidence. Whether a record is sufficient for reconstruction requires substantive review.
 
 ---
 

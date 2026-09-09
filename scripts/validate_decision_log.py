@@ -50,9 +50,9 @@ import sys
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
-from jsonschema import Draft202012Validator
+from jsonschema import Draft202012Validator, FormatChecker
 
-SCRIPT_VERSION = "1.0.0"  # script version (not RGDS schema version)
+SCRIPT_VERSION = "1.0.1"  # script version (not RGDS schema version)
 
 ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_SCHEMA = ROOT / "decision-log" / "decision-log.schema.json"
@@ -128,7 +128,7 @@ def semantic_checks(instance: dict) -> Tuple[List[str], List[str]]:
         - errors: semantic invariants (fail validation / fail CI)
         - warnings: strong recommendations (non-fatal unless strict)
 
-    NOTE: Keep this aligned with validate_all_examples.py to prevent drift.
+    Shared with validate_all_examples.py so both entry points enforce these rules.
     """
     errs: List[str] = []
     warns: List[str] = []
@@ -451,7 +451,7 @@ def main(argv: List[str] | None = None) -> int:
 
     instance = load_json(instance_path)
 
-    validator = Draft202012Validator(schema_dict)
+    validator = Draft202012Validator(schema_dict, format_checker=FormatChecker())
     schema_iter_errors = sorted(validator.iter_errors(instance), key=lambda e: list(e.path))
 
     schema_ok = len(schema_iter_errors) == 0

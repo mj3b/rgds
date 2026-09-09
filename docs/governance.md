@@ -5,7 +5,7 @@
 
 ## Purpose
 
-The RGDS governance model ensures that **decisions remain human-owned, auditable, and defensible** while benefiting from structured evidence and bounded AI assistance.
+The RGDS governance model records ownership, approvals, evidence, and follow-up obligations. These fields make accountability claims inspectable. They do not verify that a person exercised substantive judgment.
 
 Governance in RGDS is not an overlay.  
 It is embedded directly into the decision record.
@@ -17,7 +17,8 @@ RGDS rejects anonymous accountability.
 Every decision log must record:
 
 - a named `governance.decision_owner`
-- named `governance.approvers[]` with role and timestamp
+- named `governance.approvers[]` with role
+- approval records in `governance.approvals[]`, including timestamps
 
 This replaces “somebody will sign off” with an auditable record of who owned and approved the decision.
 
@@ -65,7 +66,7 @@ The following optional fields clarify authority without changing ownership:
 
 - **`authority_scope`** — `recommend` | `decide` | `veto`
 - **`escalation_path`** — defines who resolves deadlock when reviewers disagree or timelines compress
-- Examples intentionally leave escalation_path empty to demonstrate validator warnings and encourage explicit deadlock resolution in real programs.
+- Current examples include escalation paths. An empty path produces a semantic warning.
 
 These fields do not redistribute power.  
 They make authority, limits, and escalation **explicit and reviewable**.
@@ -98,11 +99,9 @@ The following are now **governance requirements**, not optional extensions:
   If AI meaningfully influences a decision artifact, disclosure is mandatory.
   Silent or undocumented AI usage is treated as a governance failure.
 
-These requirements are enforced through schema validation, semantic checks,
-and review expectations.
+The schema and semantic checks enforce selected structural requirements. Policy also requires meaningful residual-risk disclosure and substantive human review. The schema permits an empty residual risk statement, so a passing record may still fall short of policy.
 
-They exist to ensure decisions are **defensible at the time they are made**,
-not reconstructed after the fact.
+These requirements ask owners to record a decision basis at the time of the decision. Reviewers must assess whether that basis is sufficient.
 
 ---
 
@@ -215,7 +214,7 @@ All escalations are documented.
 
 - Draft → In Review → Decided → Superseded
 - Superseded decisions are retained for traceability
-- Controlled records are immutable except through versioned updates
+- Controlled records retain versioned updates under the declared change-control process
 
 The Decision Log is the system of record for governance.
 
@@ -227,4 +226,4 @@ The Decision Log is the system of record for governance.
 - It does not replace expert judgment
 - It does not eliminate disagreement
 
-It ensures disagreement is **visible, owned, and resolved before the gate closes**.
+The process asks reviewers to record disagreement, assign responsibility, and resolve it before closing the gate. Validation cannot establish that this process occurred.

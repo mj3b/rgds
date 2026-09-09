@@ -13,6 +13,24 @@ It is a governance record.
 ---
 
 
+## Unreleased: RGDS P1 citation, claim, and validation corrections (2026-09-09)
+
+The owner authorized this pass after the P0 merge in PR #8. The public ORCID and Zenodo records were inspected to resolve the citation mismatch.
+
+| Area | Correction and boundary |
+|------|-------------------------|
+| Citation | Added `CITATION.cff` for this implementation. The DOI `10.5281/zenodo.20242004` identifies the independent study v1.4; retained it as a related reference and preserved the previous citation in `citation-provenance.md`. |
+| Claims and relationships | Replaced headline RTM coverage with explicit limits for fourteen internal requirements. Clarified the roles of GDI, RGDS, the working AI method, and the historical study. Distinguished policy expectations from machine checks and field evidence. |
+| Validation | Batch validation now imports the existing single-record semantic checks. Single-record validation now checks schema date formats. Warning severity remains unchanged. The script version advances to 1.0.1; the decision schema is unchanged. |
+| Regression checks | Added nine tests covering canonical records, AI disclosure failures, warning severity, invalid dates, and all five outcome values through derived cases. CI runs the tests after validating examples. |
+| Links | Corrected the README governance destination and added stable gap-table anchors for RTM links. |
+
+The six canonical JSON records, schema files, template, license, NOTICE, historical change-log entries, tags, and releases remain unchanged. New validation behavior may reject records that previously passed through a validator gap. Corrections remain unreleased; a future release must receive a new version without renaming `v.2.0.0`.
+
+Codex assisted with source inspection, edits, and testing under the owner's authorization and E5 writing rules. Repository checks do not constitute independent research review or Node & Norm admission. ORCID, Zenodo, sibling repositories, and organization settings were not edited.
+
+---
+
 ## Unreleased: RGDS P0 documentation corrections (2026-09-09)
 
 Applied the RGDS P0 scope of the Node & Norm Repository Remediation Audit v0.1 to the current documentation.

@@ -3,6 +3,8 @@
 
 ---
 
+This is a prospective evaluation plan. It reports no completed deployment study, measured time savings, or demonstrated regulatory benefit.
+
 ## Purpose
 
 This evaluation plan defines how RGDS is assessed as a **human-governed decision-support system**.
