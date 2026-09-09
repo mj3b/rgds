@@ -1,6 +1,8 @@
 cff-version: 1.2.0
 message: "Cite this reference implementation and identify the Git commit used. The related study DOI identifies a different artifact."
 type: software
+version: "2.0.1"
+date-released: 2026-09-09
 title: "RGDS: Regulated Gate Decision Support"
 authors:
   - family-names: Banasihan

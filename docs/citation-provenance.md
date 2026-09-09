@@ -6,7 +6,7 @@ On September 9, 2026, the public [Zenodo record](https://zenodo.org/records/2024
 
 The record assigns `10.5281/zenodo.20242004` to that version and `10.5281/zenodo.20242003` to all versions. The [ORCID profile](https://orcid.org/0009-0001-8121-2878) identifies Mark Julius Banasihan and lists the related RGDS study. ORCID lists a January 2026 work date and a report classification, while Zenodo lists a May 16 deposit publication date and a software classification. This correction preserves those source-specific distinctions.
 
-The implementation's [CITATION.cff](../CITATION.cff) identifies the GitHub repository and author. It includes the archived study as a reference, with the resource type and date reported by Zenodo. It deliberately omits an implementation DOI and release version for the unreleased corrected branch. Reproducible citations should identify the commit used.
+The implementation's [CITATION.cff](../CITATION.cff) identifies the GitHub repository and author. It includes the archived study as a reference, with the resource type and date reported by Zenodo. It identifies implementation version 2.0.1 and its release date. It deliberately omits an implementation DOI because the verified DOI identifies the related study. Reproducible citations should identify the commit used.
 
 Historical releases, tags, files, and authorship remain unchanged. The historical tag is exactly `v.2.0.0`. Future releases should use a new semantic version, without renaming that tag. No ORCID or Zenodo record was edited during this repository correction.
 

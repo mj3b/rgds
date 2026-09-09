@@ -295,7 +295,9 @@ Are you a...
 
 ## Release History
 
-The historical release uses the exact tag [`v.2.0.0`](https://github.com/mj3b/rgds/releases/tag/v.2.0.0). It remains unchanged. The [change control log](docs/change-control-log.md) records the subsequent P0 and P1 corrections as unreleased changes. No normalized alias or replacement tag has been created.
+The current patch release is [v2.0.1](https://github.com/mj3b/rgds/releases/tag/v2.0.1). See the [release notes](docs/releases/v2.0.1.md) for cumulative changes and validation boundaries.
+
+The historical release uses the exact tag [`v.2.0.0`](https://github.com/mj3b/rgds/releases/tag/v.2.0.0). It remains unchanged. The [change control log](docs/change-control-log.md) preserves the dated P0 and P1 correction entries and records their inclusion in v2.0.1. No normalized alias or replacement tag has been created.
 
 These corrections preserve the decision-record schema. Batch validation now applies the single-record validator's existing AI checks, and the single-record validator checks date formats. Records previously accepted because of those validation gaps may now fail. Cite a commit when referring to the corrected current implementation.
 
@@ -332,7 +334,7 @@ RGDS is a biopharma reference implementation within the proposed NN-DE research 
 | Dimension | Current state |
 |-----------|---------------|
 | Project type | Reference implementation |
-| Development state | Working; P0 and P1 corrections follow the historical `v.2.0.0` release |
+| Development state | Working reference implementation; current release `v2.0.1` |
 | Evidence state | Internal schema, semantic, and regression checks; six illustrative canonical records |
 | Outcome coverage | Three canonical outcomes; derived regression cases also exercise `go` and `defer` |
 | Internal requirements | Fourteen declared RTM rows map to implementation artifacts; each row distinguishes machine checks from policy or review expectations |
